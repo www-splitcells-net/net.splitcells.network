@@ -163,7 +163,9 @@ public interface View extends Discoverable, Domable, Identifiable {
      * The reason for this, is the fact, that it is faster to construct {@link #unorderedLinesStream()}
      * via {@link #rawLines()}, than the other way around.</p>
      * <p>There is no guarantee regarding the ordering.</p>
-     * <p>TODO Replace {@link #unorderedLinesStream()} with this method.</p>
+     * <p>TODO Replace {@link #unorderedLinesStream()} with this method.
+     * First remove all the usage of {@link #unorderedLinesStream()} and than delete it.
+     * Afterwards, rename this method to the original one.</p>
      *
      * @return An ordered {@link Stream} of {@link #orderedLines()}.
      */
