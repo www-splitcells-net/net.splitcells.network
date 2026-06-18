@@ -263,10 +263,10 @@ public class HistoryI implements History {
                 .findFirst()
                 .orElseThrow();
         final var eventType = eventToRemove.value(EVENT_TYPE);
-        if (eventType.equals(AllocationChangeType.ADDITION)) {
+        if (eventType.equals(TableEventType.ADDITION)) {
             solution.remove(solution.anyAssignmentOf
                     (eventToRemove.value(DEMAND).toLinePointer(), eventToRemove.value(SUPPLY).toLinePointer()));
-        } else if (eventType.equals(REMOVAL)) {
+        } else if (eventType.equals(TableEventType.REMOVAL)) {
             solution.assign
                     (eventToRemove.value(DEMAND).toLinePointer().interpret(solution.demands()).orElseThrow()
                             , eventToRemove.value(SUPPLY).toLinePointer().interpret(solution.supplies()).orElseThrow());
