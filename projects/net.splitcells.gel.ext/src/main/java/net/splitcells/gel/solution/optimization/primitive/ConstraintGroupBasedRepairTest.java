@@ -30,7 +30,7 @@ import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
-import static net.splitcells.gel.solution.history.History.ALLOCATION_EVENT;
+import static net.splitcells.gel.solution.history.History.*;
 import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectors.demandSelector;
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
@@ -109,11 +109,11 @@ public class ConstraintGroupBasedRepairTest {
             testSubject.repair(solution, demandClassifications.get(0));
             solution.history().unorderedLines().requireSizeOf(initHistorySize + 4);
             final var freeSupplyIndexes = solution.history().unorderedLines().stream()
-                    .map(l -> l.value(ALLOCATION_EVENT).supply().index())
+                    .map(l -> l.value(SUPPLY).index())
                     .collect(toList());
             freeSupplyIndexes.requireContentsOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
             final var demandIndexes = solution.history().unorderedLines().stream()
-                    .map(l -> l.value(ALLOCATION_EVENT).demand().index())
+                    .map(l -> l.value(DEMAND).index())
                     .collect(toList());
             demandIndexes.requireContentsOf(0, 1, 2, 3, 4, 5, 6, 3, 2, 1, 0);
         });
