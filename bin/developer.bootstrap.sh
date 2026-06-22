@@ -19,7 +19,7 @@ echo Setting up net.splitcells.shell for developers. The repos are located at ~/
   cd $repos/net.splitcells.network
   bin/repos.pull
 # Setup Shell project.
-  cd $repos/projects/net.splitcells.shell
+  cd $repos/net.splitcells.network/projects/net.splitcells.shell
   ./bin/install
   . src/main/bash/command/managed/command.managed.export.bin.sh
 # Configure Shell project.
