@@ -2,6 +2,8 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+# TODO Should this be only a call to bin/worker.bootstrap with additional config and tooling setup, in order to avoid duplicate code?
+
 echo Setting up net.splitcells.shell for developers. The repos are located at ~/Documents/projects/net.splitcells.martins.avots.support.system/public
 
 # Setup repos.
