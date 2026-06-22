@@ -18,3 +18,6 @@ curl -s "https://get.sdkman.io" | bash
 source "/home/mavo-stream/.sdkman/bin/sdkman-init.sh"
 sdk install maven
 sdk install mvnd
+mvnd --stop
+  # Reset Maven Daemon just in case, there is an instance running with an incorrect config.
+  # This can be the case, if mvnd was already present.
