@@ -24,7 +24,9 @@ echo Setting up net.splitcells.shell for developers. The repos are located at ~/
   . src/main/bash/command/managed/command.managed.export.bin.sh
 # Configure Shell project.
   cd $repos/net.splitcells.network.hub
-  bin/net.splitcells.shell.projects.peers.for.commands | xargs -i sh -c 'command.repository.register $(realpath ./{})'
+  bin/net.splitcells.shell.projects.peers.for.commands | xargs -i sh -c 'command.repository.register $(realpath {})'
+  bin/net.splitcells.shell.projects.peers.for.commands | xargs -i sh -c 'project.repository.register $(realpath {})'
+  bin/net.splitcells.shell.repos.peers | xargs -i sh -c 'project.repository.register $(realpath ../{})'
   cd $repos/net.splitcells.network/projects
   find . -maxdepth 1 -type d | xargs -i sh -c 'project.repository.register $(realpath ./{})'
   user.bin.configure
