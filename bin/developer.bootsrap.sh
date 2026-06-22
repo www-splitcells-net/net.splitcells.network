@@ -5,6 +5,7 @@
 echo Setting up net.splitcells.shell for developers. The repos are located at ~/Documents/projects/net.splitcells.martins.avots.support.system/public
 
 coreRepo=~/Documents/projects/net.splitcells.martins.avots.support.system/public/net.splitcells.network
+bin/repos.pull
 cd $coreRepo/projects/net.splitcells.shell
 ./bin/install
 . src/main/bash/command/managed/command.managed.export.bin.sh
