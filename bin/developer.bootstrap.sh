@@ -4,6 +4,9 @@
 
 # TODO Should this be only a call to bin/worker.bootstrap with additional config and tooling setup, in order to avoid duplicate code?
 
+set -e
+set -x
+
 echo Setting up net.splitcells.shell for developers. The repos are located at ~/Documents/projects/net.splitcells.martins.avots.support.system/public
 
 # Setup repos.
