@@ -25,6 +25,7 @@ echo Setting up net.splitcells.shell for developers. The repos are located at ~/
 # Configure Shell project.
   cd $repos/net.splitcells.network.hub
   project.repository.register $(realpath .)
+  project.repository.register $(realpath ../net.splitcells.network)
   bin/net.splitcells.shell.projects.peers.for.commands | xargs -i sh -c 'command.repository.register $(realpath {})'
   bin/net.splitcells.shell.projects.peers.for.commands | xargs -i sh -c 'project.repository.register $(realpath {})'
   bin/net.splitcells.shell.repos.peers | xargs -i sh -c 'project.repository.register $(realpath ../{})'
