@@ -47,21 +47,22 @@ public final class AttributeI<T> implements Attribute<T> {
     private final Class<?> type;
     private final String name;
     private final Function<String, T> deserializer;
+    private final Function<T, String> serializer;
 
     public static <T> Attribute<T> attribute(Class<T> type) {
         return new AttributeI<>(type, type.getSimpleName());
     }
 
     public static Attribute<Integer> integerAttribute(String name) {
-        return new AttributeI<>(Integer.class, name, arg -> Integer.valueOf(arg));
+        return new AttributeI<>(Integer.class, name, Integer::valueOf, value -> "" + value);
     }
 
     public static Attribute<Float> floatAttribute(String name) {
-        return new AttributeI<>(Float.class, name, arg -> Float.valueOf(arg));
+        return new AttributeI<>(Float.class, name, Float::valueOf, value -> "" + value);
     }
 
     public static Attribute<String> stringAttribute(String name) {
-        return new AttributeI<>(String.class, name, arg -> arg);
+        return new AttributeI<>(String.class, name, arg -> arg, value -> value);
     }
 
     public static <T> Attribute<T> attribute(Class<T> type, String name) {
@@ -73,15 +74,16 @@ public final class AttributeI<T> implements Attribute<T> {
     }
 
     private AttributeI(Class<?> type, String name) {
-        this(type, name, arg -> {
+        this(type, name, string -> {
             throw new UnsupportedOperationException();
-        });
+        }, value -> "" + value);
     }
 
-    private AttributeI(Class<?> type, String name, Function<String, T> deserializer) {
-        this.type = type;
-        this.name = name;
-        this.deserializer = deserializer;
+    private AttributeI(Class<?> argType, String argName, Function<String, T> argDeserializer, Function<T, String> argSerializer) {
+        type = argType;
+        name = argName;
+        deserializer = argDeserializer;
+        serializer = argSerializer;
     }
 
     @Override
