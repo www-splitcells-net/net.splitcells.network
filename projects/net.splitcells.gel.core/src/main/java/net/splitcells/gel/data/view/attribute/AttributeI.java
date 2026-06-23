@@ -86,33 +86,27 @@ public final class AttributeI<T> implements Attribute<T> {
         serializer = argSerializer;
     }
 
-    @Override
-    public String name() {
+    @Override public String name() {
         return name;
     }
 
-    @Override
-    public boolean equals(Object arg) {
+    @Override public boolean equals(Object arg) {
         return super.equals(arg);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return super.hashCode();
     }
 
-    @Override
-    public Bool isInstanceOf(Object arg) {
+    @Override public Bool isInstanceOf(Object arg) {
         return bool(type.isAssignableFrom(arg.getClass()));
     }
 
-    @Override
-    public Class<?> type() {
+    @Override public Class<?> type() {
         return type;
     }
 
-    @Override
-    public void assertArgumentCompatibility(Object arg) {
+    @Override public void assertArgumentCompatibility(Object arg) {
         if (arg != null && !type.isAssignableFrom(arg.getClass())) {
             throw ExecutionException.execException("Given object not compatible to attribute: name=" + name
                     + ", type=" + type
@@ -121,20 +115,17 @@ public final class AttributeI<T> implements Attribute<T> {
         }
     }
 
-    @Override
-    public Tree toTree() {
+    @Override public Tree toTree() {
         return tree(Attribute.class.getSimpleName())
                 .withProperty("Name", name)
                 .withProperty("Type", type.getSimpleName());
     }
 
-    @Override
-    public T deserializeValue(String value) {
+    @Override public T deserializeValue(String value) {
         return deserializer.apply(value);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "attribute: name = " + name + ", type = " + type.getName();
     }
 }
