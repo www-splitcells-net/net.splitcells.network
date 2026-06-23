@@ -61,7 +61,7 @@ import java.util.function.Supplier;
  * <p>IDEA History should only contain primary demand/supply references and no references to used or unused demand/supply,
  * in order to preserve line pointer validity.</p>
  * <p>TODO This package should be a top level package, because it should not only be usable for {@link Assignments},
- * but for {@link View} instead.</todo>
+ * but for {@link View} instead.</p>
  */
 public interface History extends Table, AfterAdditionSubscriber, BeforeRemovalSubscriber {
     /**
