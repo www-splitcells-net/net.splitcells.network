@@ -370,7 +370,7 @@ public interface View extends Discoverable, Domable, Identifiable {
             final var row = tree("tr", HTML);
             row.withChild(tree("td", HTML).withText(line.index() + ""));
             headerView().forEach(attribute -> row.withChild(tree("td", HTML)
-                    .withText(line.value(attribute).toString())));
+                    .withText(attribute.serializeValue(line.value(attribute)))));
             htmlTable.withChild(row);
         });
         return htmlTable;
