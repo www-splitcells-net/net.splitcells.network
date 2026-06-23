@@ -28,8 +28,6 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.StreamUtils.reverse;
 import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
-import static net.splitcells.gel.solution.history.event.AllocationChange.allocations;
-import static net.splitcells.gel.solution.history.event.AllocationChangeType.REMOVAL;
 import static net.splitcells.gel.solution.history.meta.MetaDataI.metaData;
 import static net.splitcells.gel.solution.history.meta.type.AllocationNaturalArgumentation.allocationNaturalArgumentation;
 import static net.splitcells.gel.solution.history.meta.type.AllocationRating.allocationRating;
@@ -82,7 +80,7 @@ public class HistoryI implements History {
         solution.headerView2().stream()
                 .map(a -> attribute(a.type(), VALUE_PREFIX + a.name()))
                 .forEach(valueAttributes::add);
-        val header = list(EVENT_ID, EVENT_TYPE, ALLOCATION_EVENT, DEMAND, SUPPLY, META_DATA);
+        val header = list(EVENT_ID, EVENT_TYPE, DEMAND, SUPPLY, META_DATA);
         valueAttributes.forEach(header::add);
         assignments = table("history", solution, header);
         this.solution = solution;
@@ -111,7 +109,6 @@ public class HistoryI implements History {
             val supply = solution.supplyOfAssignment(allocationValues);
             final List<Object> values = list(moveLastEventIdForward()
                     , TableEventType.ADDITION
-                    , allocations(AllocationChangeType.ADDITION, demand, supply)
                     , demand
                     , supply
                     , metaData);
@@ -136,7 +133,6 @@ public class HistoryI implements History {
             val supply = solution.supplyOfAssignment(removal);
             final List<Object> values = list(moveLastEventIdForward()
                     , TableEventType.REMOVAL
-                    , allocations(AllocationChangeType.REMOVAL, demand, supply)
                     , demand
                     , supply
                     , metaData);
