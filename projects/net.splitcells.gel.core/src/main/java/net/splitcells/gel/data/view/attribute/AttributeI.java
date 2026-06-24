@@ -44,6 +44,16 @@ public final class AttributeI<T> implements Attribute<T> {
         }
     };
 
+    private static <T> Function<String, T> invalidDeserializer() {
+        return arg -> {
+            throw new UnsupportedOperationException();
+        };
+    }
+
+    private static <T> Function<T, String> serializer() {
+        return arg -> "" + arg;
+    }
+
     private final Class<?> type;
     private final String name;
     private final Function<String, T> deserializer;
@@ -66,7 +76,11 @@ public final class AttributeI<T> implements Attribute<T> {
     }
 
     public static <T> Attribute<T> attribute(Class<T> type, String name) {
-        return new AttributeI<>(type, name);
+        return new AttributeI<>(type, name, invalidDeserializer(), serializer());
+    }
+
+    public static <T> Attribute<T> attribute(Class<T> type, String name, Function<T, String> argSerializer) {
+        return new AttributeI<>(type, name, invalidDeserializer(), argSerializer);
     }
 
     public static Attribute<Object> attributeObject(Class<?> type, String name) {
@@ -74,9 +88,7 @@ public final class AttributeI<T> implements Attribute<T> {
     }
 
     private AttributeI(Class<?> type, String name) {
-        this(type, name, string -> {
-            throw new UnsupportedOperationException();
-        }, value -> "" + value);
+        this(type, name, invalidDeserializer(), value -> "" + value);
     }
 
     private AttributeI(Class<?> argType, String argName, Function<String, T> argDeserializer, Function<T, String> argSerializer) {
