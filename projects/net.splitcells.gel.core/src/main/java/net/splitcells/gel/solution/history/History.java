@@ -69,8 +69,8 @@ public interface History extends Table, AfterAdditionSubscriber, BeforeRemovalSu
      */
     Attribute<Integer> EVENT_ID = attribute(Integer.class, "event-id");
     Attribute<TableEventType> EVENT_TYPE = attribute(TableEventType.class, "database-event-type");
-    Attribute<Line> DEMAND = attribute(Line.class, "demand");
-    Attribute<Line> SUPPLY = attribute(Line.class, "supply");
+    Attribute<Line> DEMAND = attribute(Line.class, "demand", d -> "" + d.index());
+    Attribute<Line> SUPPLY = attribute(Line.class, "supply", s -> "" + s.index());
     Attribute<MetaDataView> META_DATA = attribute(MetaDataView.class, "meta-data");
     String VALUE_PREFIX = "value-";
 
