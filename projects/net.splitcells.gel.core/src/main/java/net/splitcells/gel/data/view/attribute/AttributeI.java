@@ -140,4 +140,8 @@ public final class AttributeI<T> implements Attribute<T> {
     @Override public String toString() {
         return "attribute: name = " + name + ", type = " + type.getName();
     }
+
+    @Override public String serializeValue(T value) {
+        return serializer.apply(value);
+    }
 }
