@@ -2,6 +2,10 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+# Sets up the developer's desktop environment, which is specific to this project.
+# Do not blindly execute this.
+# The main advantage of this script is the fact, that it documents and supports a working setup on Ubuntu LTS.
+
 # On Ubuntu the snap installation of gitui does not seem to work.
 # Ubuntu's Java and Maven are highly unlikely to match this project's required versions.
 
