@@ -4,6 +4,7 @@
 // general html/css/javascript functions
 /* RENAME elementId -> css_class
  * RENAME elementId_elements
+ * TODO Move form functionality into a dedicated script, in order to improve its maintainability.
  */
  function readHtmlFromTextArea(from) {
      return from.innerHTML.replaceAll('&lt;', '<').replaceAll('&gt;', '>')
