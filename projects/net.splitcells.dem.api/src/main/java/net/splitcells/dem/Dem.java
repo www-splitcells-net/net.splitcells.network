@@ -97,6 +97,11 @@ public class Dem {
         }
     }
 
+    public static void handleInterrupt(InterruptedException e) {
+        Thread.currentThread().interrupt();
+        throw new RuntimeException(e);
+    }
+
     public static ProcessResult process(Runnable program) {
         return process(program, m -> {
             // Default configured is not changed.
