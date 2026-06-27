@@ -61,6 +61,14 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.simplifiedName;
  * In other words, the main difference between a test config and a prod config is only its side effects.</p>
  * <p>TODO Provide double book accounting for all {@link Cell} based configuration and every aspect of it.</p>
  * <p>TODO Consider testing distro configurations, in order to easy complex migrations in the future.</p>
+ * <p>TODO Configure side effects like connections or paths in the file system separate to the rest of the config,
+ * as the main diff between prod config and test config are the side effects.
+ * This would maybe even allow one to provide a single side effect config for multiple configs and deployments,
+ * thereby avoiding duplicate code.
+ * Imagine something like LiveSideEffectCell, that is used by LiveDistroCell and LiveCryptoSetupCell and could easily be used for new Cells when needed.
+ * Maybe this could be done dynamically.
+ * In this case the DevDistro Cell could be configured for the local Laptop, Desktop and the live server accordingly,
+ * without changing the DevDistro code.</p>
  */
 public interface Cell extends Consumer<Environment>, Discoverable, Option<Consumer<Environment>>, Runnable {
     default List<String> path() {
