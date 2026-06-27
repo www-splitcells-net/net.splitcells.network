@@ -16,4 +16,4 @@ cd ..
   sh -c "cd net.splitcells.network.hub && git pull --ff-only"
   # Pulling and cloning are not done in parallel, as Codeberg otherwise blocks new connections more likely.
   net.splitcells.network.hub/bin/net.splitcells.shell.repos.peers | xargs -i sh -c "test -d {} || git clone ssh://git@codeberg.org/splitcells-net/{}.git"
-  net.splitcells.network.hub/bin/net.splitcells.shell.repos.peers | xargs -i sh -c "cd {} && git pull --ff-only || echo Could not pull repo {}"
+  net.splitcells.network.hub/bin/net.splitcells.shell.repos.peers | xargs -i sh -c "cd {} && git pull Codeberg --ff-only || echo Could not pull repo {}"
