@@ -15,6 +15,7 @@
  */
 package net.splitcells.dem.resource;
 
+import lombok.Getter;
 import net.splitcells.dem.data.Flows;
 
 import java.util.Optional;
@@ -36,7 +37,7 @@ public enum ContentType {
     GIF("image/gif", true);
 
     private final String codeName;
-    private final boolean isBinary;
+    @Getter private final boolean isBinary;
 
     ContentType(String argCodeName, boolean argIsBinary) {
         codeName = argCodeName;
@@ -50,10 +51,6 @@ public enum ContentType {
      */
     public String codeName() {
         return codeName;
-    }
-
-    public boolean isBinary() {
-        return isBinary;
     }
 
     public static Optional<ContentType> parseOptionally(String arg) {
