@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 # Copyright (c) 2021 Contributors To The `net.splitcells.*` Projects
 #
 # This program and the accompanying materials are made available under the
@@ -18,10 +18,10 @@
 # In other words, this command is used for bootstrapping a Shell project installation.
 
 set -e
-if [[ ":$PATH:" != *":$HOME/bin:"* ]]; then
-  # ~/bin/* is used for binaries, that are placed by the user there manually.
-  export PATH="$HOME/bin:$PATH"
-fi
+# ~/bin/* is used for binaries, that are placed by the user there manually.
+case "$PATH" in
+  *":$HOME/bin:"* ) export PATH="$HOME/bin:$PATH" ;;
+esac
 if [ -z "$NET_SPLITCELLS_SHELL_PATH" ]; then
   export PATH="$HOME/bin/net.splitcells.shell.commands.managed:$PATH"
 else

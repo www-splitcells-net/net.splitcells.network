@@ -63,4 +63,7 @@ public interface Attribute<T> extends Domable {
         return name().equals(otherAttribute.name()) && type().equals(otherAttribute.type());
     }
 
+    default String serializeValue(T value) {
+        return "" + value;
+    }
 }

@@ -26,6 +26,7 @@ import java.util.Optional;
 import java.util.concurrent.Semaphore;
 
 import static net.splitcells.dem.Dem.configValue;
+import static net.splitcells.dem.Dem.handleInterrupt;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
 import static net.splitcells.dem.lang.tree.CommonMarkConfig.commonMarkConfig;
@@ -173,7 +174,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 try {
                     statusWaiter.acquire();
                 } catch (InterruptedException e) {
-                    throw execException(e);
+                    handleInterrupt(e);
                 }
                 dataValues.withProperty(OPTIMIZATION_STATUS
                         , editor.currentOptimizationStatus().toCommonMarkString());

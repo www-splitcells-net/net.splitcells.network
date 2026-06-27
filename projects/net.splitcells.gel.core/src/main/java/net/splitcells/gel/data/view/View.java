@@ -370,7 +370,7 @@ public interface View extends Discoverable, Domable, Identifiable {
             final var row = tree("tr", HTML);
             row.withChild(tree("td", HTML).withText(line.index() + ""));
             headerView().forEach(attribute -> row.withChild(tree("td", HTML)
-                    .withText(line.value(attribute).toString())));
+                    .withText(attribute.serializeValue(line.value(attribute)))));
             htmlTable.withChild(row);
         });
         return htmlTable;
@@ -496,7 +496,7 @@ public interface View extends Discoverable, Domable, Identifiable {
         final Map<Attribute<? extends Object>, Integer> attributeDistances = map();
         {
             int rowSum = 1;
-            for (int i = rowAttributes.size() - 1 ; i >= 0 ; --i) {
+            for (int i = rowAttributes.size() - 1; i >= 0; --i) {
                 attributeDistances.put(rowAttributes.get(i), rowSum);
                 rowSum *= sortedAttributeValues.get(rowAttributes.get(i)).size();
             }
@@ -508,7 +508,7 @@ public interface View extends Discoverable, Domable, Identifiable {
             } else {
                 columnSum = unusedAttributes.size();
             }
-            for (int i = columnAttributes.size() - 1 ; i >= 0 ; --i) {
+            for (int i = columnAttributes.size() - 1; i >= 0; --i) {
                 attributeDistances.put(columnAttributes.get(i), columnSum);
                 columnSum *= sortedAttributeValues.get(columnAttributes.get(i)).size();
             }
@@ -576,7 +576,7 @@ public interface View extends Discoverable, Domable, Identifiable {
             final int row;
             {
                 int tmpRow = firstAttributeRowIndex; // The first row is a header row.
-                for (int i = 0 ; i < rowAttributes.size() ; ++i) {
+                for (int i = 0; i < rowAttributes.size(); ++i) {
                     final var attribute = rowAttributes.get(i);
                     final var attributeDistance = attributeDistances.get(attribute);
                     final var attributeIndex = sortedAttributeValues.get(attribute).indexOf("" + line.value(attribute));
@@ -587,7 +587,7 @@ public interface View extends Discoverable, Domable, Identifiable {
             final int column;
             {
                 int tmpColumn = firstAttributeColumnIndex; // The first columns are used as row headers.
-                for (int i = 0 ; i < columnAttributes.size() ; ++i) {
+                for (int i = 0; i < columnAttributes.size(); ++i) {
                     final var attribute = columnAttributes.get(i);
                     final var attributeDistance = attributeDistances.get(attribute);
                     final var attributeIndex = sortedAttributeValues.get(attribute).indexOf("" + line.value(attribute));

@@ -18,6 +18,7 @@ package net.splitcells.gel.solution.history;
 import net.splitcells.dem.testing.annotations.BenchmarkTest;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.gel.data.table.history.TableEventType;
 import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -34,10 +35,7 @@ import static net.splitcells.gel.rating.rater.lib.ConstantRater.constantRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
-import static net.splitcells.gel.solution.history.History.ALLOCATION_EVENT;
-import static net.splitcells.gel.solution.history.History.META_DATA;
-import static net.splitcells.gel.solution.history.event.AllocationChangeType.ADDITION;
-import static net.splitcells.gel.solution.history.event.AllocationChangeType.REMOVAL;
+import static net.splitcells.gel.solution.history.History.*;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 
 public class HistoryTest {
@@ -138,20 +136,18 @@ public class HistoryTest {
                                 , solution.supplies().rawLine(0));
                 solution.history().unorderedLines().requireSizeOf(1);
                 final var additionEvent = solution.history().rawLine(0);
-                final var additionOperation = additionEvent.value(ALLOCATION_EVENT);
-                requireEquals(additionOperation.type(), ADDITION);
-                requireEquals(additionOperation.demand(), solution.demands().rawLine(0));
-                requireEquals(additionOperation.supply(), solution.supplies().rawLine(0));
+                requireEquals(additionEvent.value(EVENT_TYPE), TableEventType.ADDITION);
+                requireEquals(additionEvent.value(DEMAND), solution.demands().rawLine(0));
+                requireEquals(additionEvent.value(SUPPLY), solution.supplies().rawLine(0));
             }
             {
                 solution.history().unorderedLines().requireSizeOf(1);
                 solution.remove(0);
                 solution.history().unorderedLines().requireSizeOf(2);
                 final var removalEvent = solution.history().rawLine(1);
-                final var removalOperation = removalEvent.value(ALLOCATION_EVENT);
-                requireEquals(removalOperation.type(), REMOVAL);
-                requireEquals(removalOperation.demand(), solution.demands().rawLine(0));
-                requireEquals(removalOperation.supply(), solution.supplies().rawLine(0));
+                requireEquals(removalEvent.value(EVENT_TYPE), TableEventType.REMOVAL);
+                requireEquals(removalEvent.value(DEMAND), solution.demands().rawLine(0));
+                requireEquals(removalEvent.value(SUPPLY), solution.supplies().rawLine(0));
             }
         });
     }

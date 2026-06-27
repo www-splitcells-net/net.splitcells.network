@@ -61,7 +61,7 @@ import java.util.function.Supplier;
  * <p>IDEA History should only contain primary demand/supply references and no references to used or unused demand/supply,
  * in order to preserve line pointer validity.</p>
  * <p>TODO This package should be a top level package, because it should not only be usable for {@link Assignments},
- * but for {@link View} instead.</todo>
+ * but for {@link View} instead.</p>
  */
 public interface History extends Table, AfterAdditionSubscriber, BeforeRemovalSubscriber {
     /**
@@ -69,9 +69,8 @@ public interface History extends Table, AfterAdditionSubscriber, BeforeRemovalSu
      */
     Attribute<Integer> EVENT_ID = attribute(Integer.class, "event-id");
     Attribute<TableEventType> EVENT_TYPE = attribute(TableEventType.class, "database-event-type");
-    Attribute<AllocationChange> ALLOCATION_EVENT = attribute(AllocationChange.class, "allocation-event");
-    Attribute<Line> DEMAND = attribute(Line.class, "demand");
-    Attribute<Line> SUPPLY = attribute(Line.class, "supply");
+    Attribute<Line> DEMAND = attribute(Line.class, "demand", d -> "" + d.index());
+    Attribute<Line> SUPPLY = attribute(Line.class, "supply", s -> "" + s.index());
     Attribute<MetaDataView> META_DATA = attribute(MetaDataView.class, "meta-data");
     String VALUE_PREFIX = "value-";
 

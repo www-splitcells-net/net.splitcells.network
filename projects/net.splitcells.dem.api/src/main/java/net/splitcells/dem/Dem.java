@@ -92,9 +92,13 @@ public class Dem {
         try {
             new Semaphore(1).acquire(2);
         } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            throw new RuntimeException(e);
+            handleInterrupt(e);
         }
+    }
+
+    public static void handleInterrupt(InterruptedException e) {
+        Thread.currentThread().interrupt();
+        throw new RuntimeException(e);
     }
 
     public static ProcessResult process(Runnable program) {
@@ -227,8 +231,7 @@ public class Dem {
                 Thread.sleep(1000L);
             } catch (InterruptedException e) {
                 processResult.hasError(true);
-                Thread.currentThread().interrupt();
-                throw new RuntimeException(e);
+                handleInterrupt(e);
             }
         });
         root.setName(program.getClass().getPackageName() + "." + program.getClass().getSimpleName());
@@ -237,8 +240,7 @@ public class Dem {
         try {
             root.join();
         } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            throw new RuntimeException(e);
+            handleInterrupt(e);
         }
         return processResult;
     }

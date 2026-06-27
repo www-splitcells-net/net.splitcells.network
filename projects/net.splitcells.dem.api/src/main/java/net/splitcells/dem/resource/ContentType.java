@@ -15,12 +15,15 @@
  */
 package net.splitcells.dem.resource;
 
+import lombok.Getter;
+import lombok.experimental.Accessors;
 import net.splitcells.dem.data.Flows;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.data.Flows.flow;
 
+@Accessors(fluent = true)
 public enum ContentType {
     BINARY("application/octet-stream", true),
     COMMON_MARK("text/markdown", false),
@@ -35,25 +38,15 @@ public enum ContentType {
     JSON("application/json", false),
     GIF("image/gif", true);
 
-    private final String codeName;
-    private final boolean isBinary;
+    /**
+     * TODO rename this to mime type of something like that.
+     */
+    @Getter private final String codeName;
+    @Getter private final boolean isBinary;
 
     ContentType(String argCodeName, boolean argIsBinary) {
         codeName = argCodeName;
         isBinary = argIsBinary;
-    }
-
-    /**
-     * TODO rename this to mime type of something like that.
-     * 
-     * @return
-     */
-    public String codeName() {
-        return codeName;
-    }
-
-    public boolean isBinary() {
-        return isBinary;
     }
 
     public static Optional<ContentType> parseOptionally(String arg) {

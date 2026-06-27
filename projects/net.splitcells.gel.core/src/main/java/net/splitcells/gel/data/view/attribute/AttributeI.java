@@ -44,28 +44,43 @@ public final class AttributeI<T> implements Attribute<T> {
         }
     };
 
+    private static <T> Function<String, T> invalidDeserializer() {
+        return arg -> {
+            throw new UnsupportedOperationException();
+        };
+    }
+
+    private static <T> Function<T, String> serializer() {
+        return arg -> "" + arg;
+    }
+
     private final Class<?> type;
     private final String name;
     private final Function<String, T> deserializer;
+    private final Function<T, String> serializer;
 
     public static <T> Attribute<T> attribute(Class<T> type) {
         return new AttributeI<>(type, type.getSimpleName());
     }
 
     public static Attribute<Integer> integerAttribute(String name) {
-        return new AttributeI<>(Integer.class, name, arg -> Integer.valueOf(arg));
+        return new AttributeI<>(Integer.class, name, Integer::valueOf, value -> "" + value);
     }
 
     public static Attribute<Float> floatAttribute(String name) {
-        return new AttributeI<>(Float.class, name, arg -> Float.valueOf(arg));
+        return new AttributeI<>(Float.class, name, Float::valueOf, value -> "" + value);
     }
 
     public static Attribute<String> stringAttribute(String name) {
-        return new AttributeI<>(String.class, name, arg -> arg);
+        return new AttributeI<>(String.class, name, arg -> arg, value -> value);
     }
 
     public static <T> Attribute<T> attribute(Class<T> type, String name) {
-        return new AttributeI<>(type, name);
+        return new AttributeI<>(type, name, invalidDeserializer(), serializer());
+    }
+
+    public static <T> Attribute<T> attribute(Class<T> type, String name, Function<T, String> argSerializer) {
+        return new AttributeI<>(type, name, invalidDeserializer(), argSerializer);
     }
 
     public static Attribute<Object> attributeObject(Class<?> type, String name) {
@@ -73,44 +88,37 @@ public final class AttributeI<T> implements Attribute<T> {
     }
 
     private AttributeI(Class<?> type, String name) {
-        this(type, name, arg -> {
-            throw new UnsupportedOperationException();
-        });
+        this(type, name, invalidDeserializer(), value -> "" + value);
     }
 
-    private AttributeI(Class<?> type, String name, Function<String, T> deserializer) {
-        this.type = type;
-        this.name = name;
-        this.deserializer = deserializer;
+    private AttributeI(Class<?> argType, String argName, Function<String, T> argDeserializer, Function<T, String> argSerializer) {
+        type = argType;
+        name = argName;
+        deserializer = argDeserializer;
+        serializer = argSerializer;
     }
 
-    @Override
-    public String name() {
+    @Override public String name() {
         return name;
     }
 
-    @Override
-    public boolean equals(Object arg) {
+    @Override public boolean equals(Object arg) {
         return super.equals(arg);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return super.hashCode();
     }
 
-    @Override
-    public Bool isInstanceOf(Object arg) {
+    @Override public Bool isInstanceOf(Object arg) {
         return bool(type.isAssignableFrom(arg.getClass()));
     }
 
-    @Override
-    public Class<?> type() {
+    @Override public Class<?> type() {
         return type;
     }
 
-    @Override
-    public void assertArgumentCompatibility(Object arg) {
+    @Override public void assertArgumentCompatibility(Object arg) {
         if (arg != null && !type.isAssignableFrom(arg.getClass())) {
             throw ExecutionException.execException("Given object not compatible to attribute: name=" + name
                     + ", type=" + type
@@ -119,20 +127,21 @@ public final class AttributeI<T> implements Attribute<T> {
         }
     }
 
-    @Override
-    public Tree toTree() {
+    @Override public Tree toTree() {
         return tree(Attribute.class.getSimpleName())
                 .withProperty("Name", name)
                 .withProperty("Type", type.getSimpleName());
     }
 
-    @Override
-    public T deserializeValue(String value) {
+    @Override public T deserializeValue(String value) {
         return deserializer.apply(value);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "attribute: name = " + name + ", type = " + type.getName();
+    }
+
+    @Override public String serializeValue(T value) {
+        return serializer.apply(value);
     }
 }

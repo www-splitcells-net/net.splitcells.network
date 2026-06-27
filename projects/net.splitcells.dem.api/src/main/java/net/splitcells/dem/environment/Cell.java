@@ -1,16 +1,4 @@
-/*
- * Copyright (c) 2021 Contributors To The `net.splitcells.*` Projects
- *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License 2.0 which is available at
- * http://www.eclipse.org/legal/epl-2.0.
- *
- * This Source Code may also be made available under the following Secondary
- * Licenses when the conditions for such availability set forth in the Eclipse
- * Public License, v. 2.0 are satisfied: GNU General Public License v2.0 or later
- * which is available at https://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html
- *
- * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+/* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
 package net.splitcells.dem.environment;
@@ -35,7 +23,9 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.simplifiedName;
  * <p>This interface provides a single point of entry for a Java module based on {@link Dem}.
  * It bundles all settings of a module at one place.
  * They are also a way to ensure, that some configuration is applied only once for one Java module
- * even though multiple transient dependency modules have such a configuration as its dependency.</p>
+ * even though multiple transient dependency modules have such a configuration as its dependency.
+ * See {@link Cell} as a function, that process {@link Environment} and has meta info to i.e. determine, when it is called,
+ * whereas config functions do not have such data and organization.</p>
  * <p>An instance of this interface describes the configuration of a program,
  * that can be executed via {@link Dem#serve(Class[])}.
  * Such a program provides its functionality via {@link Service}.
@@ -61,8 +51,24 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.simplifiedName;
  * which causes uncomfortableness in the IDE, when trying to adjust the default import.
  * The word unit was not used, in order to avoid confusion regarding unit tests.
  * The word cell was used, as it is also used in the project name ;)</p>
+ * <p>The default config provided by a {@link Cell}, has basically to be the normal production configuration but
+ * without any side effects like connections explicitly set.
+ * Side effects are enabled via additional config or the environment (like the shell's environment variables or via conventions in the network like DNS names).
+ * Production {@link Cell} configurations should therefore be runnable at any environment.
+ * The default test configuration is the normal production configuration with only side effects enabled,
+ * that are provided by the test environment (only some temporary folders on the file system).
+ * Furtheremore, a test config might provide some additional config depending on the executed test.
+ * In other words, the main difference between a test config and a prod config is only its side effects.</p>
  * <p>TODO Provide double book accounting for all {@link Cell} based configuration and every aspect of it.</p>
  * <p>TODO Consider testing distro configurations, in order to easy complex migrations in the future.</p>
+ * <p>TODO Configure side effects like connections or paths in the file system separate to the rest of the config,
+ * as the main diff between prod config and test config are the side effects.
+ * This would maybe even allow one to provide a single side effect config for multiple configs and deployments,
+ * thereby avoiding duplicate code.
+ * Imagine something like LiveSideEffectCell, that is used by LiveDistroCell and LiveCryptoSetupCell and could easily be used for new Cells when needed.
+ * Maybe this could be done dynamically.
+ * In this case the DevDistro Cell could be configured for the local Laptop, Desktop and the live server accordingly,
+ * without changing the DevDistro code.</p>
  */
 public interface Cell extends Consumer<Environment>, Discoverable, Option<Consumer<Environment>>, Runnable {
     default List<String> path() {

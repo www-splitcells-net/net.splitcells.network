@@ -52,7 +52,7 @@ public class LookupColumnImpl<T> implements LookupColumn<T> {
         return new LookupColumnImpl<>(view, attribute, isPersisted);
     }
 
-    private final LookupTable lookupTable;
+    private final LookupTable mainLookupTable;
 
     private final View view;
     private final Map<T, LookupTable> content = map();
@@ -62,7 +62,7 @@ public class LookupColumnImpl<T> implements LookupColumn<T> {
 
     private LookupColumnImpl(View view, Attribute<T> attribute, boolean isPersisted) {
         this.view = view;
-        this.lookupTable = lookupTable(view, attribute);
+        this.mainLookupTable = lookupTable(view, attribute);
         this.attribute = attribute;
         if (isPersisted) {
             view.unorderedLinesStream().forEach(e -> register_addition(e.value(attribute), e.index()));
@@ -134,7 +134,7 @@ public class LookupColumnImpl<T> implements LookupColumn<T> {
         if (content.containsKey(value)) {
             return content.get(value);
         }
-        return lookupTable;
+        return mainLookupTable;
     }
 
     @Override
