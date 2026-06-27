@@ -405,10 +405,12 @@ function net_splitcells_webserver_form_submit(config) {
         submitButton.setAttribute('original-inner-html', submitButton.innerHTML);
     }
     let onClickCode = submitButton.onclick;
-    if (!submitButton.hasAttribute('submitButton.onclick_original')) {
+    if (submitButton.hasOwnProperty('onclick_original')) {
         onClickCode = submitButton.onclick_original;
+    } else {
+        submitButton.onclick_original = onClickCode;
+        submitButton.onclick = null;
     }
-    submitButton.onclick = null;
     submitButton.innerHTML = "Executing...";
     submitButton.classList.add("net-splitcells-button-activity");
     submitButton.classList.remove("net-splitcells-action-button");
@@ -427,7 +429,6 @@ function net_splitcells_webserver_form_submit(config) {
             net_splitcells_webserver_form_update(config, responseObject);
             if (responseObject['net-splitcells-website-server-form-update']['data-values']['is-optimizing'] === 'true') {
                 console.log('Form submission is still running. Checking for updates.');
-                submitButton.onclick_original = onClickCode;
                 setTimeout(() => {net_splitcells_webserver_form_submit(config);}, 3000) 
                 return;
             } else {
