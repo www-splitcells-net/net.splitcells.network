@@ -72,15 +72,16 @@ public class ServerService extends ResourceOptionImpl<Service> {
     }
 
     /**
-     * Also the settings are determined via {@link ServerConfig},
+     * <p>Also the settings are determined via {@link ServerConfig},
      * this construction method works on arbitrary {@link Config},
      * because it could be the case, the multiple web servers needed to be created inside one {@link Dem#process(Runnable)}
-     * in the future.
+     * in the future.</p>
+     * <p>TODO Simplify these functions.</p>
      *
      * @param config
      * @return
      */
-    public static ProjectsRendererI projectsRenderer(Config config) {
+    private static ProjectsRendererI projectsRenderer(Config config) {
         final var profile = "public";
         final var validator = VOID_VALIDATOR;
         return projectsRenderer(profile
@@ -103,14 +104,14 @@ public class ServerService extends ResourceOptionImpl<Service> {
                 , config);
     }
 
-    public static ProjectsRendererI projectsRenderer(String profile
+    private static ProjectsRendererI projectsRenderer(String profile
             , Function<ProjectsRenderer, ProjectRenderer> fallbackProjectRenderer
             , Function<ProjectsRenderer, List<ProjectRenderer>> additionalProjects
             , Config config) {
         return ProjectsRendererI.projectsRenderer(profile, fallbackProjectRenderer, additionalProjects, config);
     }
 
-    public static ProjectRenderer fallbackProjectRenderer(ProjectsRenderer projectsRenderer, String profile
+    private static ProjectRenderer fallbackProjectRenderer(ProjectsRenderer projectsRenderer, String profile
             , SourceValidator sourceValidator
             , Config config) {
         return projectRenderer(profile
