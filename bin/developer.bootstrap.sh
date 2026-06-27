@@ -33,3 +33,6 @@ echo Setting up net.splitcells.shell for developers. The repos are located at ~/
   find . -maxdepth 1 -type d | xargs -i sh -c 'project.repository.register $(realpath ./{})'
   user.bin.configure
   command.managed.environment.configure
+# Setup programs like Maven at the correct version and enable SSH connection cache.
+  cd $repos/net.splitcells.network/
+  env.setup.sh
