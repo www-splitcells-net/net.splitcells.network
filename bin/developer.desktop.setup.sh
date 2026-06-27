@@ -28,3 +28,5 @@ mvnd --stop
 
 # TODO This did not work and configuring the Gnome Terminal GUI directly instead worked.
 # chsh -s "$(command -v fish)" # That fish as the default terminal for better autocompletion.
+# TODO fish_add_path -a /home/mavo-stream/.sdkman/candidates/maven/current/bin
+# TODO fish_add_path -a /home/mavo-stream/.sdkman/candidates/mvnd/current/bin
