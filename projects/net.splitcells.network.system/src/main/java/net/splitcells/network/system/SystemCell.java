@@ -88,10 +88,6 @@ public class SystemCell implements Cell {
         env.withCell(WebsiteServerCell.class).withCell(GelUiCell.class);
     }
 
-    public static ProjectsRendererI projectsRenderer2(Config config) {
-        return ServerService.projectsRenderer(config);
-    }
-
     @Deprecated
     public static ProjectsRendererI projectsRenderer2(String profile
             , Function<ProjectsRenderer, ProjectRenderer> fallbackProjectRenderer
