@@ -88,22 +88,6 @@ public class SystemCell implements Cell {
         env.withCell(WebsiteServerCell.class).withCell(GelUiCell.class);
     }
 
-    @Deprecated
-    public static ProjectsRendererI projectsRenderer2(String profile
-            , Function<ProjectsRenderer, ProjectRenderer> fallbackProjectRenderer
-            , Function<ProjectsRenderer, List<ProjectRenderer>> additionalProjects
-            , SourceValidator sourceValidator
-            , Config config) {
-        return projectsRenderer(profile, fallbackProjectRenderer, additionalProjects, sourceValidator, config);
-    }
-
-    @Deprecated
-    public static ProjectRenderer fallbackProjectRenderer2(ProjectsRenderer projectsRenderer, String profile
-            , SourceValidator sourceValidator
-            , Config config) {
-        return fallbackProjectRenderer(projectsRenderer, profile, sourceValidator, config);
-    }
-
     /**
      * <p>TODO This seems to be partially a duplicate of {@link WebsiteServerCell#accept(Environment)}.</p>
      *
@@ -184,40 +168,5 @@ public class SystemCell implements Cell {
                 .withLicensePage(trailLink("MIT License", "/net/splitcells/network/legal/licenses/MIT.html"))
                 .withLicensePage(trailLink("Mozilla Public License Version 2.0", "/net/splitcells/network/legal/licenses/MPL-2.0.html"))
                 ;
-    }
-
-    /**
-     * Use {@link ServerService#projectsRenderer(String, Function, Function, Config)} instead.
-     *
-     * @param profile
-     * @param fallbackProjectRenderer
-     * @param additionalProjects
-     * @param sourceValidator
-     * @param config
-     * @return
-     */
-    @Deprecated
-    public static ProjectsRendererI projectsRenderer(String profile
-            , Function<ProjectsRenderer, ProjectRenderer> fallbackProjectRenderer
-            , Function<ProjectsRenderer, List<ProjectRenderer>> additionalProjects
-            , SourceValidator sourceValidator
-            , Config config) {
-        return ServerService.projectsRenderer(profile, fallbackProjectRenderer, additionalProjects, config);
-    }
-
-    /**
-     * Use {@link ServerService#fallbackProjectRenderer(ProjectsRenderer, String, SourceValidator, Config)} instead.
-     *
-     * @param projectsRenderer
-     * @param profile
-     * @param sourceValidator
-     * @param config
-     * @return
-     */
-    @Deprecated
-    public static ProjectRenderer fallbackProjectRenderer(ProjectsRenderer projectsRenderer, String profile
-            , SourceValidator sourceValidator
-            , Config config) {
-        return ServerService.fallbackProjectRenderer(projectsRenderer, profile, sourceValidator, config);
     }
 }
