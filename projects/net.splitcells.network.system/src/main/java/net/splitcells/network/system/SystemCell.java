@@ -88,12 +88,12 @@ public class SystemCell implements Cell {
         env.withCell(WebsiteServerCell.class).withCell(GelUiCell.class);
     }
 
-    public ProjectsRendererI projectsRenderer2(Config config) {
+    public static ProjectsRendererI projectsRenderer2(Config config) {
         return ServerService.projectsRenderer(config);
     }
 
     @Deprecated
-    public ProjectsRendererI projectsRenderer2(String profile
+    public static ProjectsRendererI projectsRenderer2(String profile
             , Function<ProjectsRenderer, ProjectRenderer> fallbackProjectRenderer
             , Function<ProjectsRenderer, List<ProjectRenderer>> additionalProjects
             , SourceValidator sourceValidator
@@ -102,7 +102,7 @@ public class SystemCell implements Cell {
     }
 
     @Deprecated
-    public ProjectRenderer fallbackProjectRenderer2(ProjectsRenderer projectsRenderer, String profile
+    public static ProjectRenderer fallbackProjectRenderer2(ProjectsRenderer projectsRenderer, String profile
             , SourceValidator sourceValidator
             , Config config) {
         return fallbackProjectRenderer(projectsRenderer, profile, sourceValidator, config);
