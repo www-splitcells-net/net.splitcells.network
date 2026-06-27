@@ -400,6 +400,7 @@ function net_splitcells_webserver_form_update(config, update) {
 function net_splitcells_webserver_form_submit(config) {
     const submitButton = document.getElementById(config['submit-button-id']);
     const formId = config['form-id'];
+    console.log('Submitting ' + formId + '.')
     if (!submitButton.hasAttribute('original-inner-html')) {
         submitButton.setAttribute('original-inner-html', submitButton.innerHTML);
     }
