@@ -23,7 +23,9 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.simplifiedName;
  * <p>This interface provides a single point of entry for a Java module based on {@link Dem}.
  * It bundles all settings of a module at one place.
  * They are also a way to ensure, that some configuration is applied only once for one Java module
- * even though multiple transient dependency modules have such a configuration as its dependency.</p>
+ * even though multiple transient dependency modules have such a configuration as its dependency.
+ * See {@link Cell} as a function, that process {@link Environment} and has meta info to i.e. determine, when it is called,
+ * whereas config functions do not have such data and organization.</p>
  * <p>An instance of this interface describes the configuration of a program,
  * that can be executed via {@link Dem#serve(Class[])}.
  * Such a program provides its functionality via {@link Service}.
