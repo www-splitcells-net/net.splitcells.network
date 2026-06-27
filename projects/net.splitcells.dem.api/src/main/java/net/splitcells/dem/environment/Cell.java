@@ -51,6 +51,14 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.simplifiedName;
  * which causes uncomfortableness in the IDE, when trying to adjust the default import.
  * The word unit was not used, in order to avoid confusion regarding unit tests.
  * The word cell was used, as it is also used in the project name ;)</p>
+ * <p>The default config provided by a {@link Cell}, has basically to be the normal production configuration but
+ * without any side effects like connections explicitly set.
+ * Side effects are enabled via additional config or the environment (like the shell's environment variables or via conventions in the network like DNS names).
+ * Production {@link Cell} configurations should therefore be runnable at any environment.
+ * The default test configuration is the normal production configuration with only side effects enabled,
+ * that are provided by the test environment (only some temporary folders on the file system).
+ * Furtheremore, a test config might provide some additional config depending on the executed test.
+ * In other words, the main difference between a test config and a prod config is only its side effects.</p>
  * <p>TODO Provide double book accounting for all {@link Cell} based configuration and every aspect of it.</p>
  * <p>TODO Consider testing distro configurations, in order to easy complex migrations in the future.</p>
  */
