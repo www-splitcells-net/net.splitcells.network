@@ -58,6 +58,10 @@ public interface SetT<T> extends Collection<T> {
         return contains(arg);
     }
 
+    default boolean hasNot(T arg) {
+        return !contains(arg);
+    }
+
     /**
      * This helper method makes it easier to distinguish {@code isEmpty} and {@code !isEmpty}.
      *
