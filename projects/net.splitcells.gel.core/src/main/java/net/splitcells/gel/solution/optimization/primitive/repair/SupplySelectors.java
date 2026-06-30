@@ -123,7 +123,7 @@ public class SupplySelectors {
                                 if (distinctFreeSupplies.isEmpty()) {
                                     return;
                                 }
-                                final var freeSupply = distinctFreeSupplies.remove(rnd.integer(0, distinctFreeSupplies.size() - 1));
+                                final var freeSupply = distinctFreeSupplies.get(rnd.integer(0, distinctFreeSupplies.size() - 1));
                                 final var allocation = solution.assign(freeDemand, freeSupply);
                                 final var nextRating = solution.constraint().rating();
                                 solution.remove(allocation);
