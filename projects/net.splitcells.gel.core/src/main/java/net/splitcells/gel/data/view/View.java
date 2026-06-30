@@ -182,9 +182,7 @@ public interface View extends Discoverable, Domable, Identifiable {
 
     /**
      * @return {@link Line} With Distinct Values
-     * @see Table#query()
      */
-    @Deprecated
     default List<Line> distinctLines() {
         return distinctLineValues().stream()
                 .map(values -> lookupEquals(values).findFirst())
