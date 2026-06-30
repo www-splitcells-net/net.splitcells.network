@@ -50,7 +50,7 @@ public class RepairOptimizationStep implements EditorOptimization {
                     for (int j = 0; j < execCount; ++j) {
                         constraintGroupBasedRepair(repairConfig().withMinimumConstraintGroupPath(currentDepth)
                                 .withDemandSelector(demandSelector(demandSelectorsConfig(), list(solution.constraint())))
-                                .withSupplySelector(hillClimber())
+                                .withSupplySelector(hillClimber(3))
                         ).optimize(s);
                     }
                 }

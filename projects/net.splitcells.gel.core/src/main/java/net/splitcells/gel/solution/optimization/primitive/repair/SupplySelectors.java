@@ -15,9 +15,11 @@
  */
 package net.splitcells.gel.solution.optimization.primitive.repair;
 
+import lombok.val;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.data.view.Line;
+import net.splitcells.gel.rating.framework.Rating;
 
 import java.util.function.Function;
 
@@ -69,6 +71,59 @@ public class SupplySelectors {
                         solution.history().processWithoutHistory(() -> {
                             range(0, distinctFreeSupplies.size()).forEach(i -> {
                                 final var freeSupply = distinctFreeSupplies.get(i);
+                                final var allocation = solution.assign(freeDemand, freeSupply);
+                                final var nextRating = solution.constraint().rating();
+                                solution.remove(allocation);
+                                if (bestSupply.isEmpty()) {
+                                    bestSupply.add(freeSupply);
+                                    bestRating.set(0, nextRating);
+                                    distinctIndex.set(0, i);
+                                } else if (nextRating.betterThan(bestRating.get(0))) {
+                                    bestSupply.set(0, freeSupply);
+                                    bestRating.set(0, nextRating);
+                                    distinctIndex.set(0, i);
+                                }
+                            });
+                        });
+                        if (!bestSupply.isEmpty() && bestSupply.get(0) != null) {
+                            final var freeSupplyValues = bestSupply.get(0).values();
+                            solution.assign(freeDemand, bestSupply.get(0));
+                            distinctFreeSupplies.removeAt(distinctIndex.get(0));
+                            solution.suppliesFree()
+                                    .lookupEquals(freeSupplyValues)
+                                    .findFirst()
+                                    .ifPresent(distinctFreeSupplies::add);
+                        }
+                    }
+                }
+            }
+        };
+    }
+
+    /**
+     * @param tries
+     * @return Checks the rating of {@code tries} many random allocations and returns the one with the best {@link Rating}.
+     */
+    public static SupplySelector hillClimber(int tries) {
+        val rnd = randomness();
+        return freeDemandGroups -> solution -> {
+            final var distinctFreeSupplies = solution.suppliesFree().distinctLines();
+            for (final var demandGroup : freeDemandGroups.values()) {
+                for (final var freeDemand : demandGroup) {
+                    if (distinctFreeSupplies.isEmpty()) {
+                        return;
+                    }
+                    if (null == solution.demandsUsed().rawLine(freeDemand.index())) {
+                        // TODO HACK
+                        final List<Line> bestSupply = list();
+                        final var bestRating = list(solution.constraint().rating());
+                        final List<Integer> distinctIndex = list(-1);
+                        solution.history().processWithoutHistory(() -> {
+                            range(0, tries).filter(i -> i < distinctFreeSupplies.size()).forEach(i -> {
+                                if (distinctFreeSupplies.isEmpty()) {
+                                    return;
+                                }
+                                final var freeSupply = distinctFreeSupplies.remove(rnd.integer(0, distinctFreeSupplies.size() - 1));
                                 final var allocation = solution.assign(freeDemand, freeSupply);
                                 final var nextRating = solution.constraint().rating();
                                 solution.remove(allocation);
