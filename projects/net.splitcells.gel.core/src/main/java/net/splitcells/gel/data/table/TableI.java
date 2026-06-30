@@ -48,6 +48,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.execution.EffectSynchronization;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.constraint.Constraint;
@@ -263,7 +264,14 @@ public class TableI implements Table {
         }
         if (ENFORCING_UNIT_CONSISTENCY) {
             requireEqualInts(lineValues.size(), headerView().size());
-            require(indexesOfFree.has(index) || index >= rawLines.size());
+            if (indexesOfFree.hasNot(index) && index < rawLines.size()) {
+                throw execException(tree("Tried to add a Line at an index, that is already in use")
+                        .withProperty("Requested index for addition", "" + index)
+                        .withProperty("Indexes of free", "" + indexesOfFree)
+                        .withProperty("Raw lines", "" + rawLines)
+                        .withProperty("Raw lines size", "" + rawLines.size())
+                );
+            }
             range(0, lineValues.size()).forEach(i -> attributes.get(i).assertArgumentCompatibility(lineValues.get(i)));
         }
         if (index >= rawLines.size()) {
