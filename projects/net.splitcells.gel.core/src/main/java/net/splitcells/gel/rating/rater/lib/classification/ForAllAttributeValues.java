@@ -69,7 +69,7 @@ public class ForAllAttributeValues implements Rater {
             group.put(incomingGroup, map());
         }
         if (!group.get(incomingGroup).containsKey(groupingValue)) {
-            group.get(incomingGroup).put(groupingValue, group(incomingGroup, groupingValue.toString()));
+            group.get(incomingGroup).put(groupingValue, group(incomingGroup, "" + groupingValue));
         }
         final var ratingEvent = ratingEvent();
         ratingEvent.additions().put(addition
