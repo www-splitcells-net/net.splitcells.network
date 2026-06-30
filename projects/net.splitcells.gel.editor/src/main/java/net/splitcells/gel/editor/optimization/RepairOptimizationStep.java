@@ -18,10 +18,7 @@ package net.splitcells.gel.editor.optimization;
 import lombok.val;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.solution.Solution;
-import net.splitcells.gel.solution.optimization.DefaultOptimizationStaging;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
-import net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectors;
-import net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectorsConfig;
 
 import java.util.Optional;
 
@@ -33,6 +30,7 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.Constrai
 import static net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectors.demandSelector;
 import static net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectorsConfig.demandSelectorsConfig;
 import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
+import static net.splitcells.gel.solution.optimization.primitive.repair.SupplySelectors.hillClimber;
 
 public class RepairOptimizationStep implements EditorOptimization {
     public static RepairOptimizationStep repairOptimizationStep(Solution argSolution) {
@@ -51,8 +49,9 @@ public class RepairOptimizationStep implements EditorOptimization {
                     final int execCount = currentDepth + 1;
                     for (int j = 0; j < execCount; ++j) {
                         constraintGroupBasedRepair(repairConfig().withMinimumConstraintGroupPath(currentDepth)
-                                .withDemandSelector(demandSelector(demandSelectorsConfig(), list(solution.constraint()))))
-                                .optimize(s);
+                                .withDemandSelector(demandSelector(demandSelectorsConfig(), list(solution.constraint())))
+                                .withSupplySelector(hillClimber())
+                        ).optimize(s);
                     }
                 }
                 , maxDepth, 0, maxDepth);
