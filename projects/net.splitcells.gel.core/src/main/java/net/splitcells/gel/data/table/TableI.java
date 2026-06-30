@@ -263,7 +263,7 @@ public class TableI implements Table {
         }
         if (ENFORCING_UNIT_CONSISTENCY) {
             requireEqualInts(lineValues.size(), headerView().size());
-            require(indexesOfFree.contains(index) || index >= rawLines.size());
+            require(indexesOfFree.has(index) || index >= rawLines.size());
             range(0, lineValues.size()).forEach(i -> attributes.get(i).assertArgumentCompatibility(lineValues.get(i)));
         }
         if (index >= rawLines.size()) {
