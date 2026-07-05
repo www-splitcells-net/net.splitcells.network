@@ -47,7 +47,9 @@ public class PathFileSystemTest {
     @UnitTestFactory public Stream<DynamicTest> testTemporaryFileSystem() {
         return new FileSystemTest().fileSystemWriteTests(() -> {
             val fileSystem = temporaryFileSystem();
-            return new FileSystemTest.FileSystemAccess(fileSystem, fileSystem);
+            val results = new FileSystemTest.FileSystemAccess(fileSystem, fileSystem);
+            fileSystem.close();
+            return results;
         });
     }
 
