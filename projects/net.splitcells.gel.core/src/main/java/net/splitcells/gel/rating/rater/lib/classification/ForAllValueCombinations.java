@@ -80,7 +80,7 @@ public class ForAllValueCombinations implements Rater {
             grouping.get(incomingGroup).put(groupValues
                     , GroupId.group(incomingGroup
                             , groupValues.stream()
-                                    .map(value -> value.toString()).reduce((a, b) -> a + "," + b)
+                                    .map(value -> "" + value).reduce((a, b) -> a + "," + b)
                                     .orElse("empty")));
         }
         final var ratingEvent = ratingEvent();
