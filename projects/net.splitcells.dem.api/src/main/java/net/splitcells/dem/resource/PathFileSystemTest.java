@@ -24,14 +24,12 @@ import org.junit.jupiter.api.DynamicTest;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
-import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.resource.Files.unclosedTemporaryFolder;
 import static net.splitcells.dem.resource.PathFileSystem.pathFileSystem;
 import static net.splitcells.dem.resource.PathFileSystem.temporaryFileSystem;
-import static net.splitcells.dem.resource.Files.*;
-import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
-import static net.splitcells.dem.utils.ExecutionException.execException;
+import static net.splitcells.dem.testing.Assertions.requireThrow;
 
 public class PathFileSystemTest {
     @UnitTestFactory public Stream<DynamicTest> testPathFileSystem() {
@@ -45,12 +43,13 @@ public class PathFileSystemTest {
     }
 
     @UnitTestFactory public Stream<DynamicTest> testTemporaryFileSystem() {
+        final List<FileSystemResource> resources = list();
         return new FileSystemTest().fileSystemWriteTests(() -> {
-            val fileSystem = temporaryFileSystem();
-            val results = new FileSystemTest.FileSystemAccess(fileSystem, fileSystem);
-            fileSystem.close();
-            return results;
-        });
+                    val fileSystem = temporaryFileSystem();
+                    resources.add(fileSystem);
+                    return new FileSystemTest.FileSystemAccess(fileSystem, fileSystem);
+                }
+                , () -> resources.forEach(f -> f.close()));
     }
 
     @UnitTest public void testInvalidLocalhostFolder() {
