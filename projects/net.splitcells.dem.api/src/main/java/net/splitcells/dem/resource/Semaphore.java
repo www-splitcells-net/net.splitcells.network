@@ -31,6 +31,10 @@ public class Semaphore {
         impl = new java.util.concurrent.Semaphore(permits, true);
     }
 
+    public void release() {
+        impl.release();
+    }
+
     public void acquire(Consumer<AutoCloseable> requestor) {
         val lockClosed = Variable.<Boolean>create().withValue(FALSE);
         AutoCloseable lock = new AutoCloseable() {
