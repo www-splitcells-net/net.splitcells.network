@@ -140,8 +140,7 @@ public class SupplySelectors {
                             });
                         });
                         if (bestSupply.hasValue()) {
-                            val choice = bestSupply.val();
-                            solution.assign(freeDemand, choice);
+                            solution.assign(freeDemand, bestSupply.val());
                         }
                     }
                 }
