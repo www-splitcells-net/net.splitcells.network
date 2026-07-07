@@ -18,6 +18,7 @@ package net.splitcells.gel.solution.optimization.primitive.repair;
 import lombok.val;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.environment.config.framework.Variable;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.rating.framework.Rating;
 
@@ -27,6 +28,8 @@ import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
+import static net.splitcells.dem.environment.config.framework.Variable.variable;
+import static net.splitcells.dem.environment.config.framework.Variable.variable;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
@@ -107,45 +110,38 @@ public class SupplySelectors {
     public static SupplySelector hillClimber(int tries) {
         val rnd = randomness();
         return freeDemandGroups -> solution -> {
-            final var distinctFreeSupplies = solution.suppliesFree().distinctLines();
+            final var freeSupplies = solution.suppliesFree().unorderedLines();
             for (final var demandGroup : freeDemandGroups.values()) {
                 for (final var freeDemand : demandGroup) {
-                    if (distinctFreeSupplies.isEmpty()) {
+                    if (freeSupplies.isEmpty()) {
                         return;
                     }
                     if (null == solution.demandsUsed().rawLine(freeDemand.index())) {
-                        // TODO HACK
-                        final List<Line> bestSupply = list();
-                        final var bestRating = list(solution.constraint().rating());
-                        final List<Integer> distinctIndex = list(-1);
+                        val bestSupply = Variable.<Line>variable();
+                        val bestRating = variable(solution.constraint().rating());
                         solution.history().processWithoutHistory(() -> {
-                            range(0, tries).filter(i -> i < distinctFreeSupplies.size()).forEach(i -> {
-                                if (distinctFreeSupplies.isEmpty()) {
+                            range(0, tries).filter(i -> i < freeSupplies.size()).forEach(i -> {
+                                if (freeSupplies.isEmpty()) {
                                     return;
                                 }
-                                final var freeSupply = distinctFreeSupplies.get(rnd.integer(0, distinctFreeSupplies.size() - 1));
-                                final var allocation = solution.assign(freeDemand, freeSupply);
-                                final var nextRating = solution.constraint().rating();
+                                val freeSupply = freeSupplies.removeAt(rnd.integer(0, freeSupplies.size() - 1));
+                                val allocation = solution.assign(freeDemand, freeSupply);
+                                val nextRating = solution.constraint().rating();
                                 solution.remove(allocation);
-                                if (bestSupply.isEmpty()) {
-                                    bestSupply.add(freeSupply);
-                                    bestRating.set(0, nextRating);
-                                    distinctIndex.set(0, i);
-                                } else if (nextRating.betterThan(bestRating.get(0))) {
-                                    bestSupply.set(0, freeSupply);
-                                    bestRating.set(0, nextRating);
-                                    distinctIndex.set(0, i);
+                                if (bestSupply.isNull() || nextRating.betterThan(bestRating.val())) {
+                                    if (bestSupply.hasValue()) {
+                                        freeSupplies.add(bestSupply.val());
+                                    }
+                                    bestSupply.withValue(freeSupply);
+                                    bestRating.withValue(nextRating);
+                                } else {
+                                    freeSupplies.add(freeSupply);
                                 }
                             });
                         });
-                        if (!bestSupply.isEmpty() && bestSupply.get(0) != null) {
-                            final var freeSupplyValues = bestSupply.get(0).values();
-                            solution.assign(freeDemand, bestSupply.get(0));
-                            distinctFreeSupplies.removeAt(distinctIndex.get(0));
-                            solution.suppliesFree()
-                                    .lookupEquals(freeSupplyValues)
-                                    .findFirst()
-                                    .ifPresent(distinctFreeSupplies::add);
+                        if (bestSupply.hasValue()) {
+                            val choice = bestSupply.val();
+                            solution.assign(freeDemand, choice);
                         }
                     }
                 }
