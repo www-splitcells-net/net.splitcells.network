@@ -31,6 +31,10 @@ public class Variable<T> {
         return new Variable<>();
     }
 
+    public static <T> Variable<T> variable(T arg) {
+        return new Variable<T>().withValue(arg);
+    }
+
     public static <T> Variable<T> create() {
         return variable();
     }
@@ -45,6 +49,10 @@ public class Variable<T> {
         return value;
     }
 
+    public T val() {
+        return value.orElseThrow();
+    }
+
     public Variable<T> withValue(Optional<T> arg) {
         value = arg;
         return this;
@@ -53,5 +61,13 @@ public class Variable<T> {
     public Variable<T> withValue(T arg) {
         value = Optional.of(arg);
         return this;
+    }
+
+    public boolean hasValue() {
+        return value.isPresent();
+    }
+
+    public boolean isNull() {
+        return value.isEmpty();
     }
 }
