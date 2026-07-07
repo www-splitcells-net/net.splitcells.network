@@ -110,9 +110,9 @@ public class SupplySelectors {
     public static SupplySelector hillClimber(int tries) {
         val rnd = randomness();
         return freeDemandGroups -> solution -> {
-            final var freeSupplies = solution.suppliesFree().unorderedLines();
-            for (final var demandGroup : freeDemandGroups.values()) {
-                for (final var freeDemand : demandGroup) {
+            val freeSupplies = solution.suppliesFree().unorderedLines();
+            for (val demandGroup : freeDemandGroups.values()) {
+                for (val freeDemand : demandGroup) {
                     if (freeSupplies.isEmpty()) {
                         return;
                     }
