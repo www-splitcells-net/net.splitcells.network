@@ -124,18 +124,18 @@ public class SupplySelectors {
                                 if (freeSupplies.isEmpty()) {
                                     return;
                                 }
-                                val freeSupply = freeSupplies.removeAt(rnd.integer(0, freeSupplies.size() - 1));
-                                val allocation = solution.assign(freeDemand, freeSupply);
+                                val nextSupply = freeSupplies.removeAt(rnd.integer(0, freeSupplies.size() - 1));
+                                val allocation = solution.assign(freeDemand, nextSupply);
                                 val nextRating = solution.constraint().rating();
                                 solution.remove(allocation);
                                 if (bestSupply.isNull() || nextRating.betterThan(bestRating.val())) {
                                     if (bestSupply.hasValue()) {
                                         freeSupplies.add(bestSupply.val());
                                     }
-                                    bestSupply.withValue(freeSupply);
+                                    bestSupply.withValue(nextSupply);
                                     bestRating.withValue(nextRating);
                                 } else {
-                                    freeSupplies.add(freeSupply);
+                                    freeSupplies.add(nextSupply);
                                 }
                             });
                         });
