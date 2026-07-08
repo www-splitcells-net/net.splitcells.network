@@ -34,7 +34,6 @@ echo Setting up net.splitcells.shell for developers. The repos are located at ~/
   # TODO Remove echo code.
   echo command.repositories
   cat ~/.config/net.splitcells.shell/command.repositories
-  project.repositories
   cat ~/.config/net.splitcells.shell/project.repositories
   user.bin.configure
   command.managed.environment.configure
