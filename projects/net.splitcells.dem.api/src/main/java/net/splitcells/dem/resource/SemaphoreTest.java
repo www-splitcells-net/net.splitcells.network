@@ -14,6 +14,10 @@ import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.environment.config.framework.Variable.variable;
 import static net.splitcells.dem.resource.Semaphore.semaphore;
 
+/**
+ * TODO Test execution time of each test. Every one of these should take a minimum amount of time,
+ * as otherwise this means the test did not work correctly.
+ */
 public class SemaphoreTest {
     @IntegrationTest public void testNoPermits() {
         val testSubject = semaphore(0);
