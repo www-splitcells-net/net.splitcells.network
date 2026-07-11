@@ -15,10 +15,10 @@ import static net.splitcells.dem.environment.config.framework.Variable.variable;
 import static net.splitcells.dem.resource.Semaphore.semaphore;
 
 public class SemaphoreTest {
-    @UnitTest public void testNoPermits() {
+    @IntegrationTest public void testNoPermits() {
         val testSubject = semaphore(0);
         executeThread(getClass().getName(), () -> {
-            Dem.sleepAtLeast(1000L);
+            Dem.sleepAtLeast(10_000L);
             testSubject.release();
         });
         testSubject.acquire(a -> {
