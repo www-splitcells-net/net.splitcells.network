@@ -1227,6 +1227,15 @@
                                     <!-- If a test covers additional lines of another submodule, then these lines are added to the aggregate report as well. -->
                                     <goal>report-aggregate</goal>
                                 </goals>
+                                <configuration>
+                                    <excludes>
+                                        <!-- JaCoCo does not seem to handle requireThrow lambdas and marks these as missed,
+                                             even though they were executed and an appropriate exception was thrown.
+                                             Furthermore, benchmarks are also excluded thereby as well, which can take quite a time.
+                                             -->
+                                        <exclude>**/*Test.class</exclude>
+                                    </excludes>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
