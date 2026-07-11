@@ -404,7 +404,10 @@ class WorkerExecution:
         else:
             if self.config.verbose:
                 logging.info("Executing script: \n" + self.remote_execution_script)
-            subprocess.call(self.remote_execution_script, shell='True')
+            return_code = subprocess.call(self.remote_execution_script, shell='True')
+            if return_code != 0:
+                logging.error("Could not execute given command. The return code is " + str(return_code))
+                sys.exit(return_code)
         return
     def applyTemplate(self, string):
         return Template(string).safe_substitute(
@@ -536,8 +539,8 @@ class WorkerExecution:
             logging.info("Executing script: " + self.local_execution_script)
         return_code = subprocess.call(self.local_execution_script, shell='False') # The systems default shell is not used, because Fish and Bash are not compatible to each other in the slightest.
         if return_code != 0:
-            logging.error("Could not execute given command.")
-        exit(return_code)
+            logging.error("Could not execute given command. The return code is " + str(return_code))
+            sys.exit(return_code)
 def str2bool(arg):
     # The stringification of the truth boolean is `True` in Python 3 and therefore this capitalization is supported as well.
     return arg == 'true' or arg == 'True'
