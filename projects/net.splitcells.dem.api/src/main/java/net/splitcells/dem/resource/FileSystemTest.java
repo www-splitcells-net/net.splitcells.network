@@ -79,8 +79,10 @@ public class FileSystemTest extends TestSuiteI {
 
     public void testWriteToFile(Supplier<FileSystemAccess> factory) {
         val testSubject = factory.get();
-        testSubject.writer.writeToFile("test", "content".getBytes());
+        val testContent = "content";
+        testSubject.writer.writeToFile("test", testContent.getBytes());
         requireThrow(() -> factory.get().writer.writeToFile("missing-folder/test", "content".getBytes()));
+        requireEquals(testSubject.reader.readString("test"), testContent);
     }
 
     public void testAppendToFile(Supplier<FileSystemAccess> factory) {
