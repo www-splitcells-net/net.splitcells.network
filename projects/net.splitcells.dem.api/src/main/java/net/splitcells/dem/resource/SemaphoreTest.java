@@ -8,6 +8,7 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
+import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.environment.config.framework.Variable.variable;
 import static net.splitcells.dem.resource.Semaphore.semaphore;
@@ -33,6 +34,24 @@ public class SemaphoreTest {
             check.withValue(true);
         }));
         Dem.sleepAtLeast(1_000L);
+        testSubject.acquire(a -> {
+            // We wait, until the check is set to true.
+        });
+        require(check.val());
+    }
+
+    @IntegrationTest public void testPermits() {
+        val testSubject = semaphore(7);
+        val check = variable(false);
+        Dem.sleepAtLeast(1_000L);
+        rangeClosed(1, 6).forEach(i -> Dem.executeThread(getClass().getName(), () -> testSubject.acquire(a -> {
+            Dem.sleepAtLeast(10_000L);
+        })));
+        Dem.executeThread(getClass().getName(), () -> testSubject.acquire(a -> {
+            Dem.sleepAtLeast(10_000L);
+            check.withValue(true);
+        }));
+        Dem.sleepAtLeast(2_000L);
         testSubject.acquire(a -> {
             // We wait, until the check is set to true.
         });
