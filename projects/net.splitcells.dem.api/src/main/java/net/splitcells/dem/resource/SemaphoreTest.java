@@ -9,6 +9,7 @@ import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static java.util.stream.IntStream.rangeClosed;
+import static net.splitcells.dem.Dem.executeThread;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.environment.config.framework.Variable.variable;
 import static net.splitcells.dem.resource.Semaphore.semaphore;
@@ -16,7 +17,7 @@ import static net.splitcells.dem.resource.Semaphore.semaphore;
 public class SemaphoreTest {
     @UnitTest public void testNoPermits() {
         val testSubject = semaphore(0);
-        Dem.executeThread(getClass().getName(), () -> {
+        executeThread(getClass().getName(), () -> {
             Dem.sleepAtLeast(1000L);
             testSubject.release();
         });
@@ -29,7 +30,7 @@ public class SemaphoreTest {
         val testSubject = semaphore(1);
         val check = variable(false);
         Dem.sleepAtLeast(1_000L);
-        Dem.executeThread(getClass().getName(), () -> testSubject.acquire(a -> {
+        executeThread(getClass().getName(), () -> testSubject.acquire(a -> {
             Dem.sleepAtLeast(10_000L);
             check.withValue(true);
         }));
@@ -44,10 +45,10 @@ public class SemaphoreTest {
         val testSubject = semaphore(7);
         val check = variable(false);
         Dem.sleepAtLeast(1_000L);
-        rangeClosed(1, 6).forEach(i -> Dem.executeThread(getClass().getName(), () -> testSubject.acquire(a -> {
+        rangeClosed(1, 6).forEach(i -> executeThread(getClass().getName(), () -> testSubject.acquire(a -> {
             Dem.sleepAtLeast(10_000L);
         })));
-        Dem.executeThread(getClass().getName(), () -> testSubject.acquire(a -> {
+        executeThread(getClass().getName(), () -> testSubject.acquire(a -> {
             Dem.sleepAtLeast(10_000L);
             check.withValue(true);
         }));
