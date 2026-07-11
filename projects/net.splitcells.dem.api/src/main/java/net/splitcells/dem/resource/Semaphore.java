@@ -14,6 +14,9 @@ import static java.lang.Boolean.TRUE;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
+/**
+ * Provides a Semaphore interface, that is easier to use without deadlocks by default.
+ */
 @JavaLegacy
 public class Semaphore {
 
