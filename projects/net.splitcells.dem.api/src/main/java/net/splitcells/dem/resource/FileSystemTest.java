@@ -85,6 +85,17 @@ public class FileSystemTest extends TestSuiteI {
         requireEquals(testSubject.reader.readString("test"), testContent);
     }
 
+    public void testReplaceFile(Supplier<FileSystemAccess> factory) {
+        val testSubject = factory.get();
+        val testContentA = "A";
+        val testContentB = "B";
+        testSubject.writer.writeToFile("test", testContentA.getBytes());
+        requireEquals(testSubject.reader.readString("test"), testContentA);
+        requireThrow(() -> factory.get().writer.replaceFile("missing-folder/test", "content".getBytes()));
+        testSubject.writer.replaceFile("test", testContentB.getBytes());
+        requireEquals(testSubject.reader.readString("test"), testContentB);
+    }
+
     public void testAppendToFile(Supplier<FileSystemAccess> factory) {
         val testSubject = factory.get();
         testSubject.writer.appendToFile(Path.of("test"), "test-".getBytes());
@@ -176,6 +187,7 @@ public class FileSystemTest extends TestSuiteI {
                 , dynamicTests(this::testAppendToFile, factory)
                 , dynamicTests(this::testWalkRecursively, factory)
                 , dynamicTests(this::testJavaLegacyPath, factory)
+                , dynamicTests(this::testReplaceFile, factory)
                 , dynamicTests(f -> closing.run(), factory)
         );
     }
