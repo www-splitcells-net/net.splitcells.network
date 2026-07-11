@@ -39,4 +39,4 @@ echo Setting up net.splitcells.shell for developers. The repos are located at ~/
   command.managed.environment.configure
 # Setup programs like Maven at the correct version and enable SSH connection cache.
   cd $repos/net.splitcells.network/
-  env.setup.sh
+  bin/env.setup.sh
