@@ -85,6 +85,14 @@ public class FileSystemTest extends TestSuiteI {
         requireEquals(testSubject.reader.readString("test"), testContent);
     }
 
+    public void testDeleteIfExists(Supplier<FileSystemAccess> factory) {
+        val testSubject = factory.get();
+        testSubject.writer.writeToFile("test", "content".getBytes());
+        testSubject.reader.isFile("test");
+        testSubject.writer.deleteIfExists("test");
+        testSubject.writer.deleteIfExists("not-existing");
+    }
+
     public void testReplaceFile(Supplier<FileSystemAccess> factory) {
         val testSubject = factory.get();
         val testContentA = "A";
@@ -188,6 +196,7 @@ public class FileSystemTest extends TestSuiteI {
                 , dynamicTests(this::testWalkRecursively, factory)
                 , dynamicTests(this::testJavaLegacyPath, factory)
                 , dynamicTests(this::testReplaceFile, factory)
+                , dynamicTests(this::testDeleteIfExists, factory)
                 , dynamicTests(f -> closing.run(), factory)
         );
     }
