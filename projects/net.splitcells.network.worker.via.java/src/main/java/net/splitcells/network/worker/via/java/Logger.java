@@ -125,7 +125,7 @@ public class Logger implements TestExecutionListener {
             final var startDateTime = testToStartTime.get(testIdentifier);
             final var runTime = (endDateTime - startDateTime) / 1_000_000_000d;
             logExecutionResults(testPath.get()
-                    , config().configValue(ProgramName.class).toString()
+                    , config().configValue(ProgramName.class)
                     , LocalDate.now()
                     , logEntryProperty(EXECUTION_TIME, runTime + ""));
         }
