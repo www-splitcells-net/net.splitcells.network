@@ -406,15 +406,15 @@ public class Dem {
     public static void sleepAtLeast(long milliSeconds) {
         try {
             final var plannedEnd = Instant.now().plusMillis(milliSeconds);
-            Instant currentEnd;
+            Instant currentTime;
             long timeLeft;
             Thread.sleep(milliSeconds);
             do {
-                currentEnd = Instant.now();
-                if (currentEnd.isAfter(plannedEnd)) {
+                currentTime = Instant.now();
+                if (currentTime.isAfter(plannedEnd)) {
                     return;
                 }
-                timeLeft = milliSeconds - Duration.between(currentEnd, plannedEnd).toMillis();
+                timeLeft = milliSeconds - Duration.between(currentTime, plannedEnd).toMillis();
                 Thread.sleep(timeLeft);
             } while (timeLeft > 0);
         } catch (Throwable t) {
