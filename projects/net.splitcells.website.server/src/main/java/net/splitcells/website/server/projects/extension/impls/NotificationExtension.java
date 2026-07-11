@@ -68,7 +68,7 @@ public class NotificationExtension implements ProjectsRendererExtension {
         return setOfUniques(Path.of(PATH.unixPathString()));
     }
 
-    public Set<Path> projectPaths(ProjectsRendererI projectsRendererI) {
+    @Override public Set<Path> projectPaths(ProjectsRendererI projectsRendererI) {
         return setOfUniques(Path.of(PATH.unixPathString()));
     }
 }
