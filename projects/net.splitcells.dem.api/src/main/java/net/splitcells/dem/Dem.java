@@ -55,24 +55,21 @@ import static net.splitcells.dem.utils.StringUtils.throwableToString;
 
 /**
  * <p>This is the starting point of all process definitions.
- * For a process it defines the program that is executed and the environment in which it is executed.
- * </p>
+ * For a process it defines the program, that is executed, and the environment in which it is executed.</p>
  * <p>One of the main goals is to control side effects caused by the program to the environment.
- * This is done, by having 1 and only one variable representing the state of the environment
- * and passing it through everywhere.
- * </p>
+ * This is done, by having 1 and only one variable representing the state of the environment and
+ * passing it through everywhere.</p>
  * <p>TODO Introduce dependency injection for documentation.</p>
- * <p>TODO Support communication to a running {@link #process(Runnable)}. This could be used,
- * in order to close the process by another process.</p>
- * <p>TODO New threads should have process thread, should have appropriate names,
- * so that debuggers and profiles are easier to use.</p>
+ * <p>TODO Support communication to a running {@link #process(Runnable)}.
+ * This could be used, in order to close the process by another process.</p>
+ * <p>TODO New threads should have appropriate names, so that debuggers and profiles are easier to use.</p>
  * <p>Maven's Surefire plugin for JUnit tests does not support {@link System#exit(int)}.
  * {@link System#exit(int)} may also cause resource issues.
  * Therefore, it can make sense to disallow such calls.
  * Unfortunately, {@link System#setSecurityManager(SecurityManager)} is deprecated and
  * there are no other means to prevent calls to {@link System#exit(int)} except for code scanning.
  * End processes via exceptions or main method returns instead,
- * in order to ensure to cleanly end the program.</p>
+ * in order to ensure a clean program end.</p>
  */
 @JavaLegacy
 public class Dem {
@@ -86,7 +83,6 @@ public class Dem {
 
     /**
      * <p>Pauses/freezes the current thread.</p>
-     * <p>TODO This is a hack.</p>
      */
     public static void waitIndefinitely() {
         try {
@@ -103,7 +99,7 @@ public class Dem {
 
     public static ProcessResult process(Runnable program) {
         return process(program, m -> {
-            // Default configured is not changed.
+            // The default configuration is not changed.
         });
     }
 
@@ -147,12 +143,9 @@ public class Dem {
 
     /**
      * <p>Provides {@link net.splitcells.dem.environment.resource.Service}s as described by the configurator.
-     * In other words, this method executes a program decoratively,
+     * In other words, this method executes a program declaratively,
      * by configuring the {@link Environment} and waiting indefinitely,
-     * so that {@link net.splitcells.dem.environment.resource.Service}s can provide functionality.</p>
-     * <p>TODO Provide any mechanism for each {@link Option} to
-     * declare all other {@link Option}s, that are required for its initialization.
-     * Currently, this is solved by manually initializing the {@link Option}s in the correct order.</p>
+     * so that {@link net.splitcells.dem.environment.resource.Service}s can provide the needed functionality.</p>
      *
      * @param cells This describes the program's configuration.
      */
@@ -182,14 +175,10 @@ public class Dem {
      * See https://github.com/mojohaus/exec-maven-plugin/blob/d97517868b0fc7a70abee9eb36d43fca6451766d/src/main/java/org/codehaus/mojo/exec/ExecJavaMojo.java#L351
      * where Maven exec:java can cause exit code != 0,
      * if any thread has uncaught exceptions.</p>
-     * <p>TODO Support stacking instead of {@link #CURRENT}.</p>
-     * <p>TODO Support cactus stacking instead of {@link #CURRENT}.</p>
      */
     public static ProcessResult process(Runnable program, Consumer<Environment> configurator) {
         ProcessResult processResult = processResult();
-        /* TODO This does not work with Maven:
-         * disallowSystemExit();
-         */
+        // A thread is used in order to not contaminate the current context/process.
         Thread root = new Thread(() -> {
             try {
                 final var processEnvironment = initializeProcess(program.getClass(), env -> {
@@ -235,7 +224,6 @@ public class Dem {
             }
         });
         root.setName(program.getClass().getPackageName() + "." + program.getClass().getSimpleName());
-        // A thread is used in order to not contaminate the current context/process.
         root.start();
         try {
             root.join();
@@ -260,8 +248,7 @@ public class Dem {
         return rVal;
     }
 
-    @Deprecated
-    public static EnvironmentV ensuredInitialized(Consumer<Environment> configurator) {
+    @Deprecated public static EnvironmentV ensuredInitialized(Consumer<Environment> configurator) {
         EnvironmentV rVal;
         if (CURRENT.get() == null) {
             rVal = initializeProcess(Dem.class, configurator);
@@ -273,8 +260,7 @@ public class Dem {
 
     /**
      * During builds, every warning is logged as this is something, that should be fixed by the developer.
-     * In other words, everything should be logged, that should be reacted to by the test user,
-     * which is a developer by default.
+     * In other words, everything should be logged, that should be reacted to by the developer.
      *
      * @param dem
      */
@@ -328,8 +314,6 @@ public class Dem {
             val cell = cellClass.getDeclaredConstructor().newInstance();
             val serialization = Variable.<Tree>variable();
             Dem.process(() -> serialization.withValue(Dem.config().serialize()), new Cell() {
-
-
                 @Override public Optional<Tree> serialize(Consumer<Environment> currentValue) {
                     return Optional.empty();
                 }
@@ -360,9 +344,6 @@ public class Dem {
     /**
      * <p>TODO REMOVE This should be removed, as this provides write access to the global state.
      * This should only be possible during {@link Initialized}.</p>
-     * <p>TODO If the user does not care, how it is initialized he does not care about
-     * output. But this only is true for certain output. Logging level should be
-     * WARNING by default.</p>
      */
     @Deprecated
     public static EnvironmentV environment() {
@@ -379,8 +360,7 @@ public class Dem {
      *
      * @return The Configuration Of The Current Environment
      */
-    @Deprecated
-    public static ConfigurationV config() {
+    @Deprecated public static ConfigurationV config() {
         return environment().config();
     }
 
@@ -402,11 +382,10 @@ public class Dem {
      *
      * @param exitCode
      */
-    @Deprecated
-    public static void systemExit(int exitCode) {
+    @Deprecated public static void systemExit(int exitCode) {
         final var exception = ExecutionException.execException("Exiting system.");
         /**
-         * The {@link Exception#printStackTrace()} is a mehtod of last resort,
+         * The {@link Exception#printStackTrace()} is a method of last resort,
          * in order to get a stack trace,
          * even if {@link Dem} is not initialized or working correctly.
          */
