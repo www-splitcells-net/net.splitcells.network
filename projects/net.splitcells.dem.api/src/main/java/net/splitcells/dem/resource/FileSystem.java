@@ -74,7 +74,7 @@ public interface FileSystem extends FileSystemView {
 
     @ReturnsThis
     default FileSystem replaceFile(String path, byte[] content) {
-        deleteIfExists(path);
+        delete(path);
         return writeToFile(Path.of(path), content);
     }
 
