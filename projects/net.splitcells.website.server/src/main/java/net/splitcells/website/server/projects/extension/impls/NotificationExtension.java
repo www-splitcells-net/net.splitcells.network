@@ -1,16 +1,4 @@
-/*
- * Copyright (c) 2021 Contributors To The `net.splitcells.*` Projects
- *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License 2.0 which is available at
- * http://www.eclipse.org/legal/epl-2.0.
- *
- * This Source Code may also be made available under the following Secondary
- * Licenses when the conditions for such availability set forth in the Eclipse
- * Public License, v. 2.0 are satisfied: GNU General Public License v2.0 or later
- * which is available at https://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html
- *
- * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+/* SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
  * SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
  */
 package net.splitcells.website.server.projects.extension.impls;
@@ -48,8 +36,7 @@ public class NotificationExtension implements ProjectsRendererExtension {
 
     }
 
-    @Override
-    public RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
+    @Override public RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
         if (PATH.equals(request.trail())) {
             return renderResponse(projectsRenderer.renderContent(
                     parseNotificationQueue(request, projectsRenderer).toHtml()
@@ -58,13 +45,11 @@ public class NotificationExtension implements ProjectsRendererExtension {
         return renderResponse(Optional.empty());
     }
 
-    @Override
-    public boolean requiresAuthentication(RenderRequest request) {
+    @Override public boolean requiresAuthentication(RenderRequest request) {
         return false;
     }
 
-    @Override
-    public Set<Path> projectPaths(ProjectPathsRequest request) {
+    @Override public Set<Path> projectPaths(ProjectPathsRequest request) {
         return setOfUniques(Path.of(PATH.unixPathString()));
     }
 
