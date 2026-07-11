@@ -11,11 +11,13 @@ import java.util.function.Consumer;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static net.splitcells.dem.Dem.handleInterrupt;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * Provides a Semaphore interface, that is easier to use without deadlocks by default.
+ * The methods with longer names are target to advanced functionality and should be avoided, if possible.
  */
 @JavaLegacy
 public class Semaphore {
@@ -34,8 +36,16 @@ public class Semaphore {
         impl = new java.util.concurrent.Semaphore(permits, true);
     }
 
-    public void release() {
+    public void releasePermit() {
         impl.release();
+    }
+
+    public void acquirePermit() {
+        try {
+            impl.acquire();
+        } catch (InterruptedException e) {
+            handleInterrupt(e);
+        }
     }
 
     public void acquire(Consumer<AutoCloseable> requestor) {

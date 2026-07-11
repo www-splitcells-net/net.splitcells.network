@@ -6,7 +6,6 @@ package net.splitcells.dem.resource;
 import lombok.val;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
-import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.Dem.executeThread;
@@ -23,7 +22,7 @@ public class SemaphoreTest {
         val testSubject = semaphore(0);
         executeThread(getClass().getName(), () -> {
             Dem.sleepAtLeast(10_000L);
-            testSubject.release();
+            testSubject.releasePermit();
         });
         testSubject.acquire(a -> {
             // Nothing needs to be done, we just check if this test finishes at all.
