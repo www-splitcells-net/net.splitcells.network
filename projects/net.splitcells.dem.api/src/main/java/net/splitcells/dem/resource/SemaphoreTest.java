@@ -8,6 +8,7 @@ import net.splitcells.dem.Dem;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 
 import java.time.Instant;
+import java.util.function.Consumer;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.Dem.executeThread;
@@ -48,6 +49,12 @@ public class SemaphoreTest {
         require(check.val());
     }
 
+    /**
+     * TODO This tests has false positives, because it does not check,
+     * if the last {@link Semaphore#acquire(Consumer)} is only executed,
+     * when the first {@link Semaphore#acquire(Consumer)} is and all but last {@link Semaphore#acquire(Consumer)}
+     * have already started.
+     */
     @IntegrationTest public void testPermits() {
         val testSubject = semaphore(7);
         val check = atomicEffect(0);
