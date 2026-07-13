@@ -7,11 +7,15 @@ import lombok.val;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 
+import java.time.Instant;
+
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.Dem.executeThread;
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.environment.config.framework.Variable.variable;
+import static net.splitcells.dem.execution.AtomicEffect.atomicEffect;
 import static net.splitcells.dem.resource.Semaphore.semaphore;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
 
 /**
  * TODO Test execution time of each test. Every one of these should take a minimum amount of time,
@@ -46,19 +50,17 @@ public class SemaphoreTest {
 
     @IntegrationTest public void testPermits() {
         val testSubject = semaphore(7);
-        val check = variable(false);
+        val check = atomicEffect(0);
         Dem.sleepAtLeast(1_000L);
-        rangeClosed(1, 6).forEach(i -> executeThread(getClass().getName(), () -> testSubject.acquire(a -> {
+        rangeClosed(1, 7).forEach(i -> executeThread(getClass().getName(), () -> testSubject.acquire(a -> {
             Dem.sleepAtLeast(10_000L);
+            check.update(v -> ++v);
         })));
-        executeThread(getClass().getName(), () -> testSubject.acquire(a -> {
-            Dem.sleepAtLeast(10_000L);
-            check.withValue(true);
-        }));
-        Dem.sleepAtLeast(2_000L);
         testSubject.acquire(a -> {
-            // We wait, until the check is set to true.
+            // We assume, that the time between the first and last release is smaller than 2 seconds.
+            Dem.sleepAtLeast(2_000L);
+            // We wait, until the check is set to true by the last thread.
         });
-        require(check.val());
+        requireEquals(check.value(), 7);
     }
 }
