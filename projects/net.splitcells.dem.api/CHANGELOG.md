@@ -97,6 +97,7 @@
      This also makes it possible to use the name `Resource` for an interface
      of resource like things.
 ### Minor Changes
+* **2026-07-14\#32** Define AtomicEffect as a thread safe wrapper.
 * **2026-05-22\#72** The new method `Dem#testSerializeConfiguration` provides a way to test the configuration provided
   by a Cell and its dependencies.
 * **2026-04-08\#42** Introduce the new option StartServicesAutomatically.
