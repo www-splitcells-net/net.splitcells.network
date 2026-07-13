@@ -56,7 +56,11 @@ public class SemaphoreTest {
             Dem.sleepAtLeast(10_000L);
             check.update(v -> ++v);
         })));
+        // We wait 1 second, so all threads have aquired 1 permit.
+        Dem.sleepAtLeast(1_000L);
         testSubject.acquire(a -> {
+            // We check wether at least one thread is finished.
+            require(check.value() > 0);
             // We assume, that the time between the first and last release is smaller than 2 seconds.
             Dem.sleepAtLeast(2_000L);
             // We wait, until the check is set to true by the last thread.
