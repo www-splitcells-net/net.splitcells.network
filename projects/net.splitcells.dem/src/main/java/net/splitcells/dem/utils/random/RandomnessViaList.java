@@ -3,9 +3,9 @@
  */
 package net.splitcells.dem.utils.random;
 
+import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.utils.MathUtils;
 
-import java.util.List;
 import java.util.Random;
 
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
