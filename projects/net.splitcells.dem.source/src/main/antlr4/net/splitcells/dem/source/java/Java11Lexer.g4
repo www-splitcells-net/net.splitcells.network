@@ -67,6 +67,7 @@ lexer grammar Java11Lexer;
     		| 'import java.util.function.BiPredicate;'
     		| 'import java.util.function.BiFunction;'
     		| 'import java.util.Optional;'
+    		| 'import java.util.Random;'
     		| 'import java.util.regex.Pattern;'
     		| 'import java.util.stream.Stream;'
     		| 'import org.junit.jupiter.api.net.splitcells.Test;'
