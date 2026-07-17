@@ -24,6 +24,15 @@ import static net.splitcells.dem.utils.StringUtils.multiple;
 
 public class TreeTest {
 
+    @UnitTest public void testToXmlStringWithPrefixes() {
+        final var testSubject = tree("test")
+                .withChild(tree("path-start")
+                        .withChild(tree("path-end")
+                                .withProperty("a", "b")
+                                .withProperty("b", "c")));
+        requireEquals(testSubject.toXmlStringWithPrefixes(), "<nt:test><nt:path-start><nt:path-end><nt:a>b</nt:a><nt:b>c</nt:b></nt:path-end></nt:path-start></nt:test>");
+    }
+
     @UnitTest
     public void testXmlName() {
         requireEquals(tree("&<>\"'~").xmlName(), "&amp;&lt;&gt;&quot;&apos;&Tilde;");
