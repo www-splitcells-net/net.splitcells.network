@@ -287,11 +287,6 @@ public interface Tree extends TreeView, Convertible {
         return this;
     }
 
-    @ReturnsThis
-    default Tree withPath(Tree path, String propertyName, NameSpace nameSpace) {
-        return withPath(this, path, propertyName, nameSpace);
-    }
-
     default Tree withMerged(List<Tree> arg) {
         arg.forEach(a -> this.withMerged(a));
         return this;
@@ -353,37 +348,6 @@ public interface Tree extends TreeView, Convertible {
             current = next;
         }
         return this;
-    }
-
-    private static Tree withPath(Tree current, Tree path, String propertyName, NameSpace nameSpace) {
-        final var propertyInstances = path.propertyInstances(propertyName, nameSpace);
-        if (propertyInstances.isEmpty()) {
-            return current;
-        }
-        assertThat(propertyInstances).hasSize(1);
-        final var element = propertyInstances.get(0);
-        final var propertyValue = element.value().orElseThrow().name();
-        final var propertyHosters = current.children().stream()
-                .filter(child -> child.propertiesWithValue(propertyName, nameSpace, propertyValue).size() == 1)
-                .collect(toList());
-        final Tree child;
-        if (propertyHosters.isEmpty()) {
-            // HACK Use generic rendering specifics based on argument.
-            child = TreeI.tree(NameSpaces.VAL, NATURAL)
-                    .withProperty(NameSpaces.NAME, NATURAL, propertyValue);
-            final var elementLinking = path.childNamed(LINK, DEN);
-            if (elementLinking.isPresent()) {
-                child.withChild(elementLinking.get());
-            }
-            current.withChild(child);
-        } else {
-            assertThat(propertyHosters).hasSize(1);
-            child = propertyHosters.get(0);
-        }
-        path.children().stream()
-                .filter(pathChild -> !child.propertyInstances(propertyName, nameSpace).isEmpty())
-                .forEach(pathChild -> withPath(child, pathChild, propertyName, nameSpace));
-        return current;
     }
 
     default String toHtmlString() {
