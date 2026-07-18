@@ -53,6 +53,10 @@ public class PathFileSystemTest {
         requireEquals(testSubject.readString(testFile), testContent);
     }
 
+    /**
+     * TODO It would be better to create a copy of the file system via the class loader in a temporary folder.
+     * This way the test would be more portable.
+     */
     @UnitTest public void testLicense() {
         if (net.splitcells.dem.testing.Test.isExecutedViaMaven()) {
             // The target folder is only available with Maven.
