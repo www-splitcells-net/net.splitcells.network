@@ -40,6 +40,10 @@ public class Test {
         }
     }
 
+    public static boolean isExecutedViaMaven() {
+        return System.getProperty("surefire.test.class.path") != null;
+    }
+
     public static boolean testFunctionality() {
         return testFunctionality(list());
     }
@@ -54,11 +58,11 @@ public class Test {
                 .filters(includeTags(UNIT_TEST))
                 .build();
         final var testExecutor = LauncherFactory.create();
-        final var failureDetector = failureDetector();
+        final var failureDetector = FailureDetector.failureDetector();
         testExecutor.discover(testDiscovery);
         testExecutor.execute(testDiscovery
                 , executionListeners
-                        .withAppended(liveReporter(), failureDetector)
+                        .withAppended(LiveReporter.liveReporter(), failureDetector)
                         .toArray(new TestExecutionListener[0]));
         return !failureDetector.hasWatchedErrors();
     }
@@ -73,9 +77,9 @@ public class Test {
                 .filters(includeTags(INTEGRATION_TEST))
                 .build();
         final var testExecutor = LauncherFactory.create();
-        final var failureDetector = failureDetector();
+        final var failureDetector = FailureDetector.failureDetector();
         testExecutor.discover(testDiscovery);
-        testExecutor.execute(testDiscovery, liveReporter(), failureDetector);
+        testExecutor.execute(testDiscovery, LiveReporter.liveReporter(), failureDetector);
         return !failureDetector.hasWatchedErrors();
     }
 
@@ -89,11 +93,11 @@ public class Test {
                 .filters(includeTags(extensiveTestTags()))
                 .build();
         final var testExecutor = LauncherFactory.create();
-        final var failureDetector = failureDetector();
+        final var failureDetector = FailureDetector.failureDetector();
         testExecutor.discover(testDiscovery);
         testExecutor.execute(testDiscovery
                 , executionListeners
-                        .withAppended(liveReporter(), failureDetector)
+                        .withAppended(LiveReporter.liveReporter(), failureDetector)
                         .toArray(new TestExecutionListener[0]));
         return !failureDetector.hasWatchedErrors();
     }
@@ -112,11 +116,11 @@ public class Test {
                 .filters(includeTags("none() | " + UNIT_TEST))
                 .build();
         final var testExecutor = LauncherFactory.create();
-        final var failureDetector = failureDetector();
+        final var failureDetector = FailureDetector.failureDetector();
         testExecutor.discover(testDiscovery);
         testExecutor.execute(testDiscovery
                 , executionListeners
-                        .withAppended(liveReporter(), failureDetector)
+                        .withAppended(LiveReporter.liveReporter(), failureDetector)
                         .toArray(new TestExecutionListener[0]));
         return !failureDetector.hasWatchedErrors();
     }
@@ -130,9 +134,9 @@ public class Test {
                 .selectors(selectPackage("net"))
                 .build();
         final var testExecutor = LauncherFactory.create();
-        final var failureDetector = failureDetector();
+        final var failureDetector = FailureDetector.failureDetector();
         testExecutor.discover(testDiscovery);
-        testExecutor.execute(testDiscovery, liveReporter(), failureDetector);
+        testExecutor.execute(testDiscovery, LiveReporter.liveReporter(), failureDetector);
         return !failureDetector.hasWatchedErrors();
     }
 
@@ -143,9 +147,9 @@ public class Test {
                 .selectors(selectClass(type))
                 .build();
         final var testExecutor = LauncherFactory.create();
-        final var failureDetector = failureDetector();
+        final var failureDetector = FailureDetector.failureDetector();
         testExecutor.discover(testDiscovery);
-        testExecutor.execute(testDiscovery, liveReporter(), failureDetector);
+        testExecutor.execute(testDiscovery, LiveReporter.liveReporter(), failureDetector);
         return !failureDetector.hasWatchedErrors();
     }
 
@@ -156,9 +160,9 @@ public class Test {
                 .selectors(selectMethod(type, methodeName))
                 .build();
         final var testExecutor = LauncherFactory.create();
-        final var failureDetector = failureDetector();
+        final var failureDetector = FailureDetector.failureDetector();
         testExecutor.discover(testDiscovery);
-        testExecutor.execute(testDiscovery, liveReporter(), failureDetector);
+        testExecutor.execute(testDiscovery, LiveReporter.liveReporter(), failureDetector);
         return !failureDetector.hasWatchedErrors();
     }
 }

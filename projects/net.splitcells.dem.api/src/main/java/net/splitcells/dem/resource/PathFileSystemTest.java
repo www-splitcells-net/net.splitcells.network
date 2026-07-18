@@ -8,6 +8,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.testing.annotations.UnitTestFactory;
 import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.util.stream.Stream;
@@ -50,5 +51,11 @@ public class PathFileSystemTest {
         val testContent = "testUsersStateFiles";
         testSubject.writeToFile(testFile, testContent);
         requireEquals(testSubject.readString(testFile), testContent);
+    }
+
+    @UnitTest public void testLicense() {
+        if (net.splitcells.dem.testing.Test.isExecutedViaMaven()) {
+            // The target folder is only available with Maven.
+        }
     }
 }
