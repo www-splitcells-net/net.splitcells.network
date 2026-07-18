@@ -15,8 +15,7 @@ import java.util.stream.Stream;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.Files.unclosedTemporaryFolder;
-import static net.splitcells.dem.resource.PathFileSystem.pathFileSystem;
-import static net.splitcells.dem.resource.PathFileSystem.temporaryFileSystem;
+import static net.splitcells.dem.resource.PathFileSystem.*;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
 
@@ -60,6 +59,8 @@ public class PathFileSystemTest {
     @UnitTest public void testLicense() {
         if (net.splitcells.dem.testing.Test.isExecutedViaMaven()) {
             // The target folder is only available with Maven.
+            val testSubject = pathFileSystemForMavenProject(Path.of("../").toAbsolutePath(), "net.splitcells.dem.api");
+            System.out.println(testSubject.license("target/classes/net.splitcells.dem.api.resources/src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/another-test.txt"));
         }
     }
 }
