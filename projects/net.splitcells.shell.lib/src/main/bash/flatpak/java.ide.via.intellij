@@ -13,4 +13,10 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 export _JAVA_AWT_WM_NONREPARENTING=1 # This is needed in order to use IntelliJ in Sway.
+flatpak install flathub com.jetbrains.IntelliJ-IDEA-Community
 flatpak run com.jetbrains.IntelliJ-IDEA-Community
+exit
+# Reset to an older version, if there is a problem with the newest one.
+sudo flatpak update \
+      --commit=5b0185ca4a3d1209feccc62de188e2938a810e9ab8319e3846a8352cecc96b3b \
+      com.jetbrains.IntelliJ-IDEA-Community
