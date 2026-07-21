@@ -3,6 +3,7 @@
  */
 package net.splitcells.dem.utils.random;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.utils.MathUtils;
 
@@ -31,7 +32,11 @@ public class RandomnessViaList implements Randomness {
     }
 
     @Override public int integer(Integer min, Integer max) {
-        throw notImplementedYet();
+        val nextValue = MathUtils.modulus(MathUtils.roundToInt(nextValue()), max);
+        if (nextValue < min) {
+            return min;
+        }
+        return nextValue;
     }
 
     @Override public Random asRandom() {
