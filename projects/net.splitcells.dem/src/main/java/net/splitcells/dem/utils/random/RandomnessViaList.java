@@ -11,6 +11,11 @@ import java.util.Random;
 import static net.splitcells.dem.utils.MathUtils.*;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
+/**
+ * <p>This is a deterministic random value generator based on a given list of numbers.</p>
+ * <p>TODO This implementation currently focuses on being easily and quickly to be developed and
+ * not to be 100% randomness. Improve this as needed.</p>
+ */
 public class RandomnessViaList implements Randomness {
     private Randomness randomnessViaList(List<Double> argValues) {
         return new RandomnessViaList(argValues);
