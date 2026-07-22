@@ -67,7 +67,7 @@ public class SupplySelectors {
                     if (freeSupplies.isEmpty()) {
                         return;
                     }
-                    if (null == solution.demandsUsed().rawLine(freeDemand.index())) {
+                    if (solution.demandsFree().isRawLine(freeDemand.index())) {
                         val bestSupply = Variable.<Line>variable();
                         val bestRating = variable(solution.constraint().rating());
                         solution.history().processWithoutHistory(() -> {
