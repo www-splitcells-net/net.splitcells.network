@@ -29,7 +29,7 @@ public class RandomnessViaList implements Randomness {
     }
 
     private Double nextValue() {
-        return values.get(modulus(++currentIndex, values.size() - 1));
+        return values.get(modulus(++currentIndex, values.size()));
     }
 
     @Override public float floating(float min, float max) {
