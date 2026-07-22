@@ -17,7 +17,7 @@ import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
  * not to be 100% randomness. Improve this as needed.</p>
  */
 public class RandomnessViaList implements Randomness {
-    private Randomness randomnessViaList(List<Double> argValues) {
+    public static Randomness randomnessViaList(List<Double> argValues) {
         return new RandomnessViaList(argValues);
     }
 
