@@ -7,6 +7,7 @@ import lombok.val;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.framework.Variable;
+import net.splitcells.dem.utils.random.Randomness;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.rating.framework.Rating;
 
@@ -50,12 +51,15 @@ public class SupplySelectors {
         return hillClimber(Integer.MAX_VALUE);
     }
 
+    public static SupplySelector hillClimber(int tries) {
+        return hillClimber(tries, randomness());
+    }
+
     /**
      * @param tries
      * @return Checks the rating of {@code tries} many random allocations and returns the one with the best {@link Rating}.
      */
-    public static SupplySelector hillClimber(int tries) {
-        val rnd = randomness();
+    public static SupplySelector hillClimber(int tries, Randomness rnd) {
         return freeDemandGroups -> solution -> {
             val freeSupplies = solution.suppliesFree().unorderedLines();
             for (val demandGroup : freeDemandGroups.values()) {
