@@ -23,7 +23,7 @@ import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.lineValu
 import static net.splitcells.gel.solution.optimization.primitive.repair.SupplySelectors.hillClimber;
 
 public class SupplySelectorsTest {
-    @DisabledTest @UnitTest public void testHillClimber() {
+    @UnitTest public void testHillClimber() {
         val demand = attribute(Integer.class, "demand");
         val supply = attribute(Integer.class, "supply");
         val testProblem = defineProblem("testHillClimber")
@@ -32,19 +32,19 @@ public class SupplySelectorsTest {
                 .withSupplyAttributes(supply)
                 .withSupplies(rangeClosed(1, 10).mapToObj(i -> list((Object) i)).collect(toList()))
                 .withConstraint(c -> {
-                    c.forAll(supply).then(lineValueRater(l -> l.value(demand).equals(5)));
+                    c.then(lineValueRater(l -> l.value(supply).equals(5)));
                     return c;
                 })
                 .toProblem()
                 .asSolution();
-        val testSubjectForWorst = hillClimber(9, randomnessViaList(list(0d, 1d, 2d, 3d, 4d, 6d, 7d, 8d)));
+        val testSubjectForWorst = hillClimber(8, randomnessViaList(list(0d, 1d, 2d, 3d, 5d, 6d, 7d, 8d)));
         testSubjectForWorst.apply(Maps.<GroupId, Set<Line>>map()
                         .with(testProblem.constraint().injectionGroup()
                                 , setOfUniques(testProblem.demandsFree().unorderedLines())))
                 .optimize(testProblem);
         testProblem.unorderedLines().requireSizeOf(1);
         val worstAllocation = testProblem.unorderedLines().get(0);
-        requireEquals(worstAllocation.values(), list(1, 1d));
+        requireEquals(worstAllocation.values(), list(1, 1));
         testProblem.remove(worstAllocation);
         testProblem.unorderedLines().requireEmpty();
         val testSubjectForBest = hillClimber(10, randomnessViaList(list(0d, 1d, 2d, 3d, 5d, 6d, 7d, 8d, 9d, 4d)));
@@ -53,6 +53,6 @@ public class SupplySelectorsTest {
                                 , setOfUniques(testProblem.demandsFree().unorderedLines())))
                 .optimize(testProblem);
         testProblem.unorderedLines().requireSizeOf(1);
-        requireEquals(testProblem.unorderedLines().get(0).values(), list(1, 5d));
+        requireEquals(testProblem.unorderedLines().get(0).values(), list(1, 5));
     }
 }
