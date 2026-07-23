@@ -61,7 +61,7 @@ public class SupplySelectors {
      */
     public static SupplySelector hillClimber(int tries, Randomness rnd) {
         return freeDemandGroups -> solution -> {
-            val freeSupplies = solution.suppliesFree().unorderedLines();
+            val freeSupplies = solution.suppliesFree().orderedLines();
             for (val demandGroup : freeDemandGroups.values()) {
                 for (val freeDemand : demandGroup) {
                     if (freeSupplies.isEmpty()) {
@@ -75,18 +75,13 @@ public class SupplySelectors {
                                 if (freeSupplies.isEmpty()) {
                                     return;
                                 }
-                                val nextSupply = freeSupplies.removeAt(rnd.integer(0, freeSupplies.size() - 1));
+                                val nextSupply = freeSupplies.get(rnd.integer(0, freeSupplies.size() - 1));
                                 val allocation = solution.assign(freeDemand, nextSupply);
                                 val nextRating = solution.constraint().rating();
                                 solution.remove(allocation);
                                 if (bestSupply.isNull() || nextRating.betterThan(bestRating.val())) {
-                                    if (bestSupply.hasValue()) {
-                                        freeSupplies.add(bestSupply.val());
-                                    }
                                     bestSupply.withValue(nextSupply);
                                     bestRating.withValue(nextRating);
-                                } else {
-                                    freeSupplies.add(nextSupply);
                                 }
                             });
                         });
