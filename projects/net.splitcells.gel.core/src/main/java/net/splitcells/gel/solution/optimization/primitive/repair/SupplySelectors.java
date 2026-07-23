@@ -61,6 +61,9 @@ public class SupplySelectors {
      */
     public static SupplySelector hillClimber(int tries, Randomness rnd) {
         return freeDemandGroups -> solution -> {
+            /* Using the ordered lines makes the indexes more meaningful,
+             * especially when random generators with specific meanings are used.
+             */
             val freeSupplies = solution.suppliesFree().orderedLines();
             for (val demandGroup : freeDemandGroups.values()) {
                 for (val freeDemand : demandGroup) {
@@ -75,6 +78,7 @@ public class SupplySelectors {
                                 if (freeSupplies.isEmpty()) {
                                     return;
                                 }
+                                // Using a free supply multiple times creates an error and therefore it is avoided.
                                 val nextSupply = freeSupplies.switchVal(rnd.integer(0, freeSupplies.size() - 1), null);
                                 if (nextSupply == null) {
                                     return;
