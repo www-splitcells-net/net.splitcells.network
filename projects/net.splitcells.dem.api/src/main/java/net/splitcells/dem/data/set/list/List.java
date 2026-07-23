@@ -42,6 +42,12 @@ public interface List<T> extends java.util.List<T>, ListView<T>, SetT<T> {
         return this;
     }
 
+    default T switchVal(int index, T value) {
+        val old = get(index);
+        set(index, value);
+        return old;
+    }
+
     default List<T> require(int index, T value) {
         val existing = get(index);
         if (!value.equals(existing)) {
