@@ -75,7 +75,10 @@ public class SupplySelectors {
                                 if (freeSupplies.isEmpty()) {
                                     return;
                                 }
-                                val nextSupply = freeSupplies.get(rnd.integer(0, freeSupplies.size() - 1));
+                                val nextSupply = freeSupplies.switchVal(rnd.integer(0, freeSupplies.size() - 1), null);
+                                if (nextSupply == null) {
+                                    return;
+                                }
                                 val allocation = solution.assign(freeDemand, nextSupply);
                                 val nextRating = solution.constraint().rating();
                                 solution.remove(allocation);
