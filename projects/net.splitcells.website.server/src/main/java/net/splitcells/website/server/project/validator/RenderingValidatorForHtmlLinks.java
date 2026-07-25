@@ -40,7 +40,6 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
     }
 
     private int invalidLinkCount = 0;
-    private String reportName = "default";
 
     private RenderingValidatorForHtmlLinks() {
     }
@@ -99,7 +98,6 @@ public class RenderingValidatorForHtmlLinks implements RenderingValidator {
 
     @Override
     public void startReport(String name) {
-        reportName = name;
         invalidLinkCount = 0;
     }
 
