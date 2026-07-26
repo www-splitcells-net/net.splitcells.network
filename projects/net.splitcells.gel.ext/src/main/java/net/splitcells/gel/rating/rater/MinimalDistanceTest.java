@@ -8,6 +8,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.solution.optimization.StepType;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
