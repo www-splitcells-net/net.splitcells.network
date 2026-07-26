@@ -8,16 +8,15 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.solution.optimization.StepType;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.hasMinimalDistanceOf;
 import static net.splitcells.gel.rating.rater.lib.MinimalDistance.minimalDistance;
+import static net.splitcells.gel.rating.rater.lib.MinimalDistanceBasedOnDiffs.has_minimal_distance_of;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
@@ -45,6 +44,33 @@ public class MinimalDistanceTest {
                 .asSolution();
         testSubject.optimize(offlineLinearInitialization());
         val firstAssignment = testSubject.orderedLine(1);
+        val firstAssignmentD = testSubject.demandOfAssignment(firstAssignment).toLinePointer();
+        val firstAssignmentS = testSubject.supplyOfAssignment(firstAssignment).toLinePointer();
+        testSubject.optimize(optimizationEvent(StepType.REMOVAL, firstAssignmentD, firstAssignmentS));
+        val secondAssignment = testSubject.orderedLine(1);
+        val secondAssignmentD = testSubject.demandOfAssignment(secondAssignment).toLinePointer();
+        val secondAssignmentS = testSubject.supplyOfAssignment(secondAssignment).toLinePointer();
+        testSubject.optimize(optimizationEvent(StepType.REMOVAL, secondAssignmentD, secondAssignmentS));
+        testSubject.optimize(optimizationEvent(StepType.ADDITION, firstAssignmentD, secondAssignmentS));
+        testSubject.optimize(optimizationEvent(StepType.REMOVAL, firstAssignmentD, secondAssignmentS));
+    }
+
+    @Disabled @UnitTest public void test_multiple_line_addition_and_removal_based_on_diffs() {
+        val integer = integerAttribute("integer");
+        val testSubject = defineProblem()
+                .withDemandAttributes()
+                .withEmptyDemands(3)
+                .withSupplyAttributes(integer)
+                .withSupplies(list(
+                        list(2)
+                        , list(2)
+                        , list(9)
+                ))
+                .withConstraint(then(has_minimal_distance_of(integer, 3.0)))
+                .toProblem()
+                .asSolution();
+        testSubject.optimize(offlineLinearInitialization());
+        val firstAssignment = testSubject.orderedLine(0);
         val firstAssignmentD = testSubject.demandOfAssignment(firstAssignment).toLinePointer();
         val firstAssignmentS = testSubject.supplyOfAssignment(firstAssignment).toLinePointer();
         testSubject.optimize(optimizationEvent(StepType.REMOVAL, firstAssignmentD, firstAssignmentS));
