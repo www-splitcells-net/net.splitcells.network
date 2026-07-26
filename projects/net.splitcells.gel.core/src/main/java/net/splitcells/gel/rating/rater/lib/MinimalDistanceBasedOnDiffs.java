@@ -178,17 +178,7 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
                         final var remainingRightDistance
                                 = minimumDistance
                                 - distance(sortedProcessingLines.get(i), sortedProcessingLines.get(i + 1));
-                        final double remainingDistance;
-                        if (remainingLeftDistance > 0 && remainingRightDistance == 0) {
-                            remainingDistance = remainingLeftDistance;
-                        } else if (remainingRightDistance > 0 && remainingLeftDistance == 0) {
-                            remainingDistance = remainingRightDistance;
-                        } else if (remainingLeftDistance > 0 && remainingRightDistance > 0) {
-                            remainingDistance = remainingLeftDistance + remainingRightDistance;
-                        } else {
-                            remainingDistance = 0;
-                        }
-                        if (remainingDistance > 0) {
+                        if (remainingLeftDistance > 0 || remainingRightDistance > 0) {
                             require(noCost().betterThan(sortedProcessingLines.get(i).value(RATING)));
                         } else {
                             require(sortedProcessingLines.get(i).value(RATING).equalz(noCost()));
