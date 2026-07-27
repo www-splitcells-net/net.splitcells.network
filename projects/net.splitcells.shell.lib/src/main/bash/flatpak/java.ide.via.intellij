@@ -6,7 +6,9 @@ flatpak install flathub com.jetbrains.IntelliJ-IDEA-Community
 flatpak run com.jetbrains.IntelliJ-IDEA-Community
 exit
 # Reset to an older version, if there is a problem with the newest one.
+# This is the last known commit version, where the Lombok plugin is working.
 sudo flatpak update \
       --assumeyes \
       --commit=5b0185ca4a3d1209feccc62de188e2938a810e9ab8319e3846a8352cecc96b3b \
       com.jetbrains.IntelliJ-IDEA-Community
+sudo flatpak mask com.jetbrains.IntelliJ-IDEA-Community
