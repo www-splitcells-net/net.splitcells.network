@@ -45,6 +45,10 @@ public class ObjectsRendererI implements ProjectRenderer {
         this.pathPrefix = basePath.toString();
     }
 
+    public Path linkOf(DiscoverableRenderer object) {
+        return objects.anyKeyBy(object);
+    }
+
     @Override
     public FileSystem projectFileSystem() {
         return fileSystemVoid();
