@@ -5,29 +5,31 @@ package net.splitcells.website.server.project.renderer;
 
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.website.server.Config;
+import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
-import static net.splitcells.dem.utils.ExecutionException.execException;
-import static net.splitcells.dem.utils.StringUtils.*;
+import static net.splitcells.dem.utils.StringUtils.removeSuffix;
+import static net.splitcells.dem.utils.StringUtils.toBytes;
+import static net.splitcells.website.server.client.HtmlClientImpl.websiteServerUrl;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 public class ObjectsRendererI implements ProjectRenderer {
@@ -45,8 +47,12 @@ public class ObjectsRendererI implements ProjectRenderer {
         this.pathPrefix = basePath.toString();
     }
 
-    public Path linkOf(DiscoverableRenderer object) {
+    public Path publicLinkOf(DiscoverableRenderer object) {
         return objects.anyKeyBy(object);
+    }
+
+    public String publicLinkOf(Discoverable object) {
+        return websiteServerUrl() + "/" + publicPath(object.path());
     }
 
     private String publicPath(ListView<String> path) {

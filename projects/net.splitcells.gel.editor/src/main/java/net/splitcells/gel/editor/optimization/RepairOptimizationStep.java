@@ -4,12 +4,15 @@
 package net.splitcells.gel.editor.optimization;
 
 import lombok.val;
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
+import net.splitcells.website.server.project.renderer.ObjectsRenderer;
 
 import java.util.Optional;
 
+import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.solution.optimization.meta.Deescalation.deescalation;
@@ -59,7 +62,8 @@ public class RepairOptimizationStep implements EditorOptimization {
 
     @Override public Tree status() {
         return tree("Constraint Group Based Repair")
-                .withProperty("current step", "" + currentStep)
-                .withProperty("max step", "" + maxStep);
+                .withProperty("Current solution", configValue(ObjectsRenderer.class).publicLinkOf(solution))
+                .withProperty("Current step", "" + currentStep)
+                .withProperty("Max step", "" + maxStep);
     }
 }
