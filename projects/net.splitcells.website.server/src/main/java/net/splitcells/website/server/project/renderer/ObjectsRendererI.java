@@ -49,20 +49,23 @@ public class ObjectsRendererI implements ProjectRenderer {
         return objects.anyKeyBy(object);
     }
 
+    private String publicPath(ListView<String> path) {
+        return pathPrefix + "/" + path.stream().reduce((a, b) -> a + "/" + b).orElseThrow();
+    }
+
     @Override
     public FileSystem projectFileSystem() {
         return fileSystemVoid();
     }
 
     public synchronized ObjectsRendererI withObject(DiscoverableRenderer object) {
-        final var path = Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b).orElseThrow());
+        final var path = Path.of(publicPath(object.path()));
         Optional<Path> alternativePath;
         if (objects.containsKey(path)) {
             // This makes it easier to analyse problems, when the same path is present multiple times.
             int i = 0;
             do {
-                alternativePath = Optional.of(Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b)
-                        .orElseThrow()
+                alternativePath = Optional.of(Path.of(publicPath(object.path())
                         + "."
                         + ++i));
             } while (objects.containsKey(alternativePath.orElseThrow()));
