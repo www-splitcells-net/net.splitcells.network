@@ -28,6 +28,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.removeSuffix;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.server.client.HtmlClientImpl.websiteServerUrl;
@@ -82,7 +83,7 @@ public class ObjectsRendererI implements ProjectRenderer {
                             .withProperty("object", object.toString())
                             .withProperty("path", path.toString())
                             .withProperty("alternative path", path.toString())
-                    , ExecutionException.execException("Discoverable path is already registered."));
+                    , execException("Discoverable path is already registered."));
         }
         val finalPath = path;
         objects.put(finalPath, object);
@@ -102,7 +103,7 @@ public class ObjectsRendererI implements ProjectRenderer {
                             .withProperty("object", object.toString())
                             .withProperty("path", path.toString())
                             .withProperty("alternative path", path.toString())
-                    , ExecutionException.execException("Discoverable path is already registered."));
+                    , execException("Discoverable path is already registered."));
         }
         csvRenderers.put(path, object);
         return this;
