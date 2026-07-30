@@ -91,23 +91,20 @@ public class ObjectsRendererI implements ProjectRenderer {
     }
 
     public synchronized ObjectsRendererI withObject(CsvRenderer object) {
-        final var path = Path.of(publicPath(object.path()));
-        Optional<Path> alternativePath;
+        var path = Path.of(publicPath(object.path()));
         if (csvRenderers.hasKey(path)) {
             // This makes it easier to analyse problems, when the same path is present multiple times.
             int i = 0;
             do {
-                alternativePath = Optional.of(Path.of(publicPath(object.path()) + "." + ++i));
-            } while (csvRenderers.hasKey(alternativePath.orElseThrow()));
+                path = Path.of(publicPath(object.path()) + "." + ++i);
+            } while (csvRenderers.hasKey(path));
             logs().warn(tree("Discoverable path is already registered. Using alternative path for rendering instead.")
                             .withProperty("object", object.toString())
                             .withProperty("path", path.toString())
-                            .withProperty("alternative path", alternativePath.orElseThrow().toString())
+                            .withProperty("alternative path", path.toString())
                     , ExecutionException.execException("Discoverable path is already registered."));
-            csvRenderers.put(alternativePath.orElseThrow(), object);
-        } else {
-            csvRenderers.put(path, object);
         }
+        csvRenderers.put(path, object);
         return this;
     }
 
