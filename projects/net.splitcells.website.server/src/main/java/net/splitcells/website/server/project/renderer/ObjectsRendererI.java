@@ -73,7 +73,7 @@ public class ObjectsRendererI implements ProjectRenderer {
     public synchronized ObjectsRendererI withObject(DiscoverableRenderer object, Optional<Object> subject) {
         var path = Path.of(publicPath(object.path()));
         if (objects.hasKey(path)) {
-            // This makes it easier to analyse problems, when the same path is present multiple times.
+            // This makes it easier to analyze problems, when the same path is present multiple times.
             int i = 0;
             do {
                 path = Path.of(publicPath(object.path()) + "." + ++i);
@@ -93,7 +93,7 @@ public class ObjectsRendererI implements ProjectRenderer {
     public synchronized ObjectsRendererI withObject(CsvRenderer object) {
         var path = Path.of(publicPath(object.path()));
         if (csvRenderers.hasKey(path)) {
-            // This makes it easier to analyse problems, when the same path is present multiple times.
+            // This makes it easier to analyze problems, when the same path is present multiple times.
             int i = 0;
             do {
                 path = Path.of(publicPath(object.path()) + "." + ++i);
