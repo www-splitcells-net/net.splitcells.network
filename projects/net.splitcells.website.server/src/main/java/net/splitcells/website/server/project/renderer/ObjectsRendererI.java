@@ -3,6 +3,7 @@
  */
 package net.splitcells.website.server.project.renderer;
 
+import lombok.val;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.ListView;
@@ -42,6 +43,7 @@ public class ObjectsRendererI implements ProjectRenderer {
     private final String pathPrefix;
     private final Map<Path, DiscoverableRenderer> objects = map();
     private final Map<Path, CsvRenderer> csvRenderers = map();
+    private final Map<Object, Path> subjectPaths = map();
 
     private ObjectsRendererI(Path basePath) {
         this.pathPrefix = basePath.toString();
@@ -65,32 +67,33 @@ public class ObjectsRendererI implements ProjectRenderer {
     }
 
     public synchronized ObjectsRendererI withObject(DiscoverableRenderer object) {
-        final var path = Path.of(publicPath(object.path()));
-        Optional<Path> alternativePath;
-        if (objects.containsKey(path)) {
+        return withObject(object, Optional.empty());
+    }
+
+    public synchronized ObjectsRendererI withObject(DiscoverableRenderer object, Optional<Object> subject) {
+        var path = Path.of(publicPath(object.path()));
+        if (objects.hasKey(path)) {
             // This makes it easier to analyse problems, when the same path is present multiple times.
             int i = 0;
             do {
-                alternativePath = Optional.of(Path.of(publicPath(object.path())
-                        + "."
-                        + ++i));
-            } while (objects.containsKey(alternativePath.orElseThrow()));
+                path = Path.of(publicPath(object.path()) + "." + ++i);
+            } while (objects.hasKey(path));
             logs().warn(tree("Discoverable path is already registered. Using alternative path for rendering instead.")
                             .withProperty("object", object.toString())
                             .withProperty("path", path.toString())
-                            .withProperty("alternative path", alternativePath.orElseThrow().toString())
+                            .withProperty("alternative path", path.toString())
                     , ExecutionException.execException("Discoverable path is already registered."));
-            objects.put(alternativePath.orElseThrow(), object);
-        } else {
-            objects.put(path, object);
         }
+        val finalPath = path;
+        objects.put(finalPath, object);
+        subject.ifPresent(s -> subjectPaths.put(s, finalPath));
         return this;
     }
 
     public synchronized ObjectsRendererI withObject(CsvRenderer object) {
         final var path = Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b).orElseThrow());
         Optional<Path> alternativePath;
-        if (csvRenderers.containsKey(path)) {
+        if (csvRenderers.hasKey(path)) {
             // This makes it easier to analyse problems, when the same path is present multiple times.
             int i = 0;
             do {
@@ -98,7 +101,7 @@ public class ObjectsRendererI implements ProjectRenderer {
                         .orElseThrow()
                         + "."
                         + ++i));
-            } while (csvRenderers.containsKey(alternativePath.orElseThrow()));
+            } while (csvRenderers.hasKey(alternativePath.orElseThrow()));
             logs().warn(tree("Discoverable path is already registered. Using alternative path for rendering instead.")
                             .withProperty("object", object.toString())
                             .withProperty("path", path.toString())
