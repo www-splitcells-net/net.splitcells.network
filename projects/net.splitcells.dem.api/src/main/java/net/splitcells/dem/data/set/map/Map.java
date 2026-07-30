@@ -84,6 +84,11 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
         return rVal;
     }
 
+    /**
+     * @see #value(Object)
+     * @param key the key whose associated value is to be returned
+     * @return Returns the {@code Value} for the given {@code key}.
+     */
     @Deprecated @Override Value get(Object key);
 
     default Optional<Value> getOptionally(Key key) {
