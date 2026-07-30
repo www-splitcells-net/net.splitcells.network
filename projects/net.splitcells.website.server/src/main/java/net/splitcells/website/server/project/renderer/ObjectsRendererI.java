@@ -91,16 +91,13 @@ public class ObjectsRendererI implements ProjectRenderer {
     }
 
     public synchronized ObjectsRendererI withObject(CsvRenderer object) {
-        final var path = Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b).orElseThrow());
+        final var path = Path.of(publicPath(object.path()));
         Optional<Path> alternativePath;
         if (csvRenderers.hasKey(path)) {
             // This makes it easier to analyse problems, when the same path is present multiple times.
             int i = 0;
             do {
-                alternativePath = Optional.of(Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b)
-                        .orElseThrow()
-                        + "."
-                        + ++i));
+                alternativePath = Optional.of(Path.of(publicPath(object.path()) + "." + ++i));
             } while (csvRenderers.hasKey(alternativePath.orElseThrow()));
             logs().warn(tree("Discoverable path is already registered. Using alternative path for rendering instead.")
                             .withProperty("object", object.toString())
