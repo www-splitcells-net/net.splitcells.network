@@ -19,6 +19,10 @@ public class ObjectsRenderer implements Option<ObjectsRendererI> {
         configValue(ObjectsRenderer.class).withObject(object);
     }
 
+    public static void registerObject(DiscoverableRenderer object, Optional<Object> subject) {
+        configValue(ObjectsRenderer.class).withObject(object, subject);
+    }
+
     public static void registerObject(CsvRenderer object) {
         configValue(ObjectsRenderer.class).withObject(object);
     }
