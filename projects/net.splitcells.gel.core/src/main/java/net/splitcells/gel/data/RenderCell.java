@@ -5,15 +5,12 @@ package net.splitcells.gel.data;
 
 import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
-import net.splitcells.dem.environment.config.framework.Option;
-import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.data.assignment.Assignmentss;
 import net.splitcells.gel.data.table.Tables;
 import net.splitcells.website.server.WebsiteServerCell;
 
 import java.util.Optional;
 
-import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.data.view.View.MIRROR_NAME;
 import static net.splitcells.website.server.project.renderer.ObjectsRenderer.registerObject;
 
@@ -35,12 +32,12 @@ public class RenderCell implements Cell {
         env.withCell(WebsiteServerCell.class);
         env.config().configValue(Tables.class).withConnector(table -> {
             if (!table.name().equals(MIRROR_NAME)) {
-                registerObject(table.discoverableRenderer());
+                registerObject(table.discoverableRenderer(), Optional.of(table));
             }
         });
         env.config().configValue(Assignmentss.class).withConnector(assignments -> {
             if (!assignments.name().equals(MIRROR_NAME)) {
-                registerObject(assignments.discoverableRenderer());
+                registerObject(assignments.discoverableRenderer(), Optional.of(assignments));
             }
         });
     }

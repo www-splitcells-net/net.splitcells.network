@@ -8,10 +8,9 @@ import net.splitcells.dem.lang.annotations.JavaLegacy;
 
 import java.util.stream.IntStream;
 
-import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
@@ -121,6 +120,14 @@ public final class MathUtils {
      */
     public static boolean acceptable(double value, double target) {
         return acceptable(value, target, 0.1d);
+    }
+
+    public static void requireAcceptable(double value, double target) {
+        if (!acceptable(value, target)) {
+            throw execException(tree("Value should be at target with acceptable difference, but is not.")
+                    .withProperty("value", "" + value)
+                    .withProperty("target", "" + target));
+        }
     }
 
     /**

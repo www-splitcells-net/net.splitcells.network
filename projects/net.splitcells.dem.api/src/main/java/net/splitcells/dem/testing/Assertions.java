@@ -99,7 +99,7 @@ public class Assertions {
         }
     }
 
-    public static <T> void requireEquals(T expected, T actual) {
+    public static <T> void requireEquals(T actual, T expected) {
         requireEquals(expected, actual, a -> a + "", (a, b) -> a.equals(b));
     }
 
@@ -125,8 +125,8 @@ public class Assertions {
             val expectedStr = printer.apply(expected);
             val actualStr = printer.apply(actual);
             throw execException(tree("Expected object is not equal to actual object.")
-                    .withProperty("Expected", "`" + expectedStr + "`")
                     .withProperty("Actual", "`" + actualStr + "`")
+                    .withProperty("Expected", "`" + expectedStr + "`")
                     .withProperty("Diff", createUnifiedRawDiff(expectedStr, actualStr)));
         }
     }

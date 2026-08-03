@@ -3,8 +3,8 @@
  */
 package net.splitcells.gel.rating.rater.lib;
 
-import net.splitcells.dem.data.order.Comparison;
 import net.splitcells.dem.data.order.Comparators;
+import net.splitcells.dem.data.order.Comparison;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
@@ -13,8 +13,8 @@ import net.splitcells.dem.environment.config.StaticFlags;
 import net.splitcells.dem.lang.dom.Domable;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.utils.CommonFunctions;
-import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.dem.utils.ExecutionException;
+import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
 import net.splitcells.gel.data.view.Line;
@@ -38,8 +38,8 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.MathUtils.absolute;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.constraint.Constraint.RATING;
-import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.framework.LocalRatingI.localRating;
+import static net.splitcells.gel.rating.rater.framework.RatingEventI.ratingEvent;
 import static net.splitcells.gel.rating.type.Cost.cost;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 
@@ -178,31 +178,19 @@ public class MinimalDistanceBasedOnDiffs<T> implements Rater {
                         final var remainingRightDistance
                                 = minimumDistance
                                 - distance(sortedProcessingLines.get(i), sortedProcessingLines.get(i + 1));
-                        final double remainingDistance;
-                        if (remainingLeftDistance > 0 && remainingRightDistance == 0) {
-                            remainingDistance = remainingLeftDistance;
-                        } else if (remainingRightDistance > 0 && remainingLeftDistance == 0) {
-                            remainingDistance = remainingRightDistance;
-                        } else if (remainingLeftDistance > 0 && remainingRightDistance > 0) {
-                            remainingDistance = remainingLeftDistance + remainingRightDistance;
-                        } else {
-                            remainingDistance = 0;
-                        }
-                        if (remainingDistance > 0) {
+                        if (remainingLeftDistance > 0 || remainingRightDistance > 0) {
                             require(noCost().betterThan(sortedProcessingLines.get(i).value(RATING)));
                         } else {
                             require(sortedProcessingLines.get(i).value(RATING).equalz(noCost()));
                         }
                     });
-            if (sortedProcessingLines.size() > 2) {
+            if (sortedProcessingLines.size() == 2) {
                 final var remainingDistance = minimumDistance
-                        - distance(sortedProcessingLines.get(sortedProcessingLines.size() - 2)
-                        , sortedProcessingLines.get(sortedProcessingLines.size() - 1));
+                        - distance(sortedProcessingLines.get(0), sortedProcessingLines.get(1));
                 if (remainingDistance > 0) {
-                    require(noCost()
-                            .betterThan(sortedProcessingLines
-                                    .get(sortedProcessingLines.size() - 2)
-                                    .value(RATING)));
+                    require(noCost().betterThan(sortedProcessingLines
+                            .get(sortedProcessingLines.size() - 2)
+                            .value(RATING)));
                 } else {
                     require(noCost().betterThan
                             (sortedProcessingLines.get(sortedProcessingLines.size() - 1).value(RATING)));

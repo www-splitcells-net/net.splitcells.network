@@ -1,16 +1,14 @@
 #!/usr/bin/env bash
-# Copyright (c) 2021 Contributors To The `net.splitcells.*` Projects
-#
-# This program and the accompanying materials are made available under the
-# terms of the Eclipse Public License 2.0 which is available at
-# http://www.eclipse.org/legal/epl-2.0.
-#
-# This Source Code may also be made available under the following Secondary
-# Licenses when the conditions for such availability set forth in the Eclipse
-# Public License, v. 2.0 are satisfied: GNU General Public License v2.0 or later
-# which is available at https://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html
-#
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 export _JAVA_AWT_WM_NONREPARENTING=1 # This is needed in order to use IntelliJ in Sway.
+flatpak install flathub com.jetbrains.IntelliJ-IDEA-Community
 flatpak run com.jetbrains.IntelliJ-IDEA-Community
+exit
+# Reset to an older version, if there is a problem with the newest one.
+# This is the last known commit version, where the Lombok plugin is working.
+sudo flatpak update \
+      --assumeyes \
+      --commit=5b0185ca4a3d1209feccc62de188e2938a810e9ab8319e3846a8352cecc96b3b \
+      com.jetbrains.IntelliJ-IDEA-Community
+sudo flatpak mask com.jetbrains.IntelliJ-IDEA-Community

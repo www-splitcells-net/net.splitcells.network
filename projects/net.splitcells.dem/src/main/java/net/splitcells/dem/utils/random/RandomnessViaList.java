@@ -3,15 +3,21 @@
  */
 package net.splitcells.dem.utils.random;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.utils.MathUtils;
 
 import java.util.Random;
 
+import static net.splitcells.dem.utils.MathUtils.*;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 
+/**
+ * <p>This is a deterministic random value generator based on a given list of numbers.</p>
+ * <p>TODO This implementation currently focuses on being easily and quickly to be developed and
+ * not to be 100% randomness. Improve this as needed.</p>
+ */
 public class RandomnessViaList implements Randomness {
-    private Randomness randomnessViaList(List<Double> argValues) {
+    public static Randomness randomnessViaList(List<Double> argValues) {
         return new RandomnessViaList(argValues);
     }
 
@@ -23,15 +29,27 @@ public class RandomnessViaList implements Randomness {
     }
 
     private Double nextValue() {
-        return values.get(MathUtils.modulus(++currentIndex, values.size() - 1));
+        return values.get(modulus(++currentIndex, values.size()));
     }
 
     @Override public float floating(float min, float max) {
-        throw notImplementedYet();
+        val startVal = nextValue();
+        if (min <= startVal && startVal <= max) {
+            return doubleToFloat(startVal);
+        }
+        val maxedVal = modulus(roundToInt(startVal), roundToInt(max));
+        if (maxedVal < min) {
+            return min;
+        }
+        return maxedVal;
     }
 
     @Override public int integer(Integer min, Integer max) {
-        throw notImplementedYet();
+        val nextValue = modulus(roundToInt(nextValue()), max);
+        if (nextValue < min) {
+            return min;
+        }
+        return nextValue;
     }
 
     @Override public Random asRandom() {

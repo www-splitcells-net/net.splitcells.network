@@ -43,6 +43,16 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
 
     @Deprecated Value remove(Object key);
 
+    /**
+     * This method may allow more efficient implementations in the future without adjusting the callers.
+     *
+     * @param value
+     * @return Any {@link Key} that corresponds to the give {@code value}.
+     */
+    default Key anyKeyBy(Value value) {
+        return flowMappingsByValue(value).findFirst().orElseThrow().getKey();
+    }
+
     default Map<Key, Value> removeKey(Key key) {
         remove(key);
         return this;
@@ -74,6 +84,11 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
         return rVal;
     }
 
+    /**
+     * @see #value(Object)
+     * @param key the key whose associated value is to be returned
+     * @return Returns the {@code Value} for the given {@code key}.
+     */
     @Deprecated @Override Value get(Object key);
 
     default Optional<Value> getOptionally(Key key) {

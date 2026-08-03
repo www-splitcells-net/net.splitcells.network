@@ -3,31 +3,34 @@
  */
 package net.splitcells.website.server.project.renderer;
 
+import lombok.val;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
+import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.map.Map;
+import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.ContentType;
 import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.communication.log.LogLevel;
-import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.website.server.Config;
+import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
-import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
-import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.execException;
-import static net.splitcells.dem.utils.StringUtils.*;
+import static net.splitcells.dem.utils.StringUtils.removeSuffix;
+import static net.splitcells.dem.utils.StringUtils.toBytes;
+import static net.splitcells.website.server.client.HtmlClientImpl.websiteServerUrl;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 
 public class ObjectsRendererI implements ProjectRenderer {
@@ -40,9 +43,26 @@ public class ObjectsRendererI implements ProjectRenderer {
     private final String pathPrefix;
     private final Map<Path, DiscoverableRenderer> objects = map();
     private final Map<Path, CsvRenderer> csvRenderers = map();
+    private final Map<Object, Path> subjectPaths = map();
 
     private ObjectsRendererI(Path basePath) {
         this.pathPrefix = basePath.toString();
+    }
+
+    public Path publicLinkOf(DiscoverableRenderer object) {
+        return objects.anyKeyBy(object);
+    }
+
+    public String publicLinkOfSubject(Object subject) {
+        return websiteServerUrl() + "/" + subjectPaths.value(subject);
+    }
+
+    public String publicLinkOf(Discoverable object) {
+        return websiteServerUrl() + "/" + publicPath(object.path());
+    }
+
+    private String publicPath(ListView<String> path) {
+        return pathPrefix + "/" + path.stream().reduce((a, b) -> a + "/" + b).orElseThrow();
     }
 
     @Override
@@ -51,50 +71,44 @@ public class ObjectsRendererI implements ProjectRenderer {
     }
 
     public synchronized ObjectsRendererI withObject(DiscoverableRenderer object) {
-        final var path = Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b).orElseThrow());
-        Optional<Path> alternativePath;
-        if (objects.containsKey(path)) {
-            // This makes it easier to analyse problems, when the same path is present multiple times.
+        return withObject(object, Optional.empty());
+    }
+
+    public synchronized ObjectsRendererI withObject(DiscoverableRenderer object, Optional<Object> subject) {
+        var path = Path.of(publicPath(object.path()));
+        if (objects.hasKey(path)) {
+            // This makes it easier to analyze problems, when the same path is present multiple times.
             int i = 0;
             do {
-                alternativePath = Optional.of(Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b)
-                        .orElseThrow()
-                        + "."
-                        + ++i));
-            } while (objects.containsKey(alternativePath.orElseThrow()));
+                path = Path.of(publicPath(object.path()) + "." + ++i);
+            } while (objects.hasKey(path));
             logs().warn(tree("Discoverable path is already registered. Using alternative path for rendering instead.")
                             .withProperty("object", object.toString())
                             .withProperty("path", path.toString())
-                            .withProperty("alternative path", alternativePath.orElseThrow().toString())
-                    , ExecutionException.execException("Discoverable path is already registered."));
-            objects.put(alternativePath.orElseThrow(), object);
-        } else {
-            objects.put(path, object);
+                            .withProperty("alternative path", path.toString())
+                    , execException("Discoverable path is already registered."));
         }
+        val finalPath = path;
+        objects.put(finalPath, object);
+        subject.ifPresent(s -> subjectPaths.put(s, finalPath));
         return this;
     }
 
     public synchronized ObjectsRendererI withObject(CsvRenderer object) {
-        final var path = Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b).orElseThrow());
-        Optional<Path> alternativePath;
-        if (csvRenderers.containsKey(path)) {
-            // This makes it easier to analyse problems, when the same path is present multiple times.
+        var path = Path.of(publicPath(object.path()));
+        if (csvRenderers.hasKey(path)) {
+            // This makes it easier to analyze problems, when the same path is present multiple times.
             int i = 0;
             do {
-                alternativePath = Optional.of(Path.of(pathPrefix + "/" + object.path().stream().reduce((a, b) -> a + "/" + b)
-                        .orElseThrow()
-                        + "."
-                        + ++i));
-            } while (csvRenderers.containsKey(alternativePath.orElseThrow()));
+                path = Path.of(publicPath(object.path()) + "." + ++i);
+            } while (csvRenderers.hasKey(path));
             logs().warn(tree("Discoverable path is already registered. Using alternative path for rendering instead.")
                             .withProperty("object", object.toString())
                             .withProperty("path", path.toString())
-                            .withProperty("alternative path", alternativePath.orElseThrow().toString())
-                    , ExecutionException.execException("Discoverable path is already registered."));
-            csvRenderers.put(alternativePath.orElseThrow(), object);
-        } else {
-            csvRenderers.put(path, object);
+                            .withProperty("alternative path", path.toString())
+                    , execException("Discoverable path is already registered."));
         }
+        csvRenderers.put(path, object);
         return this;
     }
 

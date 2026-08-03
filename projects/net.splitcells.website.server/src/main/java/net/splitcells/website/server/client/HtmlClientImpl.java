@@ -40,23 +40,16 @@ public class HtmlClientImpl implements HtmlClient {
      * @return Provides an HTTP based HTML client for {@link net.splitcells.website.server.ServerService}.
      */
     public static HtmlClient htmlClientImpl() {
-        if (configValue(PublicDomain.class).isPresent()) {
-            return publicHtmlClient();
-        }
-        return new HtmlClientImpl("http://localhost:" + configValue(ServerConfig.class).openPort());
+        return new HtmlClientImpl(websiteServerUrl());
     }
 
-    /**
-     * TODO Determine protocol via configuration.
-     *
-     * @return Provides an HTTP based HTMLs client,
-     * that connects to the public facing HTTPs interface of {@link net.splitcells.website.server.ServerService}.
-     * HTTPS is assumed, because it is expected that public facing servers encrypt their communication.
-     */
-    public static HtmlClient publicHtmlClient() {
-        return new HtmlClientImpl("https://"
-                + configValue(PublicDomain.class).orElseThrow()
-                + configValue(InternalPublicPort.class).map(port -> ":" + port).orElse(""));
+    public static String websiteServerUrl() {
+        if (configValue(PublicDomain.class).isPresent()) {
+            return "https://"
+                    + configValue(PublicDomain.class).orElseThrow()
+                    + configValue(InternalPublicPort.class).map(port -> ":" + port).orElse("");
+        }
+        return "http://localhost:" + configValue(ServerConfig.class).openPort();
     }
 
     private static final Object PLAYWRIGHT_INIT_SYNCHRONIZER = new Object();
