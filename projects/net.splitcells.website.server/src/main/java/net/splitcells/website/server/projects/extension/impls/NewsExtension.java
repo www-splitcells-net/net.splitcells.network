@@ -35,8 +35,7 @@ public class NewsExtension implements ProjectsRendererExtension {
 
     private final CommonMarkChangelogEventProjectRendererExtension eventUtils = commonMarkChangelogEventRenderer();
 
-    @Override
-    public RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
+    @Override public RenderResponse render(RenderRequest request, ProjectsRenderer projectsRenderer) {
         if (PATH.equals(request.trail())) {
             return renderResponse(projectsRenderer.renderContent(
                     parseNotificationQueue(request, projectsRenderer)
@@ -47,17 +46,15 @@ public class NewsExtension implements ProjectsRendererExtension {
         return renderResponse(Optional.empty());
     }
 
-    @Override
-    public boolean requiresAuthentication(RenderRequest request) {
+    @Override public boolean requiresAuthentication(RenderRequest request) {
         return false;
     }
 
-    @Override
-    public Set<Path> projectPaths(ProjectPathsRequest request) {
+    @Override public Set<Path> projectPaths(ProjectPathsRequest request) {
         return setOfUniques(Path.of(PATH.unixPathString()));
     }
 
-    public Set<Path> projectPaths(ProjectsRendererI projectsRendererI) {
+    @Override public Set<Path> projectPaths(ProjectsRendererI projectsRendererI) {
         return setOfUniques(Path.of(PATH.unixPathString()));
     }
 }
