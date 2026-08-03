@@ -82,7 +82,7 @@ public class SportCourseExample implements ProjectsRendererExtension {
                     .setRenderingType(Optional.of(PLAIN_TEXT))
                     .setData(StringUtils.toBytes(studentChoicesCsv(rnd, DEFAULT_STUDENT_COUNT)))
                     .setType(CSV));
-            formUpdate.getFields().put("available-courses.csv", fieldUpdate()
+            formUpdate.getFields().put("courses.csv", fieldUpdate()
                     .setRenderingType(Optional.of(PLAIN_TEXT))
                     .setData(StringUtils.toBytes(availableCoursesCsv(rnd
                             , DEFAULT_SEMESTER_COUNT
@@ -91,7 +91,7 @@ public class SportCourseExample implements ProjectsRendererExtension {
                             , DEFAULT_INDIVIDUAL_COURSES_PER_SEMESTER
                             , DEFAULT_COURSES_PER_SEMESTER - DEFAULT_TEAM_COURSES_PER_SEMESTER - DEFAULT_INDIVIDUAL_COURSES_PER_SEMESTER)))
                     .setType(CSV));
-            formUpdate.getFields().put("available-half-years.csv", fieldUpdate()
+            formUpdate.getFields().put("semesters.csv", fieldUpdate()
                     .setRenderingType(Optional.of(PLAIN_TEXT))
                     .setData(StringUtils.toBytes(availableSemestersCsv(DEFAULT_MAX_COURSE_SIZE
                             , DEFAULT_COURSES_PER_SEMESTER + DEFAULT_TEAM_COURSES_PER_SEMESTER + DEFAULT_INDIVIDUAL_COURSES_PER_SEMESTER
