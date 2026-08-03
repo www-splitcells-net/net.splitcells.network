@@ -10,7 +10,7 @@ set -e
 set -x
 [ ! -d "bin" ] && cd ..
 bin/user.ssh.setup.sh
-git pull Codeberg --ff-only # Ensure, that current repo is up to date.
+git pull Codeberg $(git rev-parse --abbrev-ref HEAD) --ff-only # Ensure, that current repo is up to date.
 cd ..
   test -d net.splitcells.network.hub || git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
   sh -c "cd net.splitcells.network.hub && git pull Codeberg \$(git rev-parse --abbrev-ref HEAD) --ff-only"
