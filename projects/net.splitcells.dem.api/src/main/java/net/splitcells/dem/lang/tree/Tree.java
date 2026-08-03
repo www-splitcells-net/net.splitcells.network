@@ -621,7 +621,7 @@ public interface Tree extends TreeView, Convertible {
             return "<empty/>";
         } else if (!_VALID_XML_NAME.matcher(name()).matches()) {
             if (children().isEmpty()) {
-                xmlString += xmlName();
+                xmlString += "<" + xmlName() + "/>";
             } else {
                 xmlString += "<d:val name=\"" + xmlName() + "\">";
                 xmlString += children().stream().map(Tree::toXmlStringWithPrefixes).reduce((a, b) -> a + b).orElse("");
