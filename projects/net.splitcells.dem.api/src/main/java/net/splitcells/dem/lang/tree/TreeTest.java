@@ -31,6 +31,7 @@ public class TreeTest {
                                 .withProperty("a", "b")
                                 .withProperty("b", "c")));
         requireEquals(testSubject.toXmlStringWithPrefixes(), "<nt:test><nt:path-start><nt:path-end><nt:a>b</nt:a><nt:b>c</nt:b></nt:path-end></nt:path-start></nt:test>");
+        requireEquals(tree("").toXmlStringWithPrefixes(), "<empty/>");
     }
 
     @UnitTest
