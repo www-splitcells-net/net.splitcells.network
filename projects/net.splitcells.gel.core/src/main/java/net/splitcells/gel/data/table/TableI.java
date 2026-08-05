@@ -88,6 +88,7 @@ public class TableI implements Table {
     private final Set<Integer> indexesOfFree = setOfUniques();
     private Optional<Constraint> constraint = Optional.empty();
     private Optional<Table> threadSafeMirror = Optional.empty();
+    private Optional<DiscoverableRenderer> threadSafeRenderer = Optional.empty();
 
     @Deprecated
     public static Table tableI(List<Attribute<? extends Object>> attributes) {
@@ -464,23 +465,24 @@ public class TableI implements Table {
             subscribeToAfterAdditions(mirror::add);
             subscribeToBeforeRemoval(mirror::remove);
             threadSafeMirror = Optional.of(mirror);
+            threadSafeRenderer = Optional.of(new DiscoverableRenderer() {
+
+                @Override
+                public String render() {
+                    return threadSafeMirror.get().toHtmlTable().toHtmlString();
+                }
+
+                @Override
+                public Optional<String> title() {
+                    return threadSafeMirror.get().path().stream().reduce((a, b) -> a + " / " + b);
+                }
+
+                @Override
+                public ListView<String> path() {
+                    return threadSafeMirror.get().path();
+                }
+            });
         }
-        return new DiscoverableRenderer() {
-
-            @Override
-            public String render() {
-                return threadSafeMirror.get().toHtmlTable().toHtmlString();
-            }
-
-            @Override
-            public Optional<String> title() {
-                return threadSafeMirror.get().path().stream().reduce((a, b) -> a + " / " + b);
-            }
-
-            @Override
-            public ListView<String> path() {
-                return threadSafeMirror.get().path();
-            }
-        };
+        return threadSafeRenderer.orElseThrow();
     }
 }
