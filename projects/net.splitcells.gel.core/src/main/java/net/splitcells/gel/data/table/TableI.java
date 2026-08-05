@@ -51,6 +51,7 @@ import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
+import net.splitcells.website.server.project.renderer.ObjectsRenderer;
 
 /**
  * <p>TODO Make all constructors private. One can use configurators for {@link TableFactory} instead.</p>
@@ -457,6 +458,10 @@ public class TableI implements Table {
         return super.hashCode();
     }
 
+    /**
+     *
+     * @return The return value is cached, so that other code like {@link ObjectsRenderer} can rely on its identity.
+     */
     @Override
     public DiscoverableRenderer discoverableRenderer() {
         if (threadSafeMirror.isEmpty()) {
