@@ -41,7 +41,7 @@ public class TreeTest {
         requireEquals(tree("some-text", NATURAL).toXmlStringWithPrefixes(), "<n:some-text/>");
         requireEquals(tree("some-wrapped-text", NATURAL).withChild(tree("wrap", NATURAL)).toXmlStringWithPrefixes(), "<n:some-wrapped-text><n:wrap/></n:some-wrapped-text>");
         requireEquals(tree("some-text", DEN).toXmlStringWithPrefixes(), "<d:some-text/>");
-        requireEquals(tree("some-wrapped-text", DEN).withChild(tree("wrap", DEN)).toXmlStringWithPrefixes(), "<d:some-wrapped-text><d:wrap/></d:some-wrapped-text>");
+        requireEquals(tree("some-wrapped-text", DEN).withValue("wrap", DEN).toXmlStringWithPrefixes(), "<d:some-wrapped-text><d:wrap/></d:some-wrapped-text>");
         
     }
 
