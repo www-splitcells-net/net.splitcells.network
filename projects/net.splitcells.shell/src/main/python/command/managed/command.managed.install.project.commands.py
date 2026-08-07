@@ -37,6 +37,8 @@ class Command:
         self._installDefaultCommand('repo.gui')
         self._installDefaultCommand('repo.pull')
         self._installDefaultCustomCommand('mci', 'mci $@')
+        self._installDefaultCustomCommand('mcic', 'mcic $@')
+        self._installDefaultCustomCommand('mcip', 'mcip $@')
         self._installDefaultCustomCommand('mci.source.code.check', 'mci -Dsource_code_check=1 $@')
         self._installDefaultCustomCommand('shell', '$SHELL')
     def _installDefaultCustomCommand(self, name, command):
