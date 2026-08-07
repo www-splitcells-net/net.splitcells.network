@@ -238,7 +238,7 @@ public class TreeTest {
     public void testAsCompactXhtmlListWithNestedEmptyNodesWithEmptyNodes() {
         final var testSubject = tree("");
         testSubject.withChild(tree(""));
-        testSubject.withProperty("attribute", "value");
+        testSubject.withProperty("attribute", STRING, "value");
         testSubject.withChild(tree(""));
         testSubject.withProperty("", tree("").withChild(tree(""))
                 .withProperty("", "child"));
