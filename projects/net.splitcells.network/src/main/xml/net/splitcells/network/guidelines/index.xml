@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
-         xmlns:xl="http://www.w3.org/1999/xlink" xmlns:x="http://www.w3.org/1999/xhtml"
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://splitcells.net/sew.xsd"
-         xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
-         xmlns:m="http://www.w3.org/1998/Math/MathML" xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+         xmlns:d="http://splitcells.net/den.xsd"
+         xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
     <meta>
         <!--
             SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
@@ -62,27 +61,19 @@
                 <url>https://programmingisterrible.com/post/139222674273/how-to-write-disposable-code-in-large-systems
                 </url>
             </link>
-            and comply with
-            <link>
-                <text>Perspective's guidelines</text>
-                <post>/net/splitcells/symbiosis/perspective/index</post>
-            </link>
             .
         </paragraph>
-        <paragraph>The compliance with the
-            <link>
-                <text>Perspective's guidelines</text>
-                <post>/net/splitcells/symbiosis/perspective/index</post>
-            </link>
-            specifically means,
-            that the file and content path of a particular information
-            (for an XML element,
-            this would be the file path + the XPath pointing to the XML element)
-            should identify and describe or at least summarize the content's
-            meaning.
-            This also means, that in an ideal case, one should be able to guess,
-            where to look, for a particular content without knowing where
-            the files are located
+        <paragraph>Every part of the project has to be discoverable from the root project.
+            This specifically means,
+            that the path of a file or content should identify and describe or at least summarize the content's meaning.
+            (For an XML element, this would be the file path + the XPath pointing to the XML element.)
+            This is called a discoverable path in this project and a tree build of such paths is called a discoverable tree.
+        </paragraph>
+        <paragraph>This also means, that in the ideal case, one should be able to guess,
+            where to look for a particular thing without knowing where the files are located.
+            If this is not possible,
+            it should be possible to find the thing in question by starting from the main/root document.
+            Here establishing and maintaining this is called project rooting.
         </paragraph>
     </chapter>
 </article>
