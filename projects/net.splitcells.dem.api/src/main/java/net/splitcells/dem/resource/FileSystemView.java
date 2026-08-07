@@ -76,7 +76,7 @@ public interface FileSystemView {
 
     FileSystemView subFileSystemView(String path);
 
-    default Optional<License> license(String path) {
-        return Optional.empty();
+    default License license(String path) {
+        return License.license();
     }
 }

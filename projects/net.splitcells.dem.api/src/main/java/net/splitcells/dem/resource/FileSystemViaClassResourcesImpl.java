@@ -273,11 +273,11 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
         return getClass().getName() + " based on " + clazz.getName();
     }
 
-    @Override public Optional<License> license(String path) {
+    @Override public License license(String path) {
         final var metaPath = normalize("/" + metaBasePath + path);
         final var resourcePath = normalize("/" + resourceBasePath + path);
         if (!isResourcePathValid(resourcePath)) {
-            return Optional.empty();
+            return License.license();
         }
         return parseLicense(Files.readAsString(clazz.getResourceAsStream(metaPath)));
     }

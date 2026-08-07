@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Accessors(chain = true)
 public class License {
-    public static Optional<License> parseLicense(String licenseData) {
+    public static License parseLicense(String licenseData) {
         Optional<String> licenseId = Optional.empty();
         Optional<String> copyrightText = Optional.empty();
         for (val line : licenseData.split("\\R")) {
@@ -25,23 +25,23 @@ public class License {
                 }
             }
         }
+        val license = license();
         if (licenseId.isPresent()) {
-            val license = License.license(licenseId.get());
-            if (copyrightText.isPresent()) {
-                license.setSpdxCopyrightText(copyrightText);
-            }
-            return Optional.of(license);
+            license.setSpdxLicenseIdentifier(licenseId);
         }
-        return Optional.empty();
+        if (copyrightText.isPresent()) {
+            license.setSpdxCopyrightText(copyrightText);
+        }
+        return license;
     }
-    public static License license(String argSpdxLicenseIdentifier) {
-        return new License(argSpdxLicenseIdentifier);
+    public static License license() {
+        return new License();
     }
 
-    @Getter private final String spdxLicenseIdentifier;
-    @Getter @Setter private Optional<String> spdxCopyrightText;
+    @Getter @Setter private Optional<String> spdxLicenseIdentifier = Optional.empty();
+    @Getter @Setter private Optional<String> spdxCopyrightText = Optional.empty();
 
-    private License(String argSpdxLicenseIdentifier) {
-        spdxLicenseIdentifier = argSpdxLicenseIdentifier;
+    private License() {
+        // Nothing as to be done here.
     }
 }

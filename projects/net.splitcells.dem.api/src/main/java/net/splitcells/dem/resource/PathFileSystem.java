@@ -326,13 +326,13 @@ public class PathFileSystem implements FileSystem {
         return getClass().getName();
     }
 
-    @Override public Optional<License> license(String path) {
+    @Override public License license(String path) {
         if (metaRootPath.isEmpty()) {
-            return Optional.empty();
+            return License.license();
         }
         final var metaPath = metaRootPath.get().resolve(path);
         if (!fileExists(metaPath)) {
-            return Optional.empty();
+            return License.license();
         }
         return parseLicense(Files.readFileAsString(metaPath));
     }

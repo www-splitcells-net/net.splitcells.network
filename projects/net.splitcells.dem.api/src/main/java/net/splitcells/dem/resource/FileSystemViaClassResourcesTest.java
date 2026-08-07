@@ -41,12 +41,12 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
 
     @UnitTest public void testLicense() {
         val testSubject = fileSystemViaClassResourcesImpl(FileSystemViaClassResourcesTest.class, MAVEN_GROUP_ID, DEM_API);
-        val testResult = testSubject.license(TEST_FILE_PATH).orElseThrow();
-        requireEquals(testResult.getSpdxLicenseIdentifier(), "EPL-2.0 OR GPL-2.0-or-later");
+        val testResult = testSubject.license(TEST_FILE_PATH);
+        requireEquals(testResult.getSpdxLicenseIdentifier().orElseThrow(), "EPL-2.0 OR GPL-2.0-or-later");
         requireEquals(testResult.getSpdxCopyrightText().orElseThrow(), "Contributors To The `net.splitcells.*` Projects");
-        require(testSubject.license(NOT_EXISTING_FILE).isEmpty());
-        require(testSubject.license(NOT_EXISTING_FOLDER).isEmpty());
-        require(testSubject.license(TEST_PATH).isEmpty());
+        require(testSubject.license(NOT_EXISTING_FILE).getSpdxLicenseIdentifier().isEmpty());
+        require(testSubject.license(NOT_EXISTING_FOLDER).getSpdxLicenseIdentifier().isEmpty());
+        require(testSubject.license(TEST_PATH).getSpdxLicenseIdentifier().isEmpty());
     }
 
     @UnitTest public void readStringIfPresentWithNotBackedString() {

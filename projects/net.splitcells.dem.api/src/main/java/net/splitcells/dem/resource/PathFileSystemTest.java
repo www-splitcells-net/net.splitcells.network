@@ -59,10 +59,9 @@ public class PathFileSystemTest {
         if (net.splitcells.dem.testing.Test.isExecutedViaMaven()) {
             // The target folder is only available with Maven.
             val testSubject = pathFileSystemForMavenProject(Path.of("../").toAbsolutePath(), "net.splitcells.dem.api");
-            val testResult = testSubject.license("src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/another-test.txt")
-                    .orElseThrow();
+            val testResult = testSubject.license("src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/another-test.txt");
             requireEquals(testResult.getSpdxCopyrightText().orElseThrow(), "Contributors To The `net.splitcells.*` Projects");
-            requireEquals(testResult.getSpdxLicenseIdentifier(), "EPL-2.0 OR GPL-2.0-or-later");
+            requireEquals(testResult.getSpdxLicenseIdentifier().orElseThrow(), "EPL-2.0 OR GPL-2.0-or-later");
         }
     }
 }
