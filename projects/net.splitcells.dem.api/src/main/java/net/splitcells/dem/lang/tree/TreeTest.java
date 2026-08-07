@@ -36,6 +36,8 @@ public class TreeTest {
         requireEquals(tree("a&b").withProperty("t", "c&d").toXmlStringWithPrefixes(), "<d:val name=\"a&amp;b\"><nt:t>c&amp;d</nt:t></d:val>");
         requireEquals(tree("html", HTML).toXmlStringWithPrefixes(), "<x:html/>");
         requireEquals(tree("html", HTML).withChild(tree("body", HTML)).toXmlStringWithPrefixes(), "<x:html><x:body/></x:html>");
+        requireEquals(tree("some-text", NATURAL).toXmlStringWithPrefixes(), "<n:some-text/>");
+        requireEquals(tree("some-wrapped-text", NATURAL).withChild(tree("wrap", NATURAL)).toXmlStringWithPrefixes(), "<n:some-wrapped-text><n:wrap/></n:some-wrapped-text>");
         
     }
 
