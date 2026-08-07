@@ -8,7 +8,6 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.testing.annotations.UnitTestFactory;
 import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.util.stream.Stream;
@@ -60,7 +59,10 @@ public class PathFileSystemTest {
         if (net.splitcells.dem.testing.Test.isExecutedViaMaven()) {
             // The target folder is only available with Maven.
             val testSubject = pathFileSystemForMavenProject(Path.of("../").toAbsolutePath(), "net.splitcells.dem.api");
-            System.out.println(testSubject.license("target/classes/net.splitcells.dem.api.resources/src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/another-test.txt"));
+            val testResult = testSubject.license("src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/another-test.txt")
+                    .orElseThrow();
+            requireEquals(testResult.getSpdxCopyrightText().orElseThrow(), "Contributors To The `net.splitcells.*` Projects");
+            requireEquals(testResult.getSpdxLicenseIdentifier(), "EPL-2.0 OR GPL-2.0-or-later");
         }
     }
 }
