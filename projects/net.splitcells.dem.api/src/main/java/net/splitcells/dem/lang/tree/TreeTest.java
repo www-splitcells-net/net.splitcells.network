@@ -58,6 +58,8 @@ public class TreeTest {
         article.withChild(content);
         requireEquals(article.toXmlString(true)
                 , "<article xmlns=\"http://splitcells.net/sew.xsd\"><content><deck/></content></article>");
+        requireEquals(tree("").toXmlString(true), "<empty/>");
+        requireEquals(tree("body", HTML).toXmlString(true), "<body/>");
     }
 
     @UnitTest
