@@ -61,6 +61,8 @@ public class TreeTest {
         requireEquals(tree("").toXmlString(false), "<empty/>");
         requireEquals(tree("body", HTML).toXmlString(false), "<body/>");
         requireEquals(tree("html", HTML).withChild(tree("body", HTML)).toXmlString(false), "<html><body/></html>");
+        requireEquals(tree("value", DEN).toXmlString(false), "<value/>");
+        requireEquals(tree("article", SEW).toXmlString(true), "<article xmlns=\"http://splitcells.net/sew.xsd\"/>");
     }
 
     @UnitTest
