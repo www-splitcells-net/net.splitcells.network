@@ -28,6 +28,7 @@ public interface ConnectingConstructor<T> {
      * Processes the given instances via the listeners.
      *
      * @param subject Object to be processed.
+     * @return {@code subject}
      */
     T connect(T subject);
 
