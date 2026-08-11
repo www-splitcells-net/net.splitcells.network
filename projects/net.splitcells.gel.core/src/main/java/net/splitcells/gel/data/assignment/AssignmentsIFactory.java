@@ -19,28 +19,23 @@ public class AssignmentsIFactory implements AssignmentsFactory {
     private final AspectOrientedConstructorBase<Assignments> aspects = aspectOrientedConstructor();
     private final ConnectingConstructor<Assignments> connector = connectingConstructor();
 
-    @Override
-    public void close() {
+    @Override public void close() {
         // Nothing needs to be done.
     }
 
-    @Override
-    public void flush() {
+    @Override public void flush() {
         // Nothing needs to be done.
     }
 
-    @Override
-    public Assignments assignments(String name, Table demands, Table supplies) {
+    @Override public Assignments assignments(String name, Table demands, Table supplies) {
         return AssignmentsI.assignments(name, demands, supplies);
     }
 
-    @Override
-    public AspectOrientedConstructor withAspect(Function aspect) {
+    @Override public AspectOrientedConstructor<Assignments> withAspect(Function<Assignments, Assignments> aspect) {
         return aspects.withAspect(aspect);
     }
 
-    @Override
-    public Assignments joinAspects(Assignments arg) {
+    @Override public Assignments joinAspects(Assignments arg) {
         return aspects.joinAspects(arg);
     }
 
