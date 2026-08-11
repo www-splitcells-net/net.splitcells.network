@@ -28,7 +28,8 @@ public class AssignmentsIFactory implements AssignmentsFactory {
     }
 
     @Override public Assignments assignments(String name, Table demands, Table supplies) {
-        return AssignmentsI.assignments(name, demands, supplies);
+
+        return connector.connect(aspects.joinAspects(AssignmentsI.assignments(name, demands, supplies)));
     }
 
     @Override public AspectOrientedConstructor<Assignments> withAspect(Function<Assignments, Assignments> aspect) {
