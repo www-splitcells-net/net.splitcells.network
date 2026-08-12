@@ -62,7 +62,7 @@ public class RepairOptimizationStep implements EditorOptimization {
 
     @Override public Tree status() {
         return tree("Constraint Group Based Repair")
-                // TODO The solution is not a subject in the ObjectsRenderer: .withProperty("Current solution", configValue(ObjectsRenderer.class).publicLinkOfSubject(solution))
+                .withProperty("Current solution", configValue(ObjectsRenderer.class).publicLinkOfSubject(solution.allocations()))
                 .withProperty("Current step", "" + currentStep)
                 .withProperty("Max step", "" + maxStep);
     }
