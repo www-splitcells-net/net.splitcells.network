@@ -164,6 +164,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                     try {
                         editor.optimize(() -> statusWaiter.release());
                     } catch (Throwable t) {
+                        statusWaiter.release();
                         // TODO TOFIX Otherwise, the error would not be logged. Dem#executeThread does not work in this regard.
                         logs().fail(execException("Could not optimize problem.", t));
                     } finally {
