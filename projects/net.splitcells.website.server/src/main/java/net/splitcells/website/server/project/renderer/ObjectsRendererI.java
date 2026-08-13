@@ -53,8 +53,11 @@ public class ObjectsRendererI implements ProjectRenderer {
         return objects.anyKeyBy(object);
     }
 
-    public String publicLinkOfSubject(Object subject) {
-        return websiteServerUrl() + "/" + subjectPaths.value(subject);
+    public Optional<String> publicLinkOfSubject(Object subject) {
+        if (subjectPaths.hasKey(subject)) {
+            return Optional.of(websiteServerUrl() + "/" + subjectPaths.value(subject));
+        }
+        return Optional.empty();
     }
 
     public String publicLinkOf(Discoverable object) {
