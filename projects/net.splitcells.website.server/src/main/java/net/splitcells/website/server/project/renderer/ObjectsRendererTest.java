@@ -33,6 +33,6 @@ public class ObjectsRendererTest {
             }
         };
         objectsRenderer.withObject(testRenderer, Optional.of(subject));
-        requireEquals(objectsRenderer.publicLinkOfSubject(subject), "http://localhost:8443/./98/a/0/g");
+        requireEquals(objectsRenderer.publicLinkOfSubject(subject).orElseThrow(), "http://localhost:8443/./98/a/0/g");
     }
 }
