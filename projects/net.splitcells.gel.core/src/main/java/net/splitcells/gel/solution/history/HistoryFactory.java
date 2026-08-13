@@ -4,11 +4,13 @@
 package net.splitcells.gel.solution.history;
 
 import net.splitcells.dem.environment.resource.Resource;
+import net.splitcells.dem.resource.AspectOrientedConstructor;
+import net.splitcells.dem.resource.ConnectingConstructor;
 import net.splitcells.dem.resource.communication.Closeable;
 import net.splitcells.dem.resource.communication.Flushable;
 import net.splitcells.gel.solution.Solution;
 
-public interface HistoryFactory extends Resource {
+public interface HistoryFactory extends Resource, AspectOrientedConstructor<History>, ConnectingConstructor<History> {
 
     History history(Solution solution);
 }
