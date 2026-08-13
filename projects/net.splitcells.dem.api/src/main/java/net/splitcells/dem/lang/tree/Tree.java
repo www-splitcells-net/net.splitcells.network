@@ -110,6 +110,13 @@ public interface Tree extends TreeView, Convertible {
         return withValues(TreeI.tree(text, nameSpace));
     }
 
+    default Tree withOptionalProperty(String name, Optional<String> value) {
+        if (value.isPresent()) {
+            return withValue(TreeI.tree(name).withValue(TreeI.tree(value.get(), STRING)));
+        }
+        return this;
+    }
+
     default Tree withProperty(String name, NameSpace nameSpace, String value) {
         return withValue(TreeI.tree(name, nameSpace)
                 .withValue(TreeI.tree(value, STRING)));
