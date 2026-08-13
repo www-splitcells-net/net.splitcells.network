@@ -4,6 +4,7 @@
 package net.splitcells.website.server.project.renderer;
 
 import lombok.val;
+import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.ListView;
@@ -53,6 +54,12 @@ public class ObjectsRendererI implements ProjectRenderer {
         return objects.anyKeyBy(object);
     }
 
+    /**
+     *
+     * @param subject
+     * @return Depending on the {@link Dem#config()}, this may return something or not.
+     *         If possible do not assume, that a value will be given back.
+     */
     public Optional<String> publicLinkOfSubject(Object subject) {
         if (subjectPaths.hasKey(subject)) {
             return Optional.of(websiteServerUrl() + "/" + subjectPaths.value(subject));
