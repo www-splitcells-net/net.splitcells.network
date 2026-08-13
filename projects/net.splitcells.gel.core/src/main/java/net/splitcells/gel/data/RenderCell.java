@@ -41,8 +41,7 @@ public class RenderCell implements Cell {
                 registerObject(assignments.discoverableRenderer(), Optional.of(assignments));
             }
         });
-        env.config().configValue(Histories.class).withConnector(history -> {
-            registerObject(history.discoverableRenderer(), Optional.of(history));
-        });
+        env.config().configValue(Histories.class).withConnector(history ->
+                registerObject(history.discoverableRenderer(), Optional.of(history)));
     }
 }
