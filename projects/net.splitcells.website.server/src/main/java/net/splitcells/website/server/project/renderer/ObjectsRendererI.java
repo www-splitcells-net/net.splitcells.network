@@ -58,11 +58,18 @@ public class ObjectsRendererI implements ProjectRenderer {
      *
      * @param subject
      * @return Depending on the {@link Dem#config()}, this may return something or not.
-     *         If possible do not assume, that a value will be given back.
+     * If possible do not assume, that a value will be given back.
      */
     public Optional<String> publicLinkOfSubject(Object subject) {
         if (subjectPaths.hasKey(subject)) {
-            return Optional.of(websiteServerUrl() + "/" + subjectPaths.value(subject));
+            val subjectPath = subjectPaths.value(subject);
+            final String linkInfix;
+            if (subjectPath.startsWith("/")) {
+                linkInfix = "";
+            } else {
+                linkInfix = "/";
+            }
+            return Optional.of(websiteServerUrl() + linkInfix + subjectPath);
         }
         return Optional.empty();
     }
