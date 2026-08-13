@@ -348,7 +348,7 @@ public class Dem {
      *
      * @return The Configuration Of The Current Environment
      */
-    @Deprecated public static ConfigurationV config() {
+    public static ConfigurationV config() {
         return environment().config();
     }
 
