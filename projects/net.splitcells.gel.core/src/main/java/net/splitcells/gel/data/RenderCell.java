@@ -7,6 +7,7 @@ import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.gel.data.assignment.Assignmentss;
 import net.splitcells.gel.data.table.Tables;
+import net.splitcells.gel.solution.history.Histories;
 import net.splitcells.website.server.WebsiteServerCell;
 
 import java.util.Optional;
@@ -39,6 +40,9 @@ public class RenderCell implements Cell {
             if (!assignments.name().equals(MIRROR_NAME)) {
                 registerObject(assignments.discoverableRenderer(), Optional.of(assignments));
             }
+        });
+        env.config().configValue(Histories.class).withConnector(history -> {
+            registerObject(history.discoverableRenderer(), Optional.of(history));
         });
     }
 }
