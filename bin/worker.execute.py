@@ -311,6 +311,8 @@ mkdir -p ${daemonFolder}
 cat > ${daemonFile} <<SERVICE_EOL
 [Unit]
 Description=Execute ${executionName}
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=simple
@@ -942,6 +944,8 @@ mkdir -p ~/.config/systemd/user
 cat > ~/.config/systemd/user/net.splitcells.network.worker.boostrap.daemon.service <<SERVICE_EOL
 [Unit]
 Description=Execute net.splitcells.network.worker.boostrap.daemon
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=simple
@@ -1097,6 +1101,8 @@ mkdir -p ~/.config/systemd/user
 cat > ~/.config/systemd/user/net.splitcells.martins.avots.distro.livedistro.service <<SERVICE_EOL
 [Unit]
 Description=Execute net.splitcells.martins.avots.distro.livedistro
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=simple
