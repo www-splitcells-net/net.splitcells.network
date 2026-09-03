@@ -158,6 +158,12 @@ li:nth-child(even) {
 li:nth-child(odd) {
     background: var(--paragraph-background-color-priority-1-a);
     }
+.net-splitcells-component-priority-2 li:nth-child(even) {
+    background: var(--paragraph-background-color-priority-2-b);
+    }
+.net-splitcells-component-priority-2 li:nth-child(odd) {
+    background: var(--paragraph-background-color-priority-2-a);
+    }
 ol ol:last-child {
     /* border-left:none;
      * It is better to have some visual guidelines, regarding the indentation of an element.
