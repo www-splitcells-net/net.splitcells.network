@@ -76,7 +76,12 @@ public class HtmlClientImpl implements HtmlClient {
              * where some C code used by Playwright gets problems.
              */
             playwright = Playwright.create();
-            browser = playwright.firefox().launch();
+            try {
+                browser = playwright.firefox().launch();
+            } catch (Throwable t) {
+                playwright.close();
+                throw execException(t);
+            }
         }
     }
 
