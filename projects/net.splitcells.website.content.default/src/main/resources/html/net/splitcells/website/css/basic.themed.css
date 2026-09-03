@@ -445,6 +445,14 @@ blockquote p {
 	padding-left: .25em;
 	padding-right: .25em;
 }
+article.net-splitcells-component-priority-2 p {
+    background-image: repeating-linear-gradient(
+        var(--paragraph-background-color-priority-2-a),
+        var(--paragraph-background-color-priority-2-a) 28px,
+        var(--paragraph-background-color-priority-2-b) 28px,
+        var(--paragraph-background-color-priority-2-b) 56px
+        );
+}
 article p mjx-container {
     background-color: var(--background-color-priority-1);
     /* The following makes the container as big as the containing paragraph. */
