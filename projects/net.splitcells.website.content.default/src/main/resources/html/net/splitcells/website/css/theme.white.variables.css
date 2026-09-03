@@ -32,6 +32,8 @@
 	--background-color-priority-1-a: #EEEEEE;
 	--background-color-priority-1-b: #E1E1E1;
 	--background-color-priority-2: #DADADA;
+	--background-color-priority-2-a: #E0E0E0;
+    --background-color-priority-2-b: #D4D4D4;
 	--background-color-priority-3: #CCCCCC;
 	--background-color-priority-4: #BEBEBE;
 	--background-color-priority-5: #B0B0B0;
@@ -42,6 +44,8 @@
 	--paragraph-background-color-priority-0-b: #EFEFEF;
 	--paragraph-background-color-priority-1-a: #EEEEEE;
 	--paragraph-background-color-priority-1-b: #E1E1E1;
+	--paragraph-background-color-priority-2-a: #E0E0E0;
+	--paragraph-background-color-priority-2-b: #D4D4D4;
 
 	--foreground-color-selected-priority-0: #303030;
 	--foreground-color-selected-priority-1: #303030;
