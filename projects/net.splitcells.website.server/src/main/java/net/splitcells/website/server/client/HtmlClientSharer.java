@@ -6,10 +6,11 @@ package net.splitcells.website.server.client;
 import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.resource.HostHardware;
+import net.splitcells.dem.resource.Semaphore;
 
-import java.util.concurrent.Semaphore;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.resource.Semaphore.semaphore;
 import static net.splitcells.website.server.client.HtmlClientImpl.htmlClientImpl;
 import static net.splitcells.website.server.client.HtmlClientShare.htmlClientShare;
 
@@ -23,7 +24,7 @@ public class HtmlClientSharer {
 
     private final List<HtmlClient> freeClients = list();
     private final List<HtmlClient> usedClients = list();
-    private static final Semaphore clientWait = new Semaphore(0);
+    private static final Semaphore clientWait = semaphore();
     private final int maxClientCount = HostHardware.cpuCoreCount();
 
     private HtmlClientSharer() {
@@ -42,14 +43,14 @@ public class HtmlClientSharer {
                     return htmlClient;
                 }
             }
-            clientWait.acquireUninterruptibly();
+            clientWait.acquirePermit();
         }
     }
 
     private synchronized HtmlClient giveBack(HtmlClient client) {
         usedClients.delete(client);
         freeClients.add(client);
-        clientWait.release();
+        clientWait.releasePermit();
         return null;
     }
 
