@@ -14,7 +14,7 @@ jobs:
           set -e
           set -x
           apt update --fix-missing # $(pwd) = /workspace/splitcells-net/net.splitcells.network and --fix-missing is required on Codeberg. 
-          apt install -y bash curl git python3 openjdk-21-jdk maven
+          apt install -y bash curl git python3 openjdk-25-jdk maven
           mkdir -p ~/.ssh/
           set +x && echo "${{ secrets.SSH_WORKFLOW_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           set -x
