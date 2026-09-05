@@ -13,10 +13,10 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
+import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.CommonMarkConfig.commonMarkConfig;
-import static net.splitcells.dem.lang.tree.Tree.JSON_ARRAY;
-import static net.splitcells.dem.lang.tree.Tree.JSON_OBJECT;
+import static net.splitcells.dem.lang.tree.Tree.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
@@ -25,6 +25,11 @@ import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
 import static net.splitcells.dem.utils.StringUtils.multiple;
 
 public class TreeTest {
+
+    @UnitTest public void testToMultilineStringPathsDescription() {
+        requireEquals(toMultilineStringPathsDescription(list("a", "b")), "a\\nb");
+        requireEquals(toMultilineStringPathsDescription(list()), "");
+    }
 
     @UnitTest public void testToXmlStringWithPrefixes() {
         final var testSubject = tree("test")
@@ -44,7 +49,7 @@ public class TreeTest {
         requireEquals(tree("some-wrapped-text", NATURAL).withChild(tree("wrap", NATURAL)).toXmlStringWithPrefixes(), "<n:some-wrapped-text><n:wrap/></n:some-wrapped-text>");
         requireEquals(tree("some-text", DEN).toXmlStringWithPrefixes(), "<d:some-text/>");
         requireEquals(tree("some-wrapped-text", DEN).withValue("wrap", DEN).toXmlStringWithPrefixes(), "<d:some-wrapped-text><d:wrap/></d:some-wrapped-text>");
-        
+
     }
 
     @UnitTest
