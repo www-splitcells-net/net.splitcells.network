@@ -9,6 +9,8 @@ import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.utils.StringUtils;
 
+import java.util.Optional;
+
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
@@ -28,8 +30,8 @@ public class TreeTest {
         final var testSubject = tree("test")
                 .withChild(tree("path-start")
                         .withChild(tree("path-end")
-                                .withProperty("a", "b")
-                                .withProperty("b", "c")));
+                                .withProperty("a", TEXT, tree("b", STRING))
+                                .withOptionalProperty("b", Optional.of("c"))));
         requireEquals(testSubject.toXmlStringWithPrefixes(), "<nt:test><nt:path-start><nt:path-end><nt:a>b</nt:a><nt:b>c</nt:b></nt:path-end></nt:path-start></nt:test>");
         requireEquals(tree("").toXmlStringWithPrefixes(), "<empty/>");
         requireEquals(tree("a&b").toXmlStringWithPrefixes(), "a&amp;b");
