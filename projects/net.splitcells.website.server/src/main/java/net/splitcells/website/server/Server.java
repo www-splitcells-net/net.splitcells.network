@@ -54,7 +54,6 @@ import javax.net.ssl.SSLHandshakeException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -65,6 +64,7 @@ import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.execution.EffectWorkerPool.effectWorkerPool;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.resource.Semaphore.semaphore;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.log.LogLevel.ERROR;
 import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
@@ -409,25 +409,23 @@ public class Server {
                                 });
                     }
                 }, deploymentOptions);
-                final var deployWaiter = new Semaphore(1);
+                final var deployWaiter = semaphore(1);
                 final List<Throwable> errors = list();
                 try {
-                    deployWaiter.acquire();
+                    deployWaiter.acquirePermit();
                 } catch (Throwable t) {
-                    Thread.currentThread().interrupt();
-                    throw ExecutionException.execException("Could not start HTTP server.");
+                    throw ExecutionException.execException("Could not start HTTP server.", t);
                 }
                 deployResult.onComplete(result -> {
                     if (result.failed()) {
                         errors.add(result.cause());
                     }
-                    deployWaiter.release();
+                    deployWaiter.releasePermit();
                 });
                 try {
-                    deployWaiter.acquire();
+                    deployWaiter.acquirePermit();
                 } catch (Throwable t) {
-                    Thread.currentThread().interrupt();
-                    throw ExecutionException.execException("An error occurred during start of the HTTP server.");
+                    throw ExecutionException.execException("An error occurred during start of the HTTP server.", t);
                 }
                 if (!errors.isEmpty()) {
                     throw ExecutionException.execException("Could not start HTTP server.", errors.getFirst());
