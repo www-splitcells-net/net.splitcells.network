@@ -23,7 +23,6 @@ import net.splitcells.website.server.processor.Response;
 import net.splitcells.website.server.security.access.AccessContainer;
 
 import java.util.Optional;
-import java.util.concurrent.Semaphore;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.Dem.handleInterrupt;
@@ -33,6 +32,7 @@ import static net.splitcells.dem.lang.tree.CommonMarkConfig.commonMarkConfig;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
 import static net.splitcells.dem.resource.ContentType.TEXT;
+import static net.splitcells.dem.resource.Semaphore.semaphore;
 import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessage;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.need.NeedsCheck.runWithCheckedNeeds;
@@ -158,13 +158,13 @@ public class EditorProcessor implements Processor<Tree, Tree> {
             renderingTypes.withProperty(OPTIMIZATION_STATUS, PLAIN_TEXT);
             dataTypes.withProperty(OPTIMIZATION_STATUS_HISTORY, TEXT.codeName());
             renderingTypes.withProperty(OPTIMIZATION_STATUS_HISTORY, PLAIN_TEXT);
-            val statusWaiter = new Semaphore(0, true);
+            val statusWaiter = semaphore();
             if (isFirstRequest) {
                 Dem.executeThread(EditorProcessor.class, () -> {
                     try {
-                        editor.optimize(() -> statusWaiter.release());
+                        editor.optimize(() -> statusWaiter.releasePermit());
                     } catch (Throwable t) {
-                        statusWaiter.release();
+                        statusWaiter.releasePermit();
                         // TODO TOFIX Otherwise, the error would not be logged. Dem#executeThread does not work in this regard.
                         logs().fail(execException("Could not optimize problem.", t));
                     } finally {
@@ -172,11 +172,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                         editorAccess.delete(userSession);
                     }
                 });
-                try {
-                    statusWaiter.acquire();
-                } catch (InterruptedException e) {
-                    handleInterrupt(e);
-                }
+                statusWaiter.acquirePermit();
                 dataValues.withProperty(OPTIMIZATION_STATUS
                         , editor.currentOptimizationStatus().toCommonMarkString());
             } else {
