@@ -80,7 +80,7 @@ public class HtmlClientImpl implements HtmlClient {
                 browser = playwright.firefox().launch();
             } catch (Throwable t) {
                 playwright.close();
-                throw execException(t);
+                throw execException("Playwright could not be initialized. Consider deleting `.cache/ms-playwright/`, to fix the problem.", t);
             }
         }
     }
