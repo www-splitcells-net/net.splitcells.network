@@ -5,9 +5,9 @@ package net.splitcells.dem.execution;
 
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
+import net.splitcells.dem.resource.Semaphore;
 
-import java.util.concurrent.Semaphore;
-
+import static net.splitcells.dem.resource.Semaphore.semaphore;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
@@ -25,8 +25,8 @@ public class Processing<Argument, Result> {
         return new Processing<>();
     }
 
-    private final Semaphore resultWaiter = new Semaphore(0, true);
-    private final Semaphore argumentWaiter = new Semaphore(0, true);
+    private final Semaphore resultWaiter = semaphore();
+    private final Semaphore argumentWaiter = semaphore();
     private Argument argument;
     private Result result;
 
@@ -39,15 +39,8 @@ public class Processing<Argument, Result> {
      * @return Returns the arguments for the processing.
      */
     public Argument argument() {
-        final Argument resultArgument;
-        try {
-            argumentWaiter.acquire();
-            resultArgument = argument;
-            return resultArgument;
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            throw execException(e);
-        }
+        argumentWaiter.acquirePermit();
+        return argument;
     }
 
     /**
@@ -58,7 +51,7 @@ public class Processing<Argument, Result> {
      */
     public Processing<Argument, Result> withResult(Result argResult) {
         result = argResult;
-        resultWaiter.release();
+        resultWaiter.releasePermit();
         return this;
     }
 
@@ -69,20 +62,15 @@ public class Processing<Argument, Result> {
      * @return
      */
     public synchronized Result processResult(Argument argArgument) {
-        try {
-            argument = argArgument;
-            argumentWaiter.release();
-            resultWaiter.acquire();
-            return result;
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            throw execException(e);
-        }
+        argument = argArgument;
+        argumentWaiter.releasePermit();
+        resultWaiter.acquirePermit();
+        return result;
     }
 
     public synchronized Processing<Argument, Result> withArgument(Argument argArgument) {
         argument = argArgument;
-        argumentWaiter.release();
+        argumentWaiter.releasePermit();
         return this;
     }
 
@@ -94,12 +82,7 @@ public class Processing<Argument, Result> {
      */
     @ReturnsThis
     public synchronized Result result() {
-        try {
-            resultWaiter.acquire();
-            return result;
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            throw execException(e);
-        }
+        resultWaiter.acquirePermit();
+        return result;
     }
 }
