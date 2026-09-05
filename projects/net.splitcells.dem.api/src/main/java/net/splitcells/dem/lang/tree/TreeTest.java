@@ -26,6 +26,11 @@ import static net.splitcells.dem.utils.StringUtils.multiple;
 
 public class TreeTest {
 
+    @UnitTest public void testPropertyInstance() {
+        requireEquals(tree("").propertyInstance("something", STRING), Optional.empty());
+        requireEquals(tree("").withProperty("a", STRING, "b").propertyInstance("a", STRING), Optional.of(tree("a", STRING).withChild(tree("b", STRING))));
+    }
+
     @UnitTest public void testToMultilineStringPathsDescription() {
         requireEquals(toMultilineStringPathsDescription(list("a", "b")), "a\\nb");
         requireEquals(toMultilineStringPathsDescription(list()), "");
