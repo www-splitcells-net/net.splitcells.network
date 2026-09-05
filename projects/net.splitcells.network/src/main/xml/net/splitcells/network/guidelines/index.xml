@@ -55,11 +55,9 @@
     </chapter>
     <chapter>
         <title>Base Rule</title>
-        <paragraph>The project and its parts should be portable, extendable, adaptable,
-            <link>
-                <text>deletable</text>
-                <url>https://programmingisterrible.com/post/139222674273/how-to-write-disposable-code-in-large-systems
-                </url>
+        <paragraph>The project and its parts should be portable, extendable, adaptable and
+            <link url="https://programmingisterrible.com/post/139222674273/how-to-write-disposable-code-in-large-systems">
+                deletable
             </link>
             .
         </paragraph>
