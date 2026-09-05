@@ -27,13 +27,13 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Optional;
-import java.util.concurrent.Semaphore;
 import java.util.function.Consumer;
 
 import static net.splitcells.dem.ProcessResult.processResult;
 import static net.splitcells.dem.data.set.list.Lists.*;
 import static net.splitcells.dem.environment.config.StaticFlags.logStaticFlags;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.resource.Semaphore.semaphore;
 import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
@@ -73,11 +73,7 @@ public class Dem {
      * <p>Pauses/freezes the current thread.</p>
      */
     public static void waitIndefinitely() {
-        try {
-            new Semaphore(1).acquire(2);
-        } catch (InterruptedException e) {
-            handleInterrupt(e);
-        }
+            semaphore(0).acquire(a -> {});
     }
 
     public static void handleInterrupt(InterruptedException e) {
