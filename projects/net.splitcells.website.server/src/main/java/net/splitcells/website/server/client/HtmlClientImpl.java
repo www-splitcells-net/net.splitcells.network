@@ -256,6 +256,10 @@ public class HtmlClientImpl implements HtmlClient {
         }
     }
 
+    /**
+     * Playwright needs to be closed, if the instance has any driver related errors.
+     * Otherwise, the external Playwright process will keep running. 
+     */
     @Override
     public void close() {
         synchronized (playwrightSynchronizer) {
