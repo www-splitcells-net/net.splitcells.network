@@ -123,23 +123,6 @@ public class CommonFunctions {
         return sw.toString();
     }
 
-    public static void appendToFile(Path filePath, String content) {
-        try {
-            File file = filePath.toFile();
-            if (!file.exists() && !file.createNewFile()) {
-                throw ExecutionException.execException("Could not create file: " + filePath);
-            }
-            try (FileOutputStream basicOutput = new FileOutputStream(file);
-                 OutputStreamWriter managedOutput = new OutputStreamWriter(basicOutput, StandardCharsets.UTF_8);
-                 FileLock outputFileLock = basicOutput.getChannel().lock()) {
-                managedOutput.append(content);
-                managedOutput.flush();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @SafeVarargs
     private static <T> T[] createArray(int capacity, T... dummyArray) {
         return Arrays.copyOf(dummyArray, capacity);
