@@ -22,6 +22,7 @@ import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.environment.config.ProgramsDiscoveryPath;
+import net.splitcells.dem.object.Discoverable;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
 import net.splitcells.gel.data.assignment.Assignments;
@@ -98,6 +99,12 @@ public class SolutionBuilder implements DefineDemandAttributes, DefineDemands, D
     public ProblemGenerator withConstraint(Constraint constraint) {
         initAllocations();
         this.constraint = constraint;
+        return this;
+    }
+
+    @Override public ProblemGenerator withConstraintBuilder(Function<Discoverable, Constraint> builder) {
+        initAllocations();
+        constraint = builder.apply(assignments);
         return this;
     }
 
