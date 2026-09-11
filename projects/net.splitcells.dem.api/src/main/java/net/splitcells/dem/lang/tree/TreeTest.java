@@ -31,6 +31,12 @@ public class TreeTest {
         requireEquals(tree("").propertyInstance("something", STRING), Optional.empty());
         requireEquals(tree("").withProperty("a", STRING, "b").propertyInstance("a", STRING), Optional.of(tree("a", STRING).withChild(tree("b", STRING))));
     }
+    
+    @UnitTest public void testChildNamed() {
+        val testData = tree("").withChild(tree("something", STRING).withChild(tree("abc")));
+        requireEquals(testData.childNamed("anything", STRING), Optional.empty());
+        requireEquals(testData.childNamed("something", STRING), Optional.of(tree("something", STRING).withChild(tree("abc"))));
+    }
 
     @UnitTest public void testToMultilineStringPathsDescription() {
         requireEquals(toMultilineStringPathsDescription(list("a", "b")), "a\\nb");
