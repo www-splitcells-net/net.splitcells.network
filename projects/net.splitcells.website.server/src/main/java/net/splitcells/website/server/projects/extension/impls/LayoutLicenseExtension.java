@@ -42,7 +42,11 @@ public class LayoutLicenseExtension implements ProjectsRendererExtension {
                                         return "/" + ps;
                                     })
                                     .sorted()
-                                    .map(p -> "<li><a href=\"" + p + "\">" + p + "</a></li>")
+                                    .map(p -> "<li><a href=\"" + p + "\">"
+                                            + p
+                                            + " ("
+                                            + projectsRendererI.metaData(p).map(md -> md.getLicense().getSpdxLicenseIdentifier().orElse("unknown license")).orElse("unknown license")
+                                            + ")</a></li>")
                                     .reduce((a, b) -> a + b)
                                     .orElse("")
                                     + "</ol>"
