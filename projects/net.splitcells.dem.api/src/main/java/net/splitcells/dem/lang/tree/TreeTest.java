@@ -21,6 +21,7 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
+import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
 import static net.splitcells.dem.utils.StringUtils.multiple;
 
@@ -267,6 +268,13 @@ public class TreeTest {
         testResult.childrenPath(0, 0, 0, 1).children().requireSizeOf(1);
         requireEquals(testResult.childrenPath(0, 0, 0, 1, 0).name(), "g");
         testResult.childrenPath(0, 0, 0, 1, 0).children().requireEmpty();
+    }
+    
+    @UnitTest public void testRequireEqualsTo() {
+        tree("a").withChild(tree("b")).requireEqualsTo(tree("a").withChild(tree("b")));
+        requireThrow(() -> tree("a").requireEqualsTo(tree("b")));
+        requireThrow(() -> tree("a").requireEqualsTo(tree("a", STRING)));
+        requireThrow(() -> tree("a").requireEqualsTo(tree("b").withChild(tree("c"))));
     }
 
     @UnitTest public void testWithChildren() {
