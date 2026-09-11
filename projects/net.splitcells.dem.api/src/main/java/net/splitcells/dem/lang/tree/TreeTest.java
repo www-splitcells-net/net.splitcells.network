@@ -291,8 +291,13 @@ public class TreeTest {
         testResult.childrenPath(0, 0, 0, 1, 0).children().requireEmpty();
     }
 
-    @UnitTest
-    public void testChildrenPath() {
+    @UnitTest public void testWithChildren() {
+        final var testSubject = tree("a").withChildren(list(tree("b"), tree("c")).stream());
+        requireEquals(testSubject.child(0), tree("b"));
+        requireEquals(testSubject.child(1), tree("c"));
+    }
+
+    @UnitTest public void testChildrenPath() {
         final var testSubject = tree("a");
         testSubject.withProperty("b", tree("c").withChildren(tree("e"), tree("f")));
         requireEquals(testSubject.childrenPath(0, 0, 0).name(), "e");
