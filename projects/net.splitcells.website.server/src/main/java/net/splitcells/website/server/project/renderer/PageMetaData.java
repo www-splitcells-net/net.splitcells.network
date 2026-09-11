@@ -3,8 +3,16 @@
  */
 package net.splitcells.website.server.project.renderer;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+import net.splitcells.dem.resource.License;
+
 import java.util.Optional;
 
+import static net.splitcells.dem.resource.License.license;
+
+@Accessors(chain = true)
 public class PageMetaData {
     public static PageMetaData pageMetaData(String path) {
         return new PageMetaData(path);
@@ -22,6 +30,8 @@ public class PageMetaData {
      * In this case, moving or renaming the original document can break links.</p>
      */
     private Optional<String> alternativeNameOfIndexedFolder = Optional.empty();
+    
+    @Getter @Setter private License license = license();
 
     public PageMetaData(String path) {
         this.path = path;
