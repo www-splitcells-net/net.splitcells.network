@@ -271,8 +271,8 @@ public class TreeTest {
 
     @UnitTest public void testWithChildren() {
         final var testSubject = tree("a").withChildren(list(tree("b"), tree("c")).stream());
-        requireEquals(testSubject.child(0), tree("b"));
-        requireEquals(testSubject.child(1), tree("c"));
+        testSubject.child(0).requireEqualsTo(tree("b"));
+        testSubject.child(1).requireEqualsTo(tree("c"));
     }
 
     @UnitTest public void testChildrenPath() {
