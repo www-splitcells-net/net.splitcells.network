@@ -55,6 +55,7 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
         if (xmlPath.isPresent()) {
             val metaData = pageMetaData(path);
             val document = Xml.parse(projectRenderer.projectFileSystem().readString(xmlPath.get()));
+            metaData.setLicense(projectRenderer.projectFileSystem().license(xmlPath.get()));
             if (NameSpaces.SEW.uri().equals(document.getDocumentElement().getNamespaceURI())) {
                 val metaElement = optionalDirectChildElementsByName(document.getDocumentElement(), "meta", NameSpaces.SEW);
                 if (metaElement.isPresent()) {
