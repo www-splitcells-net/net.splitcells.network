@@ -40,6 +40,10 @@ public class License {
 
     @Getter @Setter private Optional<String> spdxLicenseIdentifier = Optional.empty();
     @Getter @Setter private Optional<String> spdxCopyrightText = Optional.empty();
+    
+    public boolean hasInfo() {
+        return spdxLicenseIdentifier.isPresent();
+    }
 
     private License() {
         // Nothing as to be done here.

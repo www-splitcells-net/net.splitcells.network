@@ -164,4 +164,12 @@ public class FileSystemUnionView implements FileSystemView {
     public FileSystemView subFileSystemView(String path) {
         return new FileSystemUnionView(uniqueFiles, enforceUniqueFiles, fileSystems, basePath.resolve(path));
     }
+
+    @Override public License license(String path) {
+        return fileSystems.stream()
+                .map(fs -> fs.license(path))
+                .filter(License::hasInfo)
+                .findFirst()
+                .orElse(License.license());
+    }
 }
