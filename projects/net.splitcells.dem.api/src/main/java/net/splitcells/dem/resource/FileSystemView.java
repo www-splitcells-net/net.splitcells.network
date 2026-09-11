@@ -79,4 +79,8 @@ public interface FileSystemView {
     default License license(String path) {
         return License.license();
     }
+
+    default License license(Path path) {
+        return license(path.toString());
+    }
 }
