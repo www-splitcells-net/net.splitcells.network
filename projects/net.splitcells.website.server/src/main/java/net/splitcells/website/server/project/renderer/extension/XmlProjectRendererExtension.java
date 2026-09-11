@@ -48,8 +48,9 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
 
     }
 
-    @Override
-    public Optional<PageMetaData> metaData(RenderRequest renderRequest, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+    @Override public Optional<PageMetaData> metaData(RenderRequest renderRequest
+            , ProjectsRenderer projectsRenderer
+            , ProjectRenderer projectRenderer) {
         val path = renderRequest.trail().unixPathString();
         val xmlPath = xmlPath(path, projectsRenderer, projectRenderer);
         if (xmlPath.isPresent()) {
@@ -87,8 +88,9 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
         return Optional.empty();
     }
 
-    @Override
-    public Optional<BinaryMessage> renderFile(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+    @Override public Optional<BinaryMessage> renderFile(String path
+            , ProjectsRenderer projectsRenderer
+            , ProjectRenderer projectRenderer) {
         if (path.endsWith(".html")) {
             final var xmlPath = xmlPath(path, projectsRenderer, projectRenderer);
             final var pathFolder = StreamUtils.stream(path.split("/"))
@@ -185,8 +187,7 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
         }
     }
 
-    @Override
-    public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
+    @Override public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         final var projectPaths = Sets.<Path>setOfUniques();
         final var sourceFolder = Path.of("src/main/xml");
         // TODO Move this code block into a function, in order to avoid
@@ -212,8 +213,9 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
         return emptyStream();
     }
 
-    @Override
-    public Optional<BinaryMessage> sourceCode(String path, ProjectsRenderer projectsRenderer, ProjectRenderer projectRenderer) {
+    @Override public Optional<BinaryMessage> sourceCode(String path
+            , ProjectsRenderer projectsRenderer
+            , ProjectRenderer projectRenderer) {
         final String normalizedPath;
         if (path.endsWith(".html")) {
             normalizedPath = path.substring(0, path.lastIndexOf(".html")) + ".xml";
@@ -227,8 +229,7 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
         return Optional.empty();
     }
 
-    @Override
-    public Set<Path> relevantProjectPaths(ProjectRenderer projectRenderer) {
+    @Override public Set<Path> relevantProjectPaths(ProjectRenderer projectRenderer) {
         return projectPaths(projectRenderer);
     }
 }
