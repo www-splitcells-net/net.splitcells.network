@@ -8,6 +8,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.lang.Xml;
 import net.splitcells.dem.lang.namespace.NameSpaces;
+import net.splitcells.dem.resource.Trail;
 import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.website.server.project.LayoutConfig;
 import net.splitcells.website.server.project.ProjectRenderer;
@@ -15,6 +16,7 @@ import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.RenderRequest;
+import net.splitcells.website.server.security.authentication.UserSession;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -30,6 +32,7 @@ import static net.splitcells.website.Format.XML;
 import static net.splitcells.website.server.project.LayoutConfig.layoutConfig;
 import static net.splitcells.website.server.processor.BinaryMessage.binaryMessage;
 import static net.splitcells.website.server.project.renderer.PageMetaData.pageMetaData;
+import static net.splitcells.website.server.projects.RenderRequest.renderRequest;
 
 /**
  * Projects the file tree located "src/main/xml/" of the project's folder.
@@ -47,6 +50,15 @@ public class XmlProjectRendererExtension implements ProjectRendererExtension {
     private XmlProjectRendererExtension() {
 
     }
+
+    @Override public Optional<PageMetaData> metaData(String path
+            , ProjectsRenderer projectsRenderer
+            , ProjectRenderer projectRenderer) {
+        return metaData(renderRequest(Trail.trail(path), Optional.empty(), UserSession.ANONYMOUS_USER_SESSION)
+                , projectsRenderer
+                , projectRenderer);
+    }
+
 
     @Override public Optional<PageMetaData> metaData(RenderRequest renderRequest
             , ProjectsRenderer projectsRenderer
