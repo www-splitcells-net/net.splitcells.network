@@ -31,7 +31,7 @@ public class TreeTest {
         requireEquals(tree("").propertyInstance("something", STRING), Optional.empty());
         requireEquals(tree("").withProperty("a", STRING, "b").propertyInstance("a", STRING), Optional.of(tree("a", STRING).withChild(tree("b", STRING))));
     }
-    
+
     @UnitTest public void testChildNamed() {
         val testData = tree("").withChild(tree("something", STRING).withChild(tree("abc")));
         requireEquals(testData.childNamed("anything", STRING), Optional.empty());
@@ -64,13 +64,11 @@ public class TreeTest {
 
     }
 
-    @UnitTest
-    public void testXmlName() {
+    @UnitTest public void testXmlName() {
         requireEquals(tree("&<>\"'~").xmlName(), "&amp;&lt;&gt;&quot;&apos;&Tilde;");
     }
 
-    @UnitTest
-    public void testToXmlString() {
+    @UnitTest public void testToXmlString() {
         final var article = TreeI.tree("article", SEW);
         final var content = TreeI.tree("content", SEW);
         content.withChild(TreeI.tree("deck", SEW));
@@ -84,8 +82,7 @@ public class TreeTest {
         requireEquals(tree("article", SEW).toXmlString(true), "<article xmlns=\"http://splitcells.net/sew.xsd\"/>");
     }
 
-    @UnitTest
-    public void testWithPath() {
+    @UnitTest public void testWithPath() {
         final var testSubject = TreeI.tree("article", SEW)
                 .withPath(TreeI.tree("content", SEW)
                         , TreeI.tree("deck", SEW));
@@ -93,8 +90,7 @@ public class TreeTest {
                 , "<article xmlns=\"http://splitcells.net/sew.xsd\"><content><deck/></content></article>");
     }
 
-    @UnitTest
-    public void testToJsonStringWithPathToDictionary() {
+    @UnitTest public void testToJsonStringWithPathToDictionary() {
         final var testSubject = tree("")
                 .withChild(tree("path start")
                         .withChild(tree("path end")
@@ -103,8 +99,7 @@ public class TreeTest {
         requireEquals(testSubject.toJsonString(), "{\"\":{\"path start\":{\"path end\":{\"a\":\"b\",\"b\":\"c\"}}}}");
     }
 
-    @UnitTest
-    public void testToJsonWithExplicitArray() {
+    @UnitTest public void testToJsonWithExplicitArray() {
         final var testSubject = tree("").withChildren(
                 tree(JSON_ARRAY, JSON).withChildren(tree("1"))
                 , tree("children").withChild(tree(JSON_ARRAY, JSON).withChildren(tree("2")))
@@ -113,8 +108,7 @@ public class TreeTest {
         requireEquals(testSubject.toJsonString(), "{\"\":[[\"1\"],\"children\":[\"2\"],[\"3\",\"5\"]]}");
     }
 
-    @UnitTest
-    public void testToJsonWithExplicitObject() {
+    @UnitTest public void testToJsonWithExplicitObject() {
         final var testSubject = tree(JSON_OBJECT, JSON).withChildren(
                 tree(JSON_OBJECT, JSON).withChildren(tree("1").withChild(tree("2")))
                 , tree("4").withChild(tree("5"))
@@ -122,8 +116,7 @@ public class TreeTest {
         requireEquals(testSubject.toJsonString(), "{{\"1\":\"2\"},\"4\":\"5\"}");
     }
 
-    @UnitTest
-    public void testToJsonStringWithPathToArray() {
+    @UnitTest public void testToJsonStringWithPathToArray() {
         final var testSubject = tree("")
                 .withChild(tree("path start")
                         .withChild(tree("path end")
@@ -131,22 +124,19 @@ public class TreeTest {
         requireEquals(testSubject.toJsonString(), "{\"\":{\"path start\":{\"path end\":[\"1\",\"2\"]}}}");
     }
 
-    @UnitTest
-    public void testToJsonStringWithNamedArray() {
+    @UnitTest public void testToJsonStringWithNamedArray() {
         final var testSubject = tree("")
                 .withChild(tree("name")
                         .withChildren(tree("3"), tree("4")));
         requireEquals(testSubject.toJsonString(), "{\"\":{\"name\":[\"3\",\"4\"]}}");
     }
 
-    @UnitTest
-    public void testEncodeJsonString() {
+    @UnitTest public void testEncodeJsonString() {
         final var testSubject = tree("").withChild(tree("\\\n\r\t\""));
         requireEquals(testSubject.toJsonString(), "{\"\":\"\\\\\\n\\r\\t\\\"\"}");
     }
 
-    @UnitTest
-    public void testToJsonStringWithArray() {
+    @UnitTest public void testToJsonStringWithArray() {
         final var testSubject = tree("")
                 .withChild(tree("1\n"))
                 .withChild(tree("2\r"))
@@ -154,8 +144,7 @@ public class TreeTest {
         requireEquals(testSubject.toJsonString(), "{\"\":[\"1\\n\",\"2\\r\",\"3\"]}");
     }
 
-    @UnitTest
-    public void testToJsonStringWithDictionary() {
+    @UnitTest public void testToJsonStringWithDictionary() {
         final var testSubject = tree("")
                 .withProperty("1", "2\n")
                 .withProperty("3", "4")
@@ -163,8 +152,7 @@ public class TreeTest {
         requireEquals(testSubject.toJsonString(), "{\"\":{\"1\":\"2\\n\",\"3\":\"4\",\"4\":\"5\\r\"}}");
     }
 
-    @UnitTest
-    public void testToJsonStringWithNamedDictionary() {
+    @UnitTest public void testToJsonStringWithNamedDictionary() {
         final var testSubject = tree("").withChild(
                 tree("name\r\n")
                         .withProperty("1", "2")
@@ -173,8 +161,7 @@ public class TreeTest {
         requireEquals(testSubject.toJsonString(), "{\"\":{\"name\\r\\n\":{\"1\":\"2\",\"3\":\"4\",\"4\":\"5\"}}}");
     }
 
-    @UnitTest
-    public void testToJsonStringWithNestedDictionary() {
+    @UnitTest public void testToJsonStringWithNestedDictionary() {
         final var testSubject = tree("")
                 .withProperty("1", "2")
                 .withChild(tree("test")
@@ -185,8 +172,7 @@ public class TreeTest {
         requireEquals(testSubject.toJsonString(), "{\"\":{\"1\":\"2\",\"test\":{\"a\":\"b\\r\",\"c\":\"d\\n\"},\"3\":\"4\"}}");
     }
 
-    @UnitTest
-    public void testPrintCommonMarkString() {
+    @UnitTest public void testPrintCommonMarkString() {
         final var resultData = binaryOutputStream();
         final var testData = tree("Lorem ipsum dolor sit amet")
                 .withProperty("consectetur adipiscing elit", "Cras lobortis mi risus")
@@ -212,54 +198,47 @@ public class TreeTest {
                         """);
     }
 
-    @UnitTest
-    public void testToXmlStringWithPrefixesAndGenericNameSpaceCase() {
+    @UnitTest public void testToXmlStringWithPrefixesAndGenericNameSpaceCase() {
         final var resultData = TreeI.tree("test", SEW).withChild(TreeI.tree("case", SEW))
                 .toXmlStringWithPrefixes();
         requireEquals(resultData, "<s:test><s:case/></s:test>");
     }
 
-    @UnitTest
-    public void testToXmlStringWithAllNameSpaceDeclarationsAtTop() {
+    @UnitTest public void testToXmlStringWithAllNameSpaceDeclarationsAtTop() {
         final var resultData = TreeI.tree("test", SEW).withChild(TreeI.tree("case", SEW))
                 .toXmlStringWithAllNameSpaceDeclarationsAtTop();
         requireEquals(resultData, "<s:test xmlns:s=\"http://splitcells.net/sew.xsd\" ><s:case/></s:test>");
     }
 
-    @UnitTest
-    public void testToHtmlString() {
+    @UnitTest public void testToHtmlString() {
         final var testSubject = tree("html", HTML);
         testSubject.withProperty("xmlns", HTML_ATTRIBUTE, "http://www.w3.org/1999/xhtml");
         testSubject.withChild(tree("body", HTML));
         requireEquals(testSubject.toHtmlString(), "<html xmlns=\"http://www.w3.org/1999/xhtml\"><body/></html>");
     }
 
-    @UnitTest
-    public void testAsCompactXhtmlList() {
+    @UnitTest public void testAsCompactXhtmlList() {
         final var testSubject = tree("root");
         testSubject.withProperty("attribute", "value");
         testSubject.withChild(tree("child"));
         requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>root<ol><li>attribute<ol><li>value</li></ol></li><li>child</li></ol></li></ol>");
     }
 
-    @UnitTest
-    public void testAsCompactXhtmlListWithEmptyNodes() {
+    @UnitTest public void testAsCompactXhtmlListWithEmptyNodes() {
         final var testSubject = tree("");
         testSubject.withProperty("attribute", "value");
         testSubject.withChild(tree("child"));
         requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>attribute<ol><li>value</li></ol></li><li>child</li></ol>");
     }
 
-    @UnitTest
-    public void testAsCompactXhtmlListWithNestedEmptyNodes() {
+    @UnitTest public void testAsCompactXhtmlListWithNestedEmptyNodes() {
         final var testSubject = tree("");
         testSubject.withProperty("attribute", "value");
         testSubject.withProperty("", tree("").withProperty("", "child"));
         requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>attribute<ol><li>value</li></ol></li><li>child</li></ol>");
     }
 
-    @UnitTest
-    public void testAsCompactXhtmlListWithNestedEmptyNodesWithEmptyNodes() {
+    @UnitTest public void testAsCompactXhtmlListWithNestedEmptyNodesWithEmptyNodes() {
         final var testSubject = tree("");
         testSubject.withChild(tree(""));
         testSubject.withProperty("attribute", STRING, "value");
@@ -269,8 +248,7 @@ public class TreeTest {
         requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>attribute<ol><li>value</li></ol></li><li>child</li></ol>");
     }
 
-    @UnitTest
-    public void testWithMerged() {
+    @UnitTest public void testWithMerged() {
         final var testSubject = tree("a");
         testSubject.withProperty("b", tree("c").withProperty("d", "e"));
         final var argument = tree("b").withProperty("c", tree("d").withProperty("f", "g"));
