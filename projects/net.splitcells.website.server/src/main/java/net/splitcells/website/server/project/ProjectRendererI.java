@@ -49,6 +49,7 @@ import static net.splitcells.website.server.project.renderer.extension.ZipProjec
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkChangelogEventProjectRendererExtension.commonMarkChangelogEventRenderer;
 import static net.splitcells.website.server.project.renderer.extension.commonmark.CommonMarkProjectRendererExtension.commonMarkExtension;
 import static net.splitcells.website.server.projects.ProjectsRendererSourceCodeFileSystem.projectsRendererSourceCodeFileSystem;
+import static net.splitcells.website.server.projects.extension.impls.LayoutLicenseExtension.layoutLicenseExtension;
 
 /**
  * <p>TODO Use resource folder for xml, txt and etc.</p>
