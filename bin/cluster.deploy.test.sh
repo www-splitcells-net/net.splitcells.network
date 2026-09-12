@@ -9,4 +9,4 @@
 mkdir -p target/cluster.deploy.test.sh
 ../net.splitcells.network.hub/bin/net.splitcells.shell.repos.peers \
   | xargs -i sh -c "cd ../{} && test -f bin/cluster.nodes.sh && bin/cluster.nodes.sh" \
-  | xargs -i -P 10 sh -c "ssh -T {} echo 1 && bin/worker.test.at {} > target/cluster.deploy.test.sh/{}.log 2> target/cluster.deploy.test.sh/{}.error.log || echo Skipping {}"
+  | xargs -i -P 10 sh -c "ssh -T {} echo 1 && bin/worker.test.at {} > target/cluster.deploy.test.sh/{}.log 2> target/cluster.deploy.test.sh/{}.error.log || echo Skipping {}, as the machine is not available."
