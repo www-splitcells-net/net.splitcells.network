@@ -52,7 +52,7 @@ public class DefaultEditorOptimization implements EditorOptimization {
         }
         if (--currentSolutionIndex > -1) {
             val currentSolution = solutionPaths.get(currentSolutionPath).get(currentSolutionIndex);
-            if (currentSolutionIndex == solutionPaths.get(currentSolutionPath).size() - 1) {
+            if (currentSolutionIndex == solutionPaths.get(currentSolutionPath).lastIndex()) {
                 currentSolution.history().processWithHistory(() -> onlineLinearInitialization().optimize(currentSolution));
             }
             currentOptimizer = Optional.of(subOptimizerFactory.apply(currentSolution));
