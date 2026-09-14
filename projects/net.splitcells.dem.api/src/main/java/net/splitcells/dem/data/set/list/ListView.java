@@ -34,6 +34,13 @@ public interface ListView<T> extends Collection<T>, java.util.List<T>, Thing, Se
         shallowCopy.addAll(this);
         return shallowCopy;
     }
+    
+    default int lastIndex() {
+        if (isEmpty()) {
+            throw execException("Only not empty lists are supported.");
+        }
+        return size() - 1;
+    }
 
     default void requireComplianceByEveryElementWith(Predicate<T> constraint) {
         stream().filter(e -> !constraint.test(e)).findFirst().ifPresent(e -> {
