@@ -44,12 +44,12 @@ public class DefaultEditorOptimization implements OptimizationStep {
         currentSolutionIndex = solutionPaths.get(currentSolutionPath).size();
     }
 
-    @Override public Optional<OptimizationStep> runNextStep() {
+    @Override public Optional<OptimizationStep> runAndProvideNextStep() {
         solutionPaths.requireSizeOf(1, () -> getClass().getName() + " only supports a list of solutions and not a full tree or even graph of interdependent solutions."
                 + " In other words, every solution is only allowed to have at most 1 solution as its demand or supply."
                 + " Furthermore, the solution's interdependencies are not allowed to form a circle.");
         if (currentOptimizer.isPresent()) {
-            currentOptimizer = currentOptimizer.get().runNextStep();
+            currentOptimizer = currentOptimizer.get().runAndProvideNextStep();
             return Optional.of(this);
         }
         if (--currentSolutionIndex > -1) {
@@ -58,14 +58,14 @@ public class DefaultEditorOptimization implements OptimizationStep {
                 currentSolution.history().processWithHistory(() -> onlineLinearInitialization().optimize(currentSolution));
             }
             currentOptimizer = Optional.of(subOptimizerFactory.apply(currentSolution));
-            currentOptimizer = currentSolution.history().processWithHistory(cs -> cs.orElseThrow().runNextStep(), currentOptimizer);
+            currentOptimizer = currentSolution.history().processWithHistory(cs -> cs.orElseThrow().runAndProvideNextStep(), currentOptimizer);
             return Optional.of(this);
         } else {
             if (currentSolutionPath > solutionPaths.size() - 2) {
                 return Optional.empty();
             }
             currentSolutionIndex = solutionPaths.get(++currentSolutionPath).size();
-            return runNextStep();
+            return runAndProvideNextStep();
         }
     }
 

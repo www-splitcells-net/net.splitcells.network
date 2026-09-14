@@ -47,7 +47,7 @@ public class RepairOptimizationStep implements OptimizationStep {
                 , maxDepth, 0, maxDepth);
     }
 
-    @Override public Optional<OptimizationStep> runNextStep() {
+    @Override public Optional<OptimizationStep> runAndProvideNextStep() {
         if (++currentStep == 0) {
             // Ensures, that at the end of the optimization all values are assigned.
             onlineLinearInitialization().optimize(solution);

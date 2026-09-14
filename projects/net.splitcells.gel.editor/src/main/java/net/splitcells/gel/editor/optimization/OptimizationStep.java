@@ -9,10 +9,11 @@ import net.splitcells.dem.lang.tree.Tree;
 import java.util.Optional;
 
 /**
- * Defines an optimization
+ * This API defines a step in an optimization chain and points to the next step after this one is done.
+ * This is primarily used, in order to pause and generate status info about the progress. 
  */
 public interface OptimizationStep {
-    Optional<OptimizationStep> runNextStep();
+    Optional<OptimizationStep> runAndProvideNextStep();
 
     Tree status();
 }

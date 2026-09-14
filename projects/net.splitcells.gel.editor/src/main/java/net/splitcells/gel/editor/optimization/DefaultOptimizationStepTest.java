@@ -26,7 +26,7 @@ public class DefaultOptimizationStepTest {
         final List<Solution> processedSolutions = list();
         val testSubject = defaultEditorOptimization(editor, s -> new OptimizationStep() {
 
-            @Override public Optional<OptimizationStep> runNextStep() {
+            @Override public Optional<OptimizationStep> runAndProvideNextStep() {
                 processedSolutions.add(s);
                 if (s.isOptimal()) return Optional.empty();
                 return Optional.of(this);
@@ -36,9 +36,9 @@ public class DefaultOptimizationStepTest {
                 return tree("no-status");
             }
         });
-        var currentStep = testSubject.runNextStep();
+        var currentStep = testSubject.runAndProvideNextStep();
         while (currentStep.isPresent()) {
-            currentStep = currentStep.get().runNextStep();
+            currentStep = currentStep.get().runAndProvideNextStep();
         }
         processedSolutions.requireEquals(list(editor.getSolutions().get("courseAssignment")
                 , editor.getSolutions().get("courseScheduling")));

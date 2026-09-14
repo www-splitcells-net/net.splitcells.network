@@ -180,7 +180,7 @@ public class Editor implements Discoverable {
                 val previousStep = nextStep;
                 nextStep = optimizationLock.supply(() -> {
                     val currentStep = previousStep.get();
-                    val suppliedStep = currentStep.runNextStep();
+                    val suppliedStep = currentStep.runAndProvideNextStep();
                     optimizationStatusHistory.add(enhanceOptimizationStatus(currentStep.status()));
                     return suppliedStep;
                 });
