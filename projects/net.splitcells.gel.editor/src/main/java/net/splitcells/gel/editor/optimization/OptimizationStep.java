@@ -5,16 +5,14 @@
 package net.splitcells.gel.editor.optimization;
 
 import net.splitcells.dem.lang.tree.Tree;
-import net.splitcells.gel.editor.Editor;
 
 import java.util.Optional;
-import java.util.function.Supplier;
 
 /**
- * Defines an optimizer, that tackles all {@link Editor#getSolutions()}.
+ * Defines an optimization
  */
-public interface EditorOptimization {
-    Optional<EditorOptimization> runNextStep();
+public interface OptimizationStep {
+    Optional<OptimizationStep> runNextStep();
 
     Tree status();
 }

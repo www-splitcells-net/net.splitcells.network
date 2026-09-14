@@ -4,7 +4,6 @@
 package net.splitcells.gel.editor.optimization;
 
 import lombok.val;
-import net.splitcells.dem.Dem;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
@@ -23,7 +22,7 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.DemandSe
 import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
 import static net.splitcells.gel.solution.optimization.primitive.repair.SupplySelectors.hillClimber;
 
-public class RepairOptimizationStep implements EditorOptimization {
+public class RepairOptimizationStep implements OptimizationStep {
     public static RepairOptimizationStep repairOptimizationStep(Solution argSolution) {
         return new RepairOptimizationStep(argSolution);
     }
@@ -48,7 +47,7 @@ public class RepairOptimizationStep implements EditorOptimization {
                 , maxDepth, 0, maxDepth);
     }
 
-    @Override public Optional<EditorOptimization> runNextStep() {
+    @Override public Optional<OptimizationStep> runNextStep() {
         if (++currentStep == 0) {
             // Ensures, that at the end of the optimization all values are assigned.
             onlineLinearInitialization().optimize(solution);

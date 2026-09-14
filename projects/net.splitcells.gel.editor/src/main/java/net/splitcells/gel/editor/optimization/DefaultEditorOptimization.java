@@ -16,33 +16,35 @@ import java.util.function.Function;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.gel.editor.optimization.RepairOptimizationStep.repairOptimizationStep;
-import static net.splitcells.gel.solution.optimization.DefaultOptimization.defaultOptimization;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 
-public class DefaultEditorOptimization implements EditorOptimization {
-    public static EditorOptimization defaultEditorOptimization(Editor argEditor) {
+/**
+ * Defines an optimizer, that tackles all {@link Editor#getSolutions()}.
+ */
+public class DefaultEditorOptimization implements OptimizationStep {
+    public static OptimizationStep defaultEditorOptimization(Editor argEditor) {
         return new DefaultEditorOptimization(argEditor, cs -> repairOptimizationStep(cs));
     }
 
-    public static EditorOptimization defaultEditorOptimization(Editor argEditor, Function<Solution, EditorOptimization> argSubOptimizerFactory) {
+    public static OptimizationStep defaultEditorOptimization(Editor argEditor, Function<Solution, OptimizationStep> argSubOptimizerFactory) {
         return new DefaultEditorOptimization(argEditor, argSubOptimizerFactory);
     }
 
     private final Editor editor;
     private int currentSolutionPath = 0;
     private int currentSolutionIndex;
-    private Optional<EditorOptimization> currentOptimizer = Optional.empty();
+    private Optional<OptimizationStep> currentOptimizer = Optional.empty();
     private final List<List<Solution>> solutionPaths;
-    private final Function<Solution, EditorOptimization> subOptimizerFactory;
+    private final Function<Solution, OptimizationStep> subOptimizerFactory;
 
-    private DefaultEditorOptimization(Editor argEditor, Function<Solution, EditorOptimization> argSubOptimizerFactory) {
+    private DefaultEditorOptimization(Editor argEditor, Function<Solution, OptimizationStep> argSubOptimizerFactory) {
         subOptimizerFactory = argSubOptimizerFactory;
         editor = argEditor;
         solutionPaths = editor.solutionPaths();
         currentSolutionIndex = solutionPaths.get(currentSolutionPath).size();
     }
 
-    @Override public Optional<EditorOptimization> runNextStep() {
+    @Override public Optional<OptimizationStep> runNextStep() {
         solutionPaths.requireSizeOf(1, () -> getClass().getName() + " only supports a list of solutions and not a full tree or even graph of interdependent solutions."
                 + " In other words, every solution is only allowed to have at most 1 solution as its demand or supply."
                 + " Furthermore, the solution's interdependencies are not allowed to form a circle.");
@@ -84,7 +86,7 @@ public class DefaultEditorOptimization implements EditorOptimization {
                 .withProperty("Current solution path position", currentSolutionIndex + "/" + solutionPaths.get(currentSolutionPath).size())
                 .withProperty("Current solution path", currentSolutionPathDescription)
                 .withProperty("Current sub optimizer", currentOptimizer
-                        .map(EditorOptimization::status)
+                        .map(OptimizationStep::status)
                         .orElseGet(() -> tree("No sub optimizer present")))
                 .withProperty("Current solution rating", currentSolution.map(cs -> cs.name()
                         + ": "
