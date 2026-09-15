@@ -20,8 +20,10 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.common.Language.*;
+import static net.splitcells.gel.data.table.TableEvent.tableEvent;
 import static net.splitcells.gel.data.table.Tables.table2;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import net.splitcells.dem.data.atom.Integers;
@@ -31,14 +33,12 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.utils.ExecutionException;
-import net.splitcells.gel.data.table.Tables;
-import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.*;
+import net.splitcells.gel.data.table.history.TableEventType;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.data.view.column.ColumnView;
-import net.splitcells.gel.data.table.AfterAdditionSubscriber;
-import net.splitcells.gel.data.table.BeforeRemovalSubscriber;
 import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
@@ -327,8 +327,22 @@ public class AssignmentsI implements Assignments {
         throw notImplementedYet();
     }
 
-    @Override
-    public void remove(Line allocation) {
+    @Override public void process(TableEvent event) {
+        if (event.getType() == TableEventType.ADDITION) {
+            add(event.getLine());
+        } else if (event.getType() == TableEventType.REMOVAL) {
+            remove(event);
+        } else {
+            throw execException("Unknown table event type " + event.getType());
+        }
+    }
+
+    @Override public void remove(Line allocation) {
+        remove(tableEvent(allocation, TableEventType.REMOVAL));
+    }
+    
+    private void remove(TableEvent event) {
+        final var allocation = event.getLine();
         final var demand = demandOfAssignment(allocation);
         final var supply = supplyOfAssignment(allocation);
         if (TRACING) {
@@ -389,7 +403,7 @@ public class AssignmentsI implements Assignments {
             suppliesUsed.remove(supply);
             suppliesFree.addWithSameHeaderPrefix(supply);
         }
-        afterRemovalSubscriptions.forEach(listener -> listener.registerBeforeRemoval(allocation));
+        afterRemovalSubscriptions.forEach(listener -> listener.registerBeforeRemoval(event));
     }
 
     @Override
