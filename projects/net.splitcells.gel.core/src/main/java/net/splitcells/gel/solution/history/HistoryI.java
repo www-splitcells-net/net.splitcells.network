@@ -110,7 +110,7 @@ public class HistoryI implements History {
                     , demand
                     , supply
                     , metaData
-                    , reason.orElse(tree("Unknown reason")));
+                    , reason.orElseGet(() -> tree("Unknown reason")));
             solution.headerView().forEach(va -> values.add(allocationValues.value(va)));
             assignments.addTranslated(values);
         } else {
