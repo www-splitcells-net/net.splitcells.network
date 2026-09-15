@@ -24,8 +24,10 @@ import static net.splitcells.gel.solution.history.meta.type.CompleteRating.compl
 import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.TableEvent;
 import net.splitcells.gel.data.table.history.TableEventType;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.data.view.column.ColumnView;
@@ -39,6 +41,7 @@ import net.splitcells.gel.solution.history.meta.type.AllocationRating;
 import net.splitcells.gel.solution.history.meta.type.CompleteRating;
 import net.splitcells.website.server.project.renderer.DiscoverableRenderer;
 
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -76,8 +79,15 @@ public class HistoryI implements History {
         solution.subscribeToBeforeRemoval(this);
     }
 
-    @Override
-    public void registerAddition(Line allocationValues) {
+    @Override public void registerAddition(TableEvent event) {
+        registerAddition(event.getLine(), event.getReason());
+    }
+
+    @Override public void registerAddition(Line allocationValues) {
+        registerAddition(allocationValues, Optional.empty());
+    }
+
+    private void registerAddition(Line allocationValues, Optional<Tree> reason) {
         if (isRegisterEventIsEnabled) {
             final var metaData = metaData();
             metaData.with(CompleteRating.class
