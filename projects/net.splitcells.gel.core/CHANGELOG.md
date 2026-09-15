@@ -99,6 +99,7 @@
   2. Rename `SupplySelector` to `SupplyOfflineSelector`.
   3. Rename `SupplySelectors` to `SupplyOfflineSelectors`.
 ### Minor Changes
+* **2026-09-15 \#37** The history table now has a reason column.
 * **2026-04-08 \#37** Implement HasSizeFast.
 * **2026-04-08 \#37** Implement ThenAtLeastFastRater.
 * **2026-02-12 \#37** Tables can now be checked, if these are Solution instances instead via `Table#lookupAsSolution`.
