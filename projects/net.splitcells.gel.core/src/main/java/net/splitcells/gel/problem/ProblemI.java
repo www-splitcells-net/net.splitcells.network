@@ -10,8 +10,7 @@ import net.splitcells.dem.execution.EffectSynchronization;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.constraint.type.framework.ConstraintAspect;
 import net.splitcells.gel.data.assignment.Assignments;
-import net.splitcells.gel.data.table.TableSynchronization;
-import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.*;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.data.view.attribute.AttributeI;
@@ -19,8 +18,6 @@ import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.problem.derived.DerivedSolution;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.solution.Solutions;
-import net.splitcells.gel.data.table.BeforeRemovalSubscriber;
-import net.splitcells.gel.data.table.AfterAdditionSubscriber;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.solution.Solution;
@@ -203,6 +200,10 @@ public class ProblemI implements Problem {
     @Override
     public void remove(final Line line) {
         this.assignments.remove(line);
+    }
+    
+    @Override public void process(TableEvent event) {
+        assignments.process(event);
     }
 
     @Override

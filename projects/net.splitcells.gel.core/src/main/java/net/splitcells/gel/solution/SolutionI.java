@@ -8,8 +8,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.data.assignment.Assignments;
-import net.splitcells.gel.data.table.TableSynchronization;
-import net.splitcells.gel.data.table.Table;
+import net.splitcells.gel.data.table.*;
 import net.splitcells.gel.data.view.LinePointer;
 import net.splitcells.gel.rating.framework.Rating;
 import net.splitcells.gel.solution.history.History;
@@ -17,8 +16,6 @@ import net.splitcells.gel.solution.history.Histories;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.column.ColumnView;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.data.table.AfterAdditionSubscriber;
-import net.splitcells.gel.data.table.BeforeRemovalSubscriber;
 import net.splitcells.gel.data.view.attribute.Attribute;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.problem.derived.DerivedSolution;
@@ -184,6 +181,10 @@ public class SolutionI implements Solution {
     @SuppressWarnings("all")
     public void remove(final Line line) {
         this.problem.remove(line);
+    }
+    
+    @Override public void process(TableEvent event) {
+        problem.process(event);
     }
 
     @SuppressWarnings("all")
