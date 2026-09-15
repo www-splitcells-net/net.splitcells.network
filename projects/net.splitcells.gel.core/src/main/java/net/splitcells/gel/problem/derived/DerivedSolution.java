@@ -8,7 +8,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.object.Discoverable;
-import net.splitcells.gel.data.assignment.AfterAssignmentSubscriber;
+import net.splitcells.gel.data.assignment.AssignmentSubscriber;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.Table;
 import net.splitcells.gel.data.view.LinePointer;
@@ -126,8 +126,8 @@ public class DerivedSolution implements Solution {
         return assignments.demandsFree();
     }
 
-    @Override public void subscribeAfterAssignments(AfterAssignmentSubscriber subscriber) {
-        assignments.subscribeAfterAssignments(subscriber);
+    @Override public void subscribeAssignments(AssignmentSubscriber subscriber) {
+        assignments.subscribeAssignments(subscriber);
     }
 
     @Override

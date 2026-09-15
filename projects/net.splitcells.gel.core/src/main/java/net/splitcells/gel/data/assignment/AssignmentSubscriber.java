@@ -4,16 +4,12 @@
 package net.splitcells.gel.data.assignment;
 
 import net.splitcells.dem.data.set.SetT;
-import net.splitcells.gel.data.table.TableEvent;
-import net.splitcells.gel.data.view.Line;
 
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
-import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.utils.ExecutionException.execException;
-import static net.splitcells.gel.data.table.history.TableEventType.ADDITION;
 
 @FunctionalInterface
-public interface AfterAssignmentSubscriber {
+public interface AssignmentSubscriber {
 
     void registerAddition(AssignmentEvent event);
 

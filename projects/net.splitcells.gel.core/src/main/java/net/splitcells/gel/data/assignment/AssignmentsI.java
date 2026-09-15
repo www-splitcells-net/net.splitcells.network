@@ -23,7 +23,6 @@ import static net.splitcells.gel.common.Language.*;
 import static net.splitcells.gel.data.table.TableEvent.tableEvent;
 import static net.splitcells.gel.data.table.Tables.table2;
 
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import net.splitcells.dem.data.atom.Integers;
@@ -67,7 +66,7 @@ public class AssignmentsI implements Assignments {
     private final String names;
     private final Table assignments;
 
-    private final List<AfterAssignmentSubscriber> assignmentSubscribers = list();
+    private final List<AssignmentSubscriber> assignmentSubscribers = list();
     private final List<AfterAdditionSubscriber> additionSubscriptions = list();
     private final List<BeforeRemovalSubscriber> beforeRemovalSubscriptions = list();
     private final List<BeforeRemovalSubscriber> afterRemovalSubscriptions = list();
@@ -187,7 +186,7 @@ public class AssignmentsI implements Assignments {
         return demandsFree;
     }
 
-    @Override public void subscribeAfterAssignments(AfterAssignmentSubscriber subscriber) {
+    @Override public void subscribeAssignments(AssignmentSubscriber subscriber) {
         assignmentSubscribers.add(subscriber);
     }
 

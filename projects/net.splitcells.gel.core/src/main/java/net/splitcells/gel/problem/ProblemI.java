@@ -9,7 +9,7 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.execution.EffectSynchronization;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.constraint.type.framework.ConstraintAspect;
-import net.splitcells.gel.data.assignment.AfterAssignmentSubscriber;
+import net.splitcells.gel.data.assignment.AssignmentSubscriber;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.*;
 import net.splitcells.gel.data.view.Line;
@@ -127,8 +127,8 @@ public class ProblemI implements Problem {
         return this.assignments.demandsFree();
     }
 
-    @Override public void subscribeAfterAssignments(AfterAssignmentSubscriber subscriber) {
-        assignments.subscribeAfterAssignments(subscriber);
+    @Override public void subscribeAssignments(AssignmentSubscriber subscriber) {
+        assignments.subscribeAssignments(subscriber);
     }
 
     @Override
