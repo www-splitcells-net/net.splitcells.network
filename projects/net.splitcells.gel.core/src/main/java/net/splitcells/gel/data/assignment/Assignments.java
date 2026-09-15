@@ -25,6 +25,9 @@ import net.splitcells.gel.data.view.Line;
  * </p>
  */
 public interface Assignments extends Allocations {
+    
+    void subscribeAfterAssignments(AfterAssignmentSubscriber subscriber);
+    
     Line assign(Line demand, Line supply);
 
     /**

@@ -7,6 +7,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.gel.data.assignment.AfterAssignmentSubscriber;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.*;
 import net.splitcells.gel.data.view.LinePointer;
@@ -106,6 +107,10 @@ public class SolutionI implements Solution {
     @SuppressWarnings("all")
     public Table demandsFree() {
         return this.problem.demandsFree();
+    }
+
+    @Override public void subscribeAfterAssignments(AfterAssignmentSubscriber subscriber) {
+        problem.subscribeAfterAssignments(subscriber);
     }
 
     @SuppressWarnings("all")

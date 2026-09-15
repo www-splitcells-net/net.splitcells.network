@@ -67,6 +67,7 @@ public class AssignmentsI implements Assignments {
     private final String names;
     private final Table assignments;
 
+    private final List<AfterAssignmentSubscriber> assignmentSubscribers = list();
     private final List<AfterAdditionSubscriber> additionSubscriptions = list();
     private final List<BeforeRemovalSubscriber> beforeRemovalSubscriptions = list();
     private final List<BeforeRemovalSubscriber> afterRemovalSubscriptions = list();
@@ -184,6 +185,10 @@ public class AssignmentsI implements Assignments {
     @Override
     public Table demandsFree() {
         return demandsFree;
+    }
+
+    @Override public void subscribeAfterAssignments(AfterAssignmentSubscriber subscriber) {
+        assignmentSubscribers.add(subscriber);
     }
 
     @Override
