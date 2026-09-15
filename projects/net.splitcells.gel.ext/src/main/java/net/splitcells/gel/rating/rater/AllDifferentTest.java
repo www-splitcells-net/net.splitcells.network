@@ -30,8 +30,8 @@ public class AllDifferentTest extends TestSuiteI {
         final var testSubject = then(allDifferent(attribute));
         testSubject.rating().requireEqualsTo(noCost());
         setOfUniques(testSubject.defying()).requireEmptySet();
-        testSubject.register_addition(lineSupplier.addTranslated(list(1)));
-        testSubject.register_addition(lineSupplier.addTranslated(list(2)));
+        testSubject.registerAddition(lineSupplier.addTranslated(list(1)));
+        testSubject.registerAddition(lineSupplier.addTranslated(list(2)));
         setOfUniques(testSubject.defying()).requireEmptySet();
         testSubject.rating().requireEqualsTo(noCost());
         // TODO Test removal.
@@ -44,8 +44,8 @@ public class AllDifferentTest extends TestSuiteI {
         final Table lineSupplier = Tables.table(attribute);
         final var testSubject = then(allDifferent(attribute));
         testSubject.rating().requireEqualsTo(noCost());
-        testSubject.register_addition(lineSupplier.addTranslated(list(1)));
-        testSubject.register_addition(lineSupplier.addTranslated(list(1)));
+        testSubject.registerAddition(lineSupplier.addTranslated(list(1)));
+        testSubject.registerAddition(lineSupplier.addTranslated(list(1)));
         testSubject.rating().requireEqualsTo(cost(2.0));
         // TODO Test removal.
     }
@@ -57,9 +57,9 @@ public class AllDifferentTest extends TestSuiteI {
         final var lineSupplier = Tables.table(attribute);
         final var testSubject = then(allDifferent(attribute));
         testSubject.rating().requireEqualsTo(noCost());
-        testSubject.register_addition(lineSupplier.addTranslated(list(1)));
-        testSubject.register_addition(lineSupplier.addTranslated(list(1)));
-        testSubject.register_addition(lineSupplier.addTranslated(list(2)));
+        testSubject.registerAddition(lineSupplier.addTranslated(list(1)));
+        testSubject.registerAddition(lineSupplier.addTranslated(list(1)));
+        testSubject.registerAddition(lineSupplier.addTranslated(list(2)));
         testSubject.rating().requireEqualsTo(cost(2.0));
         // TODO Test removal.
     }

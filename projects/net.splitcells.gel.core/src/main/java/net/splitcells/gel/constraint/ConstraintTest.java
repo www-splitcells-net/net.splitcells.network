@@ -4,13 +4,8 @@
 package net.splitcells.gel.constraint;
 
 import lombok.val;
-import net.splitcells.dem.data.atom.Bools;
-import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
-import net.splitcells.dem.lang.namespace.NameSpaces;
-import net.splitcells.dem.object.Discoverable;
-import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
@@ -23,7 +18,6 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.constraint.GroupId.group;
 import static net.splitcells.gel.constraint.GroupId.rootGroup;
@@ -119,7 +113,7 @@ public class ConstraintTest {
         final List<Line> lines = list();
         {
             lines.withAppended(lineSupplier.addTranslated(list(1)), lineSupplier.addTranslated(list(2)));
-            testSubject.register_addition(lines);
+            testSubject.registerAddition(lines);
         }
         {
             assertThat(testSubject.defying()).isEmpty();

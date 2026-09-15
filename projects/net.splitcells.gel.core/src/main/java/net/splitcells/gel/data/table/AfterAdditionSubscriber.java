@@ -13,11 +13,11 @@ public interface AfterAdditionSubscriber {
 
     void registerAddition(Line addition);
 
-    default void register_addition(SetT<Line> additions) {
+    default void registerAddition(SetT<Line> additions) {
         additions.forEach(addition -> registerAddition(addition));
     }
 
-    default void register_addition(Line... additions) {
-        register_addition(listWithValuesOf(additions));
+    default void registerAddition(Line... additions) {
+        registerAddition(listWithValuesOf(additions));
     }
 }

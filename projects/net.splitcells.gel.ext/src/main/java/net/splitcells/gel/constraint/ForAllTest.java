@@ -37,7 +37,7 @@ public class ForAllTest extends TestSuiteI {
         assertThat(testSubject.complying()).isEmpty();
         assertThat(testSubject.defying()).isEmpty();
         range(0, size).forEach(i ->
-                testSubject.register_addition(lineProducer.addTranslated(list()))
+                testSubject.registerAddition(lineProducer.addTranslated(list()))
         );
         assertThat(testSubject.complying()).hasSize(size);
         assertThat(testSubject.complying(testSubject.injectionGroup())).hasSize(size);
@@ -60,7 +60,7 @@ public class ForAllTest extends TestSuiteI {
                     , lineSupplier.addTranslated(list(3))
                     , lineSupplier.addTranslated(list(3))
                     , lineSupplier.addTranslated(list(3)));
-            testSubject.register_addition(lines);
+            testSubject.registerAddition(lines);
         }
         {
             assertThat(testSubject.defying()).isEmpty();
