@@ -12,12 +12,4 @@ import static net.splitcells.dem.utils.ExecutionException.execException;
 public interface AssignmentSubscriber {
 
     void registerAddition(AssignmentEvent event);
-
-    default void registerAddition(SetT<AssignmentEvent> additions) {
-        additions.forEach(addition -> registerAddition(addition));
-    }
-
-    default void registerAddition(AssignmentEvent... additions) {
-        registerAddition(listWithValuesOf(additions));
-    }
 }
