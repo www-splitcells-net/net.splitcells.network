@@ -19,6 +19,10 @@ public class AssignmentEvent {
 
     @Getter private Line demand;
     @Getter private Line supply;
+    /**
+     * This is {@link Optional#empty()} before the assignment and {@link Optional#isPresent()} after the assignment.
+     */
+    @Getter @Setter private Optional<Line> assignment;
     @Getter private AssignmentEventType type;
     @Getter @Setter private Optional<Tree> reason = Optional.empty();
 
@@ -30,6 +34,11 @@ public class AssignmentEvent {
 
     public AssignmentEvent setReason(Tree arg) {
         reason = Optional.of(arg);
+        return this;
+    }
+
+    public AssignmentEvent setAssignment(Line arg) {
+        assignment = Optional.of(arg);
         return this;
     }
 }
