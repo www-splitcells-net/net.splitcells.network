@@ -12,6 +12,8 @@ import net.splitcells.dem.lang.annotations.ReturnsThis;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.gel.constraint.Constraint;
+import net.splitcells.gel.data.assignment.AssignmentEvent;
+import net.splitcells.gel.data.assignment.AssignmentSubscriber;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.AfterAdditionSubscriber;
 import net.splitcells.gel.data.table.BeforeRemovalSubscriber;
@@ -118,6 +120,14 @@ public class SolutionAspect implements Solution {
     @Override
     public Solution asSolution() {
         return solution.asSolution();
+    }
+
+    @Override public void subscribeAssignments(AssignmentSubscriber subscriber) {
+        solution.subscribeAssignments(subscriber);
+    }
+
+    @Override public void process(AssignmentEvent event) {
+        solution.process(event);
     }
 
     @Override
