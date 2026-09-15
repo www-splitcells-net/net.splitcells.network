@@ -8,6 +8,7 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.Query;
+import net.splitcells.gel.data.table.history.TableEventType;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -112,6 +113,16 @@ public interface Table extends View {
     void remove(int lineIndex);
 
     void remove(Line line);
+
+    default void process(TableEvent event) {
+        if (event.getType() == TableEventType.ADDITION) {
+            add(event.getLine());
+        } else if (event.getType() == TableEventType.REMOVAL) {
+            remove(event.getLine());
+        } else {
+            throw execException("Unknown table event type " + event.getType());
+        }
+    }
 
     default void replace(Line newLine) {
         if (null != rawLinesView().get(newLine.index())) {
