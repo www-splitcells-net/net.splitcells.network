@@ -59,6 +59,10 @@ public interface History extends Table, AfterAdditionSubscriber, BeforeRemovalSu
     Attribute<TableEventType> EVENT_TYPE = attribute(TableEventType.class, "database-event-type");
     Attribute<Line> DEMAND = attribute(Line.class, "demand", d -> "" + d.index());
     Attribute<Line> SUPPLY = attribute(Line.class, "supply", s -> "" + s.index());
+    /**
+     * @deprecated By default, every property should have its own {@link Attribute}, in order to a as statically typed as possible. 
+     */
+    @Deprecated
     Attribute<MetaDataView> META_DATA = attribute(MetaDataView.class, "meta-data");
     String VALUE_PREFIX = "value-";
 
