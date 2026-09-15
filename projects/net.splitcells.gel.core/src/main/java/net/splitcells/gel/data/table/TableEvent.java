@@ -26,4 +26,9 @@ public class TableEvent {
         line = argLine;
         type = argType;
     }
+    
+    public TableEvent setReason(Tree arg) {
+        reason = Optional.of(arg);
+        return this;
+    }
 }

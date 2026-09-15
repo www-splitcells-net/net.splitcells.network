@@ -9,6 +9,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
+import net.splitcells.gel.data.table.history.TableEventType;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.type.Cost;
@@ -18,10 +19,13 @@ import net.splitcells.gel.solution.optimization.OnlineOptimization;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
 import static net.splitcells.gel.constraint.Constraint.LINE;
 import static net.splitcells.gel.constraint.Constraint.RATING;
+import static net.splitcells.gel.data.table.TableEvent.tableEvent;
+import static net.splitcells.gel.data.table.history.TableEventType.REMOVAL;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
 import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
@@ -148,7 +152,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
                         }
                         return true;
                     })
-                    .forEach(solution::remove);
+                    .forEach(alloc -> solution.process(tableEvent(alloc, REMOVAL).setReason(tree("Delete defying allocations."))));
         }
     }
 }
