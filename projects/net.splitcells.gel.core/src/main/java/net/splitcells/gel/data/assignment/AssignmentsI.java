@@ -364,7 +364,7 @@ public class AssignmentsI implements Assignments {
             requireEquals(allocationsIndexToUsedDemandIndex.get(allocation.index()), demand.index());
             requireEquals(allocationsIndexToUsedSupplyIndex.get(allocation.index()), supply.index());
         }
-        beforeRemovalSubscriptions.forEach(subscriber -> subscriber.registerBeforeRemoval(allocation));
+        beforeRemovalSubscriptions.forEach(subscriber -> subscriber.registerBeforeRemoval(event));
         assignments.remove(allocation);
         // TODO Make following code a remove subscription to allocations.
         {
@@ -403,7 +403,7 @@ public class AssignmentsI implements Assignments {
             suppliesUsed.remove(supply);
             suppliesFree.addWithSameHeaderPrefix(supply);
         }
-        afterRemovalSubscriptions.forEach(listener -> listener.registerBeforeRemoval(event));
+        afterRemovalSubscriptions.forEach(listener -> listener.registerBeforeRemoval(allocation));
     }
 
     @Override
