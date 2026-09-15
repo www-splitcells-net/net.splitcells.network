@@ -3,11 +3,27 @@
  */
 package net.splitcells.gel.data.table;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.gel.data.table.history.TableEventType;
+import net.splitcells.gel.data.view.Line;
+
+import java.util.Optional;
+
+@Accessors(chain = true)
 public class TableEvent {
-    public static TableEvent tableEvent() {
-        return new TableEvent();
+    public static TableEvent tableEvent(Line argLine, TableEventType argType) {
+        return new TableEvent(argLine, argType);
     }
-    private TableEvent() {
-        
+
+    @Getter private Line line;
+    @Getter private TableEventType type;
+    @Getter @Setter private Optional<Tree> reason = Optional.empty();
+
+    private TableEvent(Line argLine, TableEventType argType) {
+        line = argLine;
+        type = argType;
     }
 }
