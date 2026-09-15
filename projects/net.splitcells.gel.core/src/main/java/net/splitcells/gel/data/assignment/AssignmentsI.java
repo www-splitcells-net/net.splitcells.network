@@ -24,7 +24,6 @@ import static net.splitcells.gel.data.assignment.AssignmentEvent.assignmentEvent
 import static net.splitcells.gel.data.table.TableEvent.tableEvent;
 import static net.splitcells.gel.data.table.Tables.table2;
 
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import lombok.val;
@@ -310,7 +309,7 @@ public class AssignmentsI implements Assignments {
         }
         additionSubscriptions.forEach(listener -> listener.registerAddition(allocation));
         event.setAssignment(allocation);
-        assignmentSubscribers.forEach(sub -> sub.registerAddition(event));
+        assignmentSubscribers.forEach(sub -> sub.register(event));
         return allocation;
     }
 

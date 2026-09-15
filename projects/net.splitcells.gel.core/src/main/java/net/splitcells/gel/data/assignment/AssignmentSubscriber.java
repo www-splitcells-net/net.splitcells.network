@@ -3,13 +3,11 @@
  */
 package net.splitcells.gel.data.assignment;
 
-import net.splitcells.dem.data.set.SetT;
-
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 
 @FunctionalInterface
 public interface AssignmentSubscriber {
 
-    void registerAddition(AssignmentEvent event);
+    void register(AssignmentEvent event);
 }
