@@ -28,6 +28,8 @@ public interface Assignments extends Allocations {
     
     void subscribeAssignments(AssignmentSubscriber subscriber);
     
+    void process(AssignmentEvent event);
+    
     Line assign(Line demand, Line supply);
 
     /**

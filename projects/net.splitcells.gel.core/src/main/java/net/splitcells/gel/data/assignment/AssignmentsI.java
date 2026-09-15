@@ -190,6 +190,16 @@ public class AssignmentsI implements Assignments {
         assignmentSubscribers.add(subscriber);
     }
 
+    @Override public void process(AssignmentEvent event) {
+        if (event.getType() == AssignmentEventType.ADDITION) {
+            assign(event.getDemand(), event.getSupply());
+        } else if (event.getType() == AssignmentEventType.REMOVAL) {
+            remove(assignmentsOf(event.getDemand(), event.getSupply()).iterator().next());
+        } else {
+            throw execException("Unknown assignment event type " + event.getType());
+        }
+    }
+
     @Override
     public Line assign(Line demand, Line supply) {
         if (TRACING) {

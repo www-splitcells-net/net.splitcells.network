@@ -7,6 +7,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.gel.data.assignment.AssignmentEvent;
 import net.splitcells.gel.data.assignment.AssignmentSubscriber;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.*;
@@ -111,6 +112,10 @@ public class SolutionI implements Solution {
 
     @Override public void subscribeAssignments(AssignmentSubscriber subscriber) {
         problem.subscribeAssignments(subscriber);
+    }
+
+    @Override public void process(AssignmentEvent event) {
+        problem.process(event);
     }
 
     @SuppressWarnings("all")

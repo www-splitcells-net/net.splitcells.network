@@ -9,6 +9,7 @@ import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.execution.EffectSynchronization;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.gel.constraint.type.framework.ConstraintAspect;
+import net.splitcells.gel.data.assignment.AssignmentEvent;
 import net.splitcells.gel.data.assignment.AssignmentSubscriber;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.*;
@@ -129,6 +130,10 @@ public class ProblemI implements Problem {
 
     @Override public void subscribeAssignments(AssignmentSubscriber subscriber) {
         assignments.subscribeAssignments(subscriber);
+    }
+
+    @Override public void process(AssignmentEvent event) {
+        assignments.process(event);
     }
 
     @Override

@@ -7,6 +7,7 @@ import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.utils.random.Randomness;
+import net.splitcells.gel.data.assignment.AssignmentEvent;
 import net.splitcells.gel.data.assignment.AssignmentSubscriber;
 import net.splitcells.gel.data.assignment.Assignments;
 import net.splitcells.gel.data.table.AfterAdditionSubscriber;
@@ -85,6 +86,10 @@ public class SimplifiedAnnealingProblem implements Solution {
 
     @Override public void subscribeAssignments(AssignmentSubscriber subscriber) {
         originalSolution.subscribeAssignments(subscriber);
+    }
+
+    @Override public void process(AssignmentEvent event) {
+        originalSolution.process(event);
     }
 
     @Override
