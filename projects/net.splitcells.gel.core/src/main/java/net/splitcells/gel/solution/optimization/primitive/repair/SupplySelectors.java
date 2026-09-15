@@ -8,6 +8,7 @@ import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.framework.Variable;
 import net.splitcells.dem.utils.random.Randomness;
+import net.splitcells.gel.data.assignment.AssignmentEventType;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.rating.framework.Rating;
 
@@ -23,6 +24,8 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
+import static net.splitcells.gel.data.assignment.AssignmentEvent.assignmentEvent;
+import static net.splitcells.gel.data.assignment.AssignmentEventType.ADDITION;
 import static net.splitcells.gel.data.table.TableEvent.tableEvent;
 import static net.splitcells.gel.data.table.history.TableEventType.REMOVAL;
 
@@ -86,9 +89,10 @@ public class SupplySelectors {
                                 if (nextSupply == null) {
                                     return;
                                 }
-                                val allocation = solution.assign(freeDemand, nextSupply);
+                                val assignment = assignmentEvent(freeDemand, nextSupply, ADDITION).setReason(tree("Checking rating for potential assignment."));
+                                solution.process(assignment);
                                 val nextRating = solution.constraint().rating();
-                                solution.process(tableEvent(allocation, REMOVAL).setReason(tree("Removing allocation after rating check.")));
+                                solution.process(tableEvent(assignment.getAssignment().orElseThrow(), REMOVAL).setReason(tree("Removing allocation after rating check.")));
                                 if (bestSupply.isNull() || nextRating.betterThan(bestRating.val())) {
                                     bestSupply.withValue(nextSupply);
                                     bestRating.withValue(nextRating);
