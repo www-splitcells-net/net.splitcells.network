@@ -71,7 +71,7 @@ public class HistoryI implements History {
         solution.headerView2().stream()
                 .map(a -> attribute(a.type(), VALUE_PREFIX + a.name()))
                 .forEach(valueAttributes::add);
-        val header = list(EVENT_ID, EVENT_TYPE, DEMAND, SUPPLY, META_DATA);
+        val header = list(EVENT_ID, EVENT_TYPE, DEMAND, SUPPLY, META_DATA, REASON);
         valueAttributes.forEach(header::add);
         assignments = table("history", solution, header);
         this.solution = solution;
@@ -109,7 +109,8 @@ public class HistoryI implements History {
                     , TableEventType.ADDITION
                     , demand
                     , supply
-                    , metaData);
+                    , metaData
+                    , reason.orElse(tree("Unknown reason")));
             solution.headerView().forEach(va -> values.add(allocationValues.value(va)));
             assignments.addTranslated(values);
         } else {
@@ -133,7 +134,8 @@ public class HistoryI implements History {
                     , TableEventType.REMOVAL
                     , demand
                     , supply
-                    , metaData);
+                    , metaData
+                    , tree("Unknown reason"));
             solution.headerView().forEach(va -> values.add(removal.value(va)));
             assignments.addTranslated(values);
         } else {
