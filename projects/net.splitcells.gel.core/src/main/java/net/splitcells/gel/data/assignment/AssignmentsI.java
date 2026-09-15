@@ -20,11 +20,14 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.gel.common.Language.*;
+import static net.splitcells.gel.data.assignment.AssignmentEvent.assignmentEvent;
 import static net.splitcells.gel.data.table.TableEvent.tableEvent;
 import static net.splitcells.gel.data.table.Tables.table2;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
+import lombok.val;
 import net.splitcells.dem.data.atom.Integers;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
@@ -192,7 +195,7 @@ public class AssignmentsI implements Assignments {
 
     @Override public void process(AssignmentEvent event) {
         if (event.getType() == AssignmentEventType.ADDITION) {
-            assign(event.getDemand(), event.getSupply());
+            assign(event);
         } else if (event.getType() == AssignmentEventType.REMOVAL) {
             remove(assignmentsOf(event.getDemand(), event.getSupply()).iterator().next());
         } else {
@@ -200,8 +203,13 @@ public class AssignmentsI implements Assignments {
         }
     }
 
-    @Override
-    public Line assign(Line demand, Line supply) {
+    @Override public Line assign(Line demand, Line supply) {
+        return assign(assignmentEvent(demand, supply, AssignmentEventType.ADDITION));
+    }
+    
+    private Line assign(AssignmentEvent event) {
+        val demand = event.getDemand();
+        val supply = event.getSupply();
         if (TRACING) {
             requireNotNull(demand, "Cannot allocate without demand.");
             requireNotNull(supply, "Cannot allocate without supply.");
@@ -301,6 +309,8 @@ public class AssignmentsI implements Assignments {
             }
         }
         additionSubscriptions.forEach(listener -> listener.registerAddition(allocation));
+        event.setAssignment(allocation);
+        assignmentSubscribers.forEach(sub -> sub.registerAddition(event));
         return allocation;
     }
 
