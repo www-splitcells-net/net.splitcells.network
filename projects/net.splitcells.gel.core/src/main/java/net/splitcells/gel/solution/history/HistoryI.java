@@ -120,8 +120,15 @@ public class HistoryI implements History {
         }
     }
 
-    @Override
-    public void registerBeforeRemoval(Line removal) {
+    @Override public void registerBeforeRemoval(TableEvent removal) {
+        registerBeforeRemoval(removal.getLine(), removal.getReason());
+    }
+
+    @Override public void registerBeforeRemoval(Line removal) {
+        registerBeforeRemoval(removal, Optional.empty());
+    }
+
+    private void registerBeforeRemoval(Line removal, Optional<Tree> reason) {
         if (isRegisterEventIsEnabled) {
             final var metaData = metaData();
             metaData.with(CompleteRating.class
@@ -135,7 +142,7 @@ public class HistoryI implements History {
                     , demand
                     , supply
                     , metaData
-                    , tree("Unknown reason"));
+                    , reason.orElseGet(() -> tree("Unknown reason")));
             solution.headerView().forEach(va -> values.add(removal.value(va)));
             assignments.addTranslated(values);
         } else {
