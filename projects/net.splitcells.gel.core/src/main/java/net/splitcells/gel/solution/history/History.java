@@ -59,6 +59,7 @@ public interface History extends Table, AfterAdditionSubscriber, BeforeRemovalSu
     Attribute<TableEventType> EVENT_TYPE = attribute(TableEventType.class, "database-event-type");
     Attribute<Line> DEMAND = attribute(Line.class, "demand", d -> "" + d.index());
     Attribute<Line> SUPPLY = attribute(Line.class, "supply", s -> "" + s.index());
+    Attribute<Tree> REASON = attribute(Tree.class, "reason", r -> "" + r.toCommonMarkString());
     /**
      * @deprecated By default, every property should have its own {@link Attribute}, in order to a as statically typed as possible. 
      */
