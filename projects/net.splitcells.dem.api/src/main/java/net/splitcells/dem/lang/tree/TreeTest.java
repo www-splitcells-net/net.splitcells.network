@@ -219,6 +219,12 @@ public class TreeTest {
         final var stringTest = tree("html", HTML)
                 .withChild(tree("test", STRING));
         requireEquals(stringTest.toHtmlString(), "<html>test</html>");
+        final var simpleNaturalTest = tree("html", HTML)
+                .withChild(tree("test", NATURAL));
+        requireEquals(simpleNaturalTest.toHtmlString(), "<html><test/></html>");
+        final var complexNaturalTest = tree("html", HTML)
+                .withChild(tree("test", NATURAL).withChild(tree("content", NATURAL)));
+        requireEquals(complexNaturalTest.toHtmlString(), "<html><test><content/></test></html>");
     }
 
     @UnitTest public void testAsCompactXhtmlList() {
