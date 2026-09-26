@@ -225,6 +225,7 @@ public class TreeTest {
         final var complexNaturalTest = tree("html", HTML)
                 .withChild(tree("test", NATURAL).withChild(tree("content", NATURAL)));
         requireEquals(complexNaturalTest.toHtmlString(), "<html><test><content/></test></html>");
+        requireThrow(() -> tree("test", JSON).toHtmlString());
     }
 
     @UnitTest public void testAsCompactXhtmlList() {
