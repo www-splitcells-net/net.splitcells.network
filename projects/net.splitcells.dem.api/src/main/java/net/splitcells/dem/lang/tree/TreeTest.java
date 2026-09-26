@@ -212,10 +212,13 @@ public class TreeTest {
     }
 
     @UnitTest public void testToHtmlString() {
-        final var testSubject = tree("html", HTML)
+        final var simpleSubject = tree("html", HTML)
                 .withProperty("xmlns", HTML_ATTRIBUTE, "http://www.w3.org/1999/xhtml")
                 .withChild(tree("body", HTML));
-        requireEquals(testSubject.toHtmlString(), "<html xmlns=\"http://www.w3.org/1999/xhtml\"><body/></html>");
+        requireEquals(simpleSubject.toHtmlString(), "<html xmlns=\"http://www.w3.org/1999/xhtml\"><body/></html>");
+        final var stringTest = tree("html", HTML)
+                .withChild(tree("test", STRING));
+        requireEquals(stringTest.toHtmlString(), "<html>test</html>");
     }
 
     @UnitTest public void testAsCompactXhtmlList() {
