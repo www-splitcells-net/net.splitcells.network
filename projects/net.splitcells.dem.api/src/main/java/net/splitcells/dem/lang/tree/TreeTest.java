@@ -212,9 +212,9 @@ public class TreeTest {
     }
 
     @UnitTest public void testToHtmlString() {
-        final var testSubject = tree("html", HTML);
-        testSubject.withProperty("xmlns", HTML_ATTRIBUTE, "http://www.w3.org/1999/xhtml");
-        testSubject.withChild(tree("body", HTML));
+        final var testSubject = tree("html", HTML)
+                .withProperty("xmlns", HTML_ATTRIBUTE, "http://www.w3.org/1999/xhtml")
+                .withChild(tree("body", HTML));
         requireEquals(testSubject.toHtmlString(), "<html xmlns=\"http://www.w3.org/1999/xhtml\"><body/></html>");
     }
 
@@ -269,7 +269,7 @@ public class TreeTest {
         requireEquals(testResult.childrenPath(0, 0, 0, 1, 0).name(), "g");
         testResult.childrenPath(0, 0, 0, 1, 0).children().requireEmpty();
     }
-    
+
     @UnitTest public void testRequireEqualsTo() {
         tree("a").withChild(tree("b")).requireEqualsTo(tree("a").withChild(tree("b")));
         requireThrow(() -> tree("a").requireEqualsTo(tree("b")));
