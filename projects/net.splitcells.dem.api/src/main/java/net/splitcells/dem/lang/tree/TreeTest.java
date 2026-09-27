@@ -27,6 +27,15 @@ import static net.splitcells.dem.utils.StringUtils.multiple;
 
 public class TreeTest {
 
+    @UnitTest public void testPathOfValueTree() {
+        val a = tree("a");
+        val b = tree("b");
+        val c = tree("c");
+        final var testData = TreeI.tree("test data").withPath(a, b, c);
+        testData.pathOfValueTree("test data", "a", "b", "c").orElseThrow().requireEquals(list(a, b, c));
+        requireEquals(testData.pathOfValueTree("test data", "b", "b", "c"), Optional.empty());
+    }
+
     @UnitTest public void testPropertyInstance() {
         requireEquals(tree("").propertyInstance("something"), Optional.empty());
         requireEquals(tree("").propertyInstance("something", STRING), Optional.empty());
