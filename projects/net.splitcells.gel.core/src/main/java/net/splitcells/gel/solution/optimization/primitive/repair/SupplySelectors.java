@@ -100,7 +100,8 @@ public class SupplySelectors {
                             });
                         });
                         if (bestSupply.hasValue()) {
-                            solution.assign(freeDemand, bestSupply.val());
+                            solution.process(assignmentEvent(freeDemand, bestSupply.val(), ADDITION)
+                                    .setReason(tree("Using best supply for demand.")));
                         }
                     }
                 }
