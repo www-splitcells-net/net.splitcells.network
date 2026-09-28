@@ -3,10 +3,15 @@
  */
 package net.splitcells.gel.solution.optimization.primitive;
 
+import net.splitcells.gel.data.assignment.AssignmentEvent;
+import net.splitcells.gel.data.assignment.AssignmentEventType;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
+import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.gel.data.assignment.AssignmentEvent.assignmentEvent;
+import static net.splitcells.gel.data.assignment.AssignmentEventType.ADDITION;
 
 /**
  * Allocates {@link Solution#demandsFree()} and {@link Solution#suppliesFree()} in their respective order.
@@ -37,11 +42,13 @@ public class OnlineLinearInitialization implements OnlineOptimization {
             while (solution.demandsFree().hasContent() && solution.suppliesFree().hasContent()) {
                 if (IMPROVE_RUNTIME_GET_NEXT_LINE_BY_STREAM) {
                     // TODO Create faster version of initialization, based on 2 unordered streams.
-                    solution.assign(solution.demandsFree().orderedLinesStream().findFirst().orElseThrow()
-                            , solution.suppliesFree().orderedLinesStream().findFirst().orElseThrow());
+                    solution.process(assignmentEvent(solution.demandsFree().orderedLinesStream().findFirst().orElseThrow()
+                            , solution.suppliesFree().orderedLinesStream().findFirst().orElseThrow(), ADDITION)
+                            .setReason(tree("Initialize linearly.")));
                 } else {
-                    solution.assign(solution.demandsFree().orderedLine(0)
-                            , solution.suppliesFree().orderedLine(0));
+                    solution.process(assignmentEvent(solution.demandsFree().orderedLine(0)
+                            , solution.suppliesFree().orderedLine(0), ADDITION)
+                            .setReason(tree("Initialize linearly.")));
                 }
             }
         }
