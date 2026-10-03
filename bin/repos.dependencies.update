@@ -9,6 +9,7 @@ cd ../net.splitcells.network.bom
 # These leads to more tests, but on the other hand makes it easier to understand, which version exactly introduced a problem.
 mvn versions:update-parent
 mvn versions:use-next-releases
+mvn versions:update-properties
 
 cd ../net.splitcells.network.hub
 mvn clean install # Check if the project can be build, after the update.
