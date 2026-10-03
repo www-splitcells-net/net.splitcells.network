@@ -36,6 +36,15 @@ public class TreeTest {
         requireEquals(testData.pathOfValueTree("test data", "b", "b", "c"), Optional.empty());
     }
 
+    @UnitTest public void testPathOfDenValueTree() {
+        val a = tree(VAL, DEN).withProperty(NAME, DEN, "a");
+        val b = tree(VAL, DEN).withProperty(NAME, DEN, "b");
+        val c = tree(VAL, DEN).withProperty(NAME, DEN, "c");
+        final var testData = TreeI.tree("test data").withPath(a, b, c);
+        testData.pathOfDenValueTree("a/b/c").orElseThrow().requireEquals(list(a, b, c));
+        requireEquals(testData.pathOfDenValueTree("test data/a/b/c"), Optional.empty());
+    }
+
     @UnitTest public void testSubtreeByName() {
         val a = tree("a");
         val b = tree("b");
