@@ -169,7 +169,7 @@ def reposProcess(args):
     parser = argparse.ArgumentParser(description="Processes a group of repos.")
     parser.add_argument('--path', dest='path', default='./', help="This is path of the to be processed meta repo.")
     parser.add_argument('--host', dest='host', required=False)
-    parser.add_argument('--command', dest='command', required=True, help="This command is executed for all present repositories.")
+    parser.add_argument('--command', dest='command', required=True, help="This command is executed for all present repositories. Use ${childRepo} in order to reference the currently processed repo name. This can be used to define URL templates for remotes.")
     parser.add_argument('--command-for-missing', dest='commandForMissing', default='echo Missing repo ${childRepo} at $(pwd)\nexit 1')
     parser.add_argument('--command-for-unknown', dest='commandForUnknown', default='echo Unknown repo ${childRepo} at $(pwd)\nexit 1')
     parser.add_argument('--ignore-peer-repos', dest='ignorePeerRepos', type=str2bool, required=False, default='false')
