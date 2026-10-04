@@ -7,9 +7,8 @@ set -e
 cd ../net.splitcells.network.bom
 # These commands increase all dependencies by at most one version increment, if an update is available.
 # This leads to more tests, but on the other hand makes it easier to understand, which version exactly introduced a problem.
-mvn versions:update-parent
-mvn versions:use-next-releases
-mvn versions:update-properties
+mvn versions:use-next-releases -DprocessParent=true
+mvn versions:update-properties -DprocessParent=true
 
 cd ../net.splitcells.network.hub
 mvn clean install # Check if the project can be build, after the update.
