@@ -64,6 +64,14 @@ public class TreeTest {
         testData.subtreeByName("a", "b").requireEqualsTo(b);
     }
 
+    @UnitTest public void testSubtree() {
+        val a = tree(VAL, DEN).withProperty(NAME, DEN, "a");
+        val b = tree(VAL, DEN).withProperty(NAME, DEN, "b");
+        val c = tree(VAL, DEN).withProperty(NAME, DEN, "c");
+        final var testData = TreeI.tree("test data").withPath(a, b, c);
+        Tree.subtree(testData, list("a", "b")).requireEqualsTo(b);
+    }
+
     @UnitTest public void testPropertyInstance() {
         requireEquals(tree("").propertyInstance("something"), Optional.empty());
         requireEquals(tree("").propertyInstance("something", STRING), Optional.empty());
