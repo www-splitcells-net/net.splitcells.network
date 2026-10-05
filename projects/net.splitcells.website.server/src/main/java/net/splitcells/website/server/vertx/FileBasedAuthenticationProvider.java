@@ -9,6 +9,9 @@ import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.User;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
+import io.vertx.ext.auth.authentication.Credentials;
+import io.vertx.ext.auth.authentication.UsernamePasswordCredentials;
+import lombok.val;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.website.server.security.authentication.Authentication;
 import net.splitcells.website.server.security.authentication.Authenticator;
@@ -35,27 +38,21 @@ public class FileBasedAuthenticationProvider implements AuthenticationProvider {
      * This method will never log the password entered by the user or the actual password,
      * in order to avoid security problems.
      *
-     * @param credentials   The credentials
-     * @param resultHandler The result handler
+     * @param credentials The credentials
      */
-    @Override
-    public void authenticate(JsonObject credentials, Handler<AsyncResult<User>> resultHandler) {
-        final var username = credentials.getString("username");
-        final var inputtedPassword = credentials.getString("password");
-        final var userSession = authenticator.userSession(Login.login(username, inputtedPassword));
+    @Override public Future<User> authenticate(Credentials credentials) {
+        val userCredentials = (UsernamePasswordCredentials) credentials;
+        final var username = userCredentials.getUsername();
+        final var userSession = authenticator.userSession(Login.login(username, userCredentials.getPassword()));
         if (INSECURE_USER_SESSION.equals(userSession)) {
-            resultHandler.handle(Future.failedFuture("The password for `"
+            return Future.failedFuture("The password for `"
                     + username
-                    + "` is unknown."));
-            return;
+                    + "` is unknown.");
         } else if (ANONYMOUS_USER_SESSION.equals(userSession)) {
-            resultHandler.handle(Future.failedFuture("The username `"
-                    + username
-                    + "` is unknown."));
-            return;
+            return Future.failedFuture("The username `" + username + "` is unknown.");
         }
         final var user = User.fromName(username);
         user.attributes().put(LOGIN_KEY, userSession);
-        resultHandler.handle(Future.succeededFuture(user));
+        return Future.succeededFuture(user);
     }
 }

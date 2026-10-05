@@ -22,6 +22,7 @@ import io.vertx.ext.web.handler.BodyHandler;
 import lombok.val;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.Lists;
+import net.splitcells.dem.environment.config.framework.Variable;
 import net.splitcells.dem.environment.resource.Service;
 import net.splitcells.dem.execution.ExplicitEffect;
 import net.splitcells.dem.execution.Processing;
@@ -53,6 +54,7 @@ import net.splitcells.website.server.vertx.DocumentNotFound;
 import javax.net.ssl.SSLHandshakeException;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -283,7 +285,7 @@ public class Server {
                                             .setPassword(config.sslKeystorePassword().orElseThrow()));
                         } else if (configValue(SslEnabled.class)) {
                             webServerOptions.setSsl(true)//
-                                    .setPemKeyCertOptions(new PemKeyCertOptions()
+                                    .setKeyCertOptions(new PemKeyCertOptions()
                                             .setKeyValue(buffer(configValue(PrivateIdentityPemStore.class)
                                                     .orElseThrow()))
                                             .setCertValue(buffer(configValue(PublicIdentityPemStore.class)
@@ -328,63 +330,62 @@ public class Server {
                                 .handler(routingContext -> {
                                     HttpServerResponse response = routingContext.response();
                                     if (routingContext.request().isExpectMultipart()) {
-                                        vertx.<byte[]>executeBlocking(promise -> {
-                                                    val requestPath = routingContext.request().path();
-                                                    final UserSession user;
-                                                    if (routingContext.user() == null) {
-                                                        user = anonymous();
-                                                    } else {
-                                                        user = (UserSession) routingContext.user().attributes().getValue(LOGIN_KEY);
-                                                    }
-                                                    final var binaryRequest = parseBinaryRequest(requestPath
-                                                            , user
-                                                            , routingContext.request().formAttributes());
-                                                    logs().append(tree("Processing web server binary request.")
-                                                                    .withProperty("Binary request", binaryRequest.data())
-                                                            , LogLevel.DEBUG);
-                                                    final var binaryResponse = binaryProcessor.process(binaryRequest);
-                                                    response.putHeader("content-type", Format.JSON.mimeTypes());
-                                                    if (binaryResponse.hasData()) {
-                                                        promise.complete(toBytes(binaryResponse.data().createToJsonPrintable()
-                                                                .toJsonString()));
-                                                    } else {
-                                                        promise.fail(new DocumentNotFound(requestPath));
-                                                    }
-                                                }, config.isSingleThreaded()
-                                                , result -> handleResult(routingContext, result));
+                                        vertx.executeBlocking(() -> {
+                                            val requestPath = routingContext.request().path();
+                                            final UserSession user;
+                                            if (routingContext.user() == null) {
+                                                user = anonymous();
+                                            } else {
+                                                user = (UserSession) routingContext.user().attributes().getValue(LOGIN_KEY);
+                                            }
+                                            final var binaryRequest = parseBinaryRequest(requestPath
+                                                    , user
+                                                    , routingContext.request().formAttributes());
+                                            logs().append(tree("Processing web server binary request.")
+                                                            .withProperty("Binary request", binaryRequest.data())
+                                                    , LogLevel.DEBUG);
+                                            final var binaryResponse = binaryProcessor.process(binaryRequest);
+                                            response.putHeader("content-type", Format.JSON.mimeTypes());
+                                            if (binaryResponse.hasData()) {
+                                                return toBytes(binaryResponse.data().createToJsonPrintable()
+                                                        .toJsonString());
+                                            }
+                                            throw new DocumentNotFound(requestPath);
+                                        }, config.isSingleThreaded());
                                     } else {
-                                        vertx.<byte[]>executeBlocking(promise -> {
-                                                    try {
-                                                        final String requestPath = requestPath(routingContext).replace("%20", " ");
-                                                        logs().append(tree("Processing web server rendering request.")
-                                                                        .withProperty("Raw request path", routingContext.request().path())
-                                                                        .withProperty("Interpreted request path", requestPath)
-                                                                , LogLevel.DEBUG);
-                                                        /* TODO This style creates duplicate threads. Use a callback for the response instead.
-                                                         * Callbacks would also make the renderer queue requests,
-                                                         * which avoids holding one thread for each parallel request.
-                                                         */
-                                                        final UserSession user;
-                                                        if (routingContext.user() == null) {
-                                                            user = anonymous();
-                                                        } else {
-                                                            user = (UserSession) routingContext.user().attributes().getValue(LOGIN_KEY);
-                                                        }
-                                                        renderer.access((u, r) -> {
-                                                            final var result = r.render(renderRequest(trail(requestPath), Optional.empty(), user));
-                                                            if (result.data().isPresent()) {
-                                                                response.putHeader("content-type", result.data().get().getFormat());
-                                                                promise.complete(result.data().get().getContent());
-                                                            } else {
-                                                                promise.fail(new DocumentNotFound(requestPath));
-                                                            }
-                                                        }, user);
-                                                    } catch (Exception e) {
-                                                        logs().fail(e);
-                                                        throw new RuntimeException(e);
+                                        vertx.executeBlocking(() -> {
+                                            try {
+                                                final String requestPath = requestPath(routingContext).replace("%20", " ");
+                                                logs().append(tree("Processing web server rendering request.")
+                                                                .withProperty("Raw request path", routingContext.request().path())
+                                                                .withProperty("Interpreted request path", requestPath)
+                                                        , LogLevel.DEBUG);
+                                                /* TODO This style creates duplicate threads. Use a callback for the response instead.
+                                                 * Callbacks would also make the renderer queue requests,
+                                                 * which avoids holding one thread for each parallel request.
+                                                 */
+                                                final UserSession user;
+                                                if (routingContext.user() == null) {
+                                                    user = anonymous();
+                                                } else {
+                                                    user = (UserSession) routingContext.user().attributes().getValue(LOGIN_KEY);
+                                                }
+                                                val content = Variable.<byte[]>variable();
+                                                renderer.access((u, r) -> {
+                                                    final var result = r.render(renderRequest(trail(requestPath), Optional.empty(), user));
+                                                    if (result.data().isPresent()) {
+                                                        response.putHeader("content-type", result.data().get().getFormat());
+                                                        content.withValue(result.data().get().getContent());
+                                                    } else {
+                                                        throw new DocumentNotFound(requestPath);
                                                     }
-                                                }, config.isSingleThreaded()
-                                                , result -> handleResult(routingContext, result));
+                                                }, user);
+                                                return content.val();
+                                            } catch (Exception e) {
+                                                logs().fail(e);
+                                                throw new RuntimeException(e);
+                                            }
+                                        }, config.isSingleThreaded());
                                     }
                                 });
                         router.errorHandler(500, e -> {
@@ -400,13 +401,7 @@ public class Server {
                                 .exceptionHandler(th ->
                                         // TODO Avoid logging stack traces for connection issues. Filter appropriate stack traces. When filtering is added, at least log the type of filtered exceptions and not just the message.
                                         logs().fail(tree("An error occurred at the HTTP server.").with(th)))
-                                .listen(result -> {
-                                    if (result.failed()) {
-                                        startPromise.fail(result.cause());
-                                    } else {
-                                        startPromise.complete();
-                                    }
-                                });
+                                .listen();
                     }
                 }, deploymentOptions);
                 final var deployWaiter = semaphore(1);
@@ -518,7 +513,7 @@ public class Server {
                         });
                         router.route("/*").handler(routingContext -> {
                             HttpServerResponse response = routingContext.response();
-                            vertx.<byte[]>executeBlocking(promise -> {
+                            vertx.executeBlocking(() -> {
                                 final String requestPath;
                                 if ("".equals(routingContext.request().path()) || "/".equals(routingContext.request().path())) {
                                     requestPath = "index.html";
@@ -528,19 +523,21 @@ public class Server {
                                 final var result = renderer.apply(requestPath);
                                 if (result.isPresent()) {
                                     response.putHeader("content-type", result.get().getFormat());
-                                    promise.complete(result.get().getContent());
+                                    return result.get().getContent();
                                 } else {
-                                    promise.fail(new DocumentNotFound(requestPath));
+                                    throw new DocumentNotFound(requestPath);
                                 }
-                            }, result -> {
-                                if (result.failed()) {
-                                    logs().fail(result.cause());
-                                    response.setStatusCode(500);
-                                    response.end();
-                                } else {
-                                    response.end(buffer().appendBytes(result.result()));
-                                }
-                            });
+                            }).onComplete(result -> {
+                                        if (result.failed()) {
+                                            logs().fail(result.cause());
+                                            response.setStatusCode(500);
+                                            response.end();
+                                        } else {
+                                            response.end(buffer().appendBytes(result.result()));
+                                        }
+                                    }
+
+                            );
                         });
                         router.errorHandler(500, e -> {
                             logs().fail(e.failure());
