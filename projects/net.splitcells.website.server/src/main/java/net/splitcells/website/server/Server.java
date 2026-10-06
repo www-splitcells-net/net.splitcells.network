@@ -334,61 +334,63 @@ public class Server {
                                     HttpServerResponse response = routingContext.response();
                                     if (routingContext.request().isExpectMultipart()) {
                                         vertx.executeBlocking(() -> {
-                                            val requestPath = routingContext.request().path();
-                                            final UserSession user;
-                                            if (routingContext.user() == null) {
-                                                user = anonymous();
-                                            } else {
-                                                user = (UserSession) routingContext.user().attributes().getValue(LOGIN_KEY);
-                                            }
-                                            final var binaryRequest = parseBinaryRequest(requestPath
-                                                    , user
-                                                    , routingContext.request().formAttributes());
-                                            logs().append(tree("Processing web server binary request.")
-                                                            .withProperty("Binary request", binaryRequest.data())
-                                                    , LogLevel.DEBUG);
-                                            final var binaryResponse = binaryProcessor.process(binaryRequest);
-                                            response.putHeader("content-type", Format.JSON.mimeTypes());
-                                            if (binaryResponse.hasData()) {
-                                                return toBytes(binaryResponse.data().createToJsonPrintable()
-                                                        .toJsonString());
-                                            }
-                                            throw new DocumentNotFound(requestPath);
-                                        }, config.isSingleThreaded());
+                                                    val requestPath = routingContext.request().path();
+                                                    final UserSession user;
+                                                    if (routingContext.user() == null) {
+                                                        user = anonymous();
+                                                    } else {
+                                                        user = (UserSession) routingContext.user().attributes().getValue(LOGIN_KEY);
+                                                    }
+                                                    final var binaryRequest = parseBinaryRequest(requestPath
+                                                            , user
+                                                            , routingContext.request().formAttributes());
+                                                    logs().append(tree("Processing web server binary request.")
+                                                                    .withProperty("Binary request", binaryRequest.data())
+                                                            , LogLevel.DEBUG);
+                                                    final var binaryResponse = binaryProcessor.process(binaryRequest);
+                                                    response.putHeader("content-type", Format.JSON.mimeTypes());
+                                                    if (binaryResponse.hasData()) {
+                                                        return toBytes(binaryResponse.data().createToJsonPrintable()
+                                                                .toJsonString());
+                                                    }
+                                                    throw new DocumentNotFound(requestPath);
+                                                }, config.isSingleThreaded())
+                                                .onComplete(result -> handleResult(routingContext, result));
                                     } else {
                                         vertx.executeBlocking(() -> {
-                                            try {
-                                                final String requestPath = requestPath(routingContext).replace("%20", " ");
-                                                logs().append(tree("Processing web server rendering request.")
-                                                                .withProperty("Raw request path", routingContext.request().path())
-                                                                .withProperty("Interpreted request path", requestPath)
-                                                        , LogLevel.DEBUG);
-                                                /* TODO This style creates duplicate threads. Use a callback for the response instead.
-                                                 * Callbacks would also make the renderer queue requests,
-                                                 * which avoids holding one thread for each parallel request.
-                                                 */
-                                                final UserSession user;
-                                                if (routingContext.user() == null) {
-                                                    user = anonymous();
-                                                } else {
-                                                    user = (UserSession) routingContext.user().attributes().getValue(LOGIN_KEY);
-                                                }
-                                                val content = Variable.<byte[]>variable();
-                                                renderer.access((u, r) -> {
-                                                    final var result = r.render(renderRequest(trail(requestPath), Optional.empty(), user));
-                                                    if (result.data().isPresent()) {
-                                                        response.putHeader("content-type", result.data().get().getFormat());
-                                                        content.withValue(result.data().get().getContent());
-                                                    } else {
-                                                        throw new DocumentNotFound(requestPath);
+                                                    try {
+                                                        final String requestPath = requestPath(routingContext).replace("%20", " ");
+                                                        logs().append(tree("Processing web server rendering request.")
+                                                                        .withProperty("Raw request path", routingContext.request().path())
+                                                                        .withProperty("Interpreted request path", requestPath)
+                                                                , LogLevel.DEBUG);
+                                                        /* TODO This style creates duplicate threads. Use a callback for the response instead.
+                                                         * Callbacks would also make the renderer queue requests,
+                                                         * which avoids holding one thread for each parallel request.
+                                                         */
+                                                        final UserSession user;
+                                                        if (routingContext.user() == null) {
+                                                            user = anonymous();
+                                                        } else {
+                                                            user = (UserSession) routingContext.user().attributes().getValue(LOGIN_KEY);
+                                                        }
+                                                        val content = Variable.<byte[]>variable();
+                                                        renderer.access((u, r) -> {
+                                                            final var result = r.render(renderRequest(trail(requestPath), Optional.empty(), user));
+                                                            if (result.data().isPresent()) {
+                                                                response.putHeader("content-type", result.data().get().getFormat());
+                                                                content.withValue(result.data().get().getContent());
+                                                            } else {
+                                                                throw new DocumentNotFound(requestPath);
+                                                            }
+                                                        }, user);
+                                                        return content.val();
+                                                    } catch (Exception e) {
+                                                        logs().fail(e);
+                                                        throw new RuntimeException(e);
                                                     }
-                                                }, user);
-                                                return content.val();
-                                            } catch (Exception e) {
-                                                logs().fail(e);
-                                                throw new RuntimeException(e);
-                                            }
-                                        }, config.isSingleThreaded());
+                                                }, config.isSingleThreaded())
+                                                .onComplete(result -> handleResult(routingContext, result));
                                     }
                                 });
                         router.errorHandler(500, e -> {
