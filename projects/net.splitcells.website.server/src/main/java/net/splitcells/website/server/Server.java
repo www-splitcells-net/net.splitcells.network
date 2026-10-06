@@ -329,6 +329,7 @@ public class Server {
                                         }
                                     }
                                 })
+                                // TODO Consider using a blocking handler here instead, which avoids using a nested executeBlocking.
                                 .handler(routingContext -> {
                                     HttpServerResponse response = routingContext.response();
                                     if (routingContext.request().isExpectMultipart()) {
