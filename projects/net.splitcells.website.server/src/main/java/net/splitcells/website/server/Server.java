@@ -307,7 +307,7 @@ public class Server {
                         final var authenticator = BasicAuthHandler.create(fileBasedAuthenticationProvider());
                         final var authenticationEnabled = configValue(PasswordAuthenticationEnabled.class);
                         /* The BodyHandler ensures, that all parts of a multipart request are available
-                         * at the next handler in a multi threaded context,
+                         * at the next handler in a multithreaded context,
                          * by downloading/receiving all data from the request.
                          */
                         router.route().useNormalizedPath(true)
