@@ -389,6 +389,10 @@ a.NonStandard {
 	text-decoration: none;
 	color: inherit;
 	}
+p a {
+    /* Use sans serif text for links. */
+    font-family: var(--text-font-family);
+    }
 a {
 	text-decoration: none;
 	font-weight: bold;
