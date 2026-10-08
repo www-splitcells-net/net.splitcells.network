@@ -150,7 +150,7 @@ public class Server {
 
             @Override
             public RenderResponse render(RenderRequest request) {
-                final var processing = Processing.<ProjectsRenderer, RenderResponse>processing();
+                val processing = Processing.<ProjectsRenderer, RenderResponse>processing();
                 processing.withArgument(null);
                 effect.affect(i -> processing.withResult(i.render(request)));
                 return processing.result();
@@ -198,7 +198,7 @@ public class Server {
 
             @Override
             public boolean requiresAuthentication(RenderRequest request) {
-                final var processing = Processing.<ProjectsRenderer, Boolean>processing();
+                val processing = Processing.<ProjectsRenderer, Boolean>processing();
                 processing.withArgument(null);
                 effect.affect(i -> processing.withResult(i.requiresAuthentication(request)));
                 return processing.result();
@@ -260,31 +260,31 @@ public class Server {
                                 .setBlockedThreadCheckInterval(60_000L))
                         .exceptionHandler(t -> logs().fail(t));
                 // TODO Use own worker pool/executor provided by Dem.
-                final var deploymentOptions = new DeploymentOptions()
+                val deploymentOptions = new DeploymentOptions()
                         .setWorkerPoolName(Server.class.getName())
                         .setWorkerPoolSize(20)
                         .setMaxWorkerExecuteTimeUnit(TimeUnit.DAYS)// TODO Limit blocking.
                         .setMaxWorkerExecuteTime(1L);
                 // TODO Make binaryProcessor thread safe.
-                final var binaryProcessor = new Processor<Tree, Tree>() {
+                val binaryProcessor = new Processor<Tree, Tree>() {
                     @Override
                     public Response<Tree> process(Request<Tree> request) {
                         return config.processor().process(request);
                     }
                 };
-                final var deployWaiter = semaphore(1);
+                val deployWaiter = semaphore(1);
                 final List<Throwable> errors = list();
                 try {
                     deployWaiter.acquirePermit();
                 } catch (Throwable t) {
                     throw ExecutionException.execException("Could not start HTTP server.", t);
                 }
-                final var deployResult = vertx.deployVerticle(new AbstractVerticle() {
+                val deployResult = vertx.deployVerticle(new AbstractVerticle() {
                     @Override
                     public void start(Promise<Void> startPromise) {
                         try {
                             // TODO Errors are not logged.
-                            final var webServerOptions = new HttpServerOptions();
+                            val webServerOptions = new HttpServerOptions();
                             if (config.isSecured()) {
                                 webServerOptions.setSsl(true)//
                                         .setKeyCertOptions(new PfxOptions()
@@ -305,15 +305,15 @@ public class Server {
                             }
                             webServerOptions.setMaxFormAttributeSize(100_000_000);
                             webServerOptions.setPort(config.openPort());
-                            final var router = Router.router(vertx);
+                            val router = Router.router(vertx);
                             router.route("/favicon.ico").handler(a -> {
                                 /* TODO Nothing needs to be done for now, as this is not supported yet,
                                  * but a response is required.
                                  */
 
                             });
-                            final var authenticator = BasicAuthHandler.create(fileBasedAuthenticationProvider());
-                            final var authenticationEnabled = configValue(PasswordAuthenticationEnabled.class);
+                            val authenticator = BasicAuthHandler.create(fileBasedAuthenticationProvider());
+                            val authenticationEnabled = configValue(PasswordAuthenticationEnabled.class);
                             /* The BodyHandler ensures, that all parts of a multipart request are available
                              * at the next handler in a multithreaded context,
                              * by downloading/receiving all data from the request.
@@ -349,13 +349,13 @@ public class Server {
                                                         } else {
                                                             user = (UserSession) routingContext.user().attributes().getValue(LOGIN_KEY);
                                                         }
-                                                        final var binaryRequest = parseBinaryRequest(requestPath
+                                                        val binaryRequest = parseBinaryRequest(requestPath
                                                                 , user
                                                                 , routingContext.request().formAttributes());
                                                         logs().append(tree("Processing web server binary request.")
                                                                         .withProperty("Binary request", binaryRequest.data())
                                                                 , LogLevel.DEBUG);
-                                                        final var binaryResponse = binaryProcessor.process(binaryRequest);
+                                                        val binaryResponse = binaryProcessor.process(binaryRequest);
                                                         response.putHeader("content-type", Format.JSON.mimeTypes());
                                                         if (binaryResponse.hasData()) {
                                                             return toBytes(binaryResponse.data().createToJsonPrintable()
@@ -384,7 +384,7 @@ public class Server {
                                                             }
                                                             val content = Variable.<byte[]>variable();
                                                             renderer.access((u, r) -> {
-                                                                final var result = r.render(renderRequest(trail(requestPath), Optional.empty(), user));
+                                                                val result = r.render(renderRequest(trail(requestPath), Optional.empty(), user));
                                                                 if (result.data().isPresent()) {
                                                                     response.putHeader("content-type", result.data().get().getFormat());
                                                                     content.withValue(result.data().get().getContent());
@@ -446,7 +446,7 @@ public class Server {
     }
 
     private static void handleResult(RoutingContext routingContext, AsyncResult<byte[]> result) {
-        final var response = routingContext.response();
+        val response = routingContext.response();
         if (result.failed() && result.cause() instanceof DocumentNotFound) {
             logs().append(tree("Could not find render for path")
                             .withProperty("path", result.cause().getMessage())
@@ -467,11 +467,11 @@ public class Server {
     }
 
     private static Request<Tree> parseBinaryRequest(String path, UserSession userSession, MultiMap multiMap) {
-        final var pathSplit = Lists.listWithValuesOf(path.split("/"));
+        val pathSplit = Lists.listWithValuesOf(path.split("/"));
         if (!pathSplit.isEmpty() && "".equals(pathSplit.get(0))) {
             pathSplit.removeAt(0);
         }
-        final var requestData = tree("");
+        val requestData = tree("");
         multiMap.entries().forEach(entry -> {
             requestData.withProperty(entry.getKey(), entry.getValue());
         });
@@ -501,7 +501,7 @@ public class Server {
                     @Override
                     public void start() {
                         // TODO Errors are not logged.
-                        final var webServerOptions = new HttpServerOptions()
+                        val webServerOptions = new HttpServerOptions()
                                 .setSsl(true)
                                 .setKeyCertOptions(new PfxOptions()
                                         .setPath(config.sslKeystoreFile().orElseThrow().toString())
@@ -513,7 +513,7 @@ public class Server {
                                 .setLogActivity(true)
                                 .setPort(config.openPort())
                                 .setMaxFormAttributeSize(100_000_000);
-                        final var router = Router.router(vertx);
+                        val router = Router.router(vertx);
                         router.route("/favicon.ico").handler(a -> {
                             // TODO
                         });
@@ -526,7 +526,7 @@ public class Server {
                                 } else {
                                     requestPath = routingContext.request().path();
                                 }
-                                final var result = renderer.apply(requestPath);
+                                val result = renderer.apply(requestPath);
                                 if (result.isPresent()) {
                                     response.putHeader("content-type", result.get().getFormat());
                                     return result.get().getContent();
@@ -548,7 +548,7 @@ public class Server {
                         router.errorHandler(500, e -> {
                             logs().fail(e.failure());
                         });
-                        final var server = vertx.createHttpServer(webServerOptions);//
+                        val server = vertx.createHttpServer(webServerOptions);//
                         server.requestHandler(router);//
                         server.listen();
                     }
