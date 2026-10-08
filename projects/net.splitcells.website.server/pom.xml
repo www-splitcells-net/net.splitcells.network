@@ -16,6 +16,9 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
+            <!-- TODO Do not use simple logger, because it can cause test failures at net.splitcells.martins.avots.distro.LiveCryptoSetupCellTest.
+                 The reason for that is unknown. TODO Confirm, that using runtime scope avoids the error. -->
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.commonmark</groupId>
