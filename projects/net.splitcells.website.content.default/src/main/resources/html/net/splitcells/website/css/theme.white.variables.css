@@ -8,6 +8,7 @@
      * in order to align every paragraph line's x coordinates with the alternating color background colors.
      */
     --text-flowing-font: Georgia, serif;
+    /* TODO --text-font-family is not the best name, as it does not state its intent. */
     --text-font-family: Arial, Helvetica, sans-serif;
     --no-code-text-font-family: Arial, Helvetica, sans-serif;
 
