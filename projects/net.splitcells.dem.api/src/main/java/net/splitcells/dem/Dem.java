@@ -73,7 +73,8 @@ public class Dem {
      * <p>Pauses/freezes the current thread.</p>
      */
     public static void waitIndefinitely() {
-            semaphore(0).acquire(a -> {});
+        semaphore(0).acquire(a -> {
+        });
     }
 
     public static void handleInterrupt(InterruptedException e) {
@@ -297,7 +298,7 @@ public class Dem {
         try {
             val cell = cellClass.getDeclaredConstructor().newInstance();
             val serialization = Variable.<Tree>variable();
-            Dem.process(() -> serialization.withValue(Dem.config().serialize()), new Cell() {
+            process(() -> serialization.withValue(Dem.config().serialize()), new Cell() {
                 @Override public Optional<Tree> serialize(Consumer<Environment> currentValue) {
                     return Optional.empty();
                 }
@@ -318,7 +319,7 @@ public class Dem {
                             .withConfigValue(StartServicesAutomatically.class, false)
                     ;
                 }
-            }, cellClass);
+            }, cellClass).requireErrorFree();
             return serialization.value().orElseThrow();
         } catch (Throwable t) {
             throw execException(t);
