@@ -15,7 +15,8 @@
 - An element with the CSS class cm-editor contains an instance of CodeMirror rendering aka. a text editor.
   Limit styles applied to children to such elements via the `not(.cm-editor) > targetElementName` selector.
 */
-/* - TODO Split CSS in CSS without classes and CSS with specifics for this website.
+/* - TODO Clean up and simplify the CSS files. 
+ * - TODO Split CSS in CSS without classes and CSS with specifics for this website.
  * - TODO Split up CSS into multiple files, where each file is responsible for one somewhat big functionality,
  *   like the styling of HTML tables.
  * - TODO Consider allowing only one line per item in a tree and enforce it via clipping.
