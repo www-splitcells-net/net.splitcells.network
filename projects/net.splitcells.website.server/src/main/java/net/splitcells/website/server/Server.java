@@ -272,143 +272,6 @@ public class Server {
                         return config.processor().process(request);
                     }
                 };
-                final var deployResult = vertx.deployVerticle(new AbstractVerticle() {
-                    @Override
-                    public void start(Promise<Void> startPromise) {
-                        // TODO Errors are not logged.
-                        final var webServerOptions = new HttpServerOptions();
-                        if (config.isSecured()) {
-                            webServerOptions.setSsl(true)//
-                                    .setKeyCertOptions(new PfxOptions()
-                                            .setPath(config.sslKeystoreFile().orElseThrow().toString())
-                                            .setPassword(config.sslKeystorePassword().orElseThrow()))
-                                    .setTrustOptions(new PfxOptions()
-                                            .setPath(config.sslKeystoreFile().orElseThrow().toString())
-                                            .setPassword(config.sslKeystorePassword().orElseThrow()));
-                        } else if (configValue(SslEnabled.class)) {
-                            webServerOptions.setSsl(true)//
-                                    .setKeyCertOptions(new PemKeyCertOptions()
-                                            .setKeyValue(buffer(configValue(PrivateIdentityPemStore.class)
-                                                    .orElseThrow()))
-                                            .setCertValue(buffer(configValue(PublicIdentityPemStore.class)
-                                                    .orElseThrow())));
-                        } else {
-                            logs().append(tree("Webserver is not secured!"), WARNING);
-                        }
-                        webServerOptions.setMaxFormAttributeSize(100_000_000);
-                        webServerOptions.setPort(config.openPort());
-                        final var router = Router.router(vertx);
-                        router.route("/favicon.ico").handler(a -> {
-                            /* TODO Nothing needs to be done for now, as this is not supported yet,
-                             * but a response is required.
-                             */
-
-                        });
-                        final var authenticator = BasicAuthHandler.create(fileBasedAuthenticationProvider());
-                        final var authenticationEnabled = configValue(PasswordAuthenticationEnabled.class);
-                        /* The BodyHandler ensures, that all parts of a multipart request are available
-                         * at the next handler in a multithreaded context,
-                         * by downloading/receiving all data from the request.
-                         */
-                        router.route().useNormalizedPath(true)
-                                .handler(BodyHandler.create())
-                                .handler(new BasicAuthHandler() {
-                                    @Override
-                                    public void handle(RoutingContext routingContext) {
-                                        if (authenticationEnabled) {
-                                            renderer.access((u, r) -> {
-                                                if (r.requiresAuthentication(renderRequest(trail(requestPath(routingContext))
-                                                        , Optional.empty(), u))) {
-                                                    authenticator.handle(routingContext);
-                                                } else {
-                                                    routingContext.next();
-                                                }
-                                            }, anonymousLogin());
-                                        } else {
-                                            routingContext.next();
-                                        }
-                                    }
-                                })
-                                // TODO Consider using a blocking handler here instead, which avoids using a nested executeBlocking.
-                                .handler(routingContext -> {
-                                    HttpServerResponse response = routingContext.response();
-                                    if (routingContext.request().isExpectMultipart()) {
-                                        vertx.executeBlocking(() -> {
-                                                    val requestPath = routingContext.request().path();
-                                                    final UserSession user;
-                                                    if (routingContext.user() == null) {
-                                                        user = anonymous();
-                                                    } else {
-                                                        user = (UserSession) routingContext.user().attributes().getValue(LOGIN_KEY);
-                                                    }
-                                                    final var binaryRequest = parseBinaryRequest(requestPath
-                                                            , user
-                                                            , routingContext.request().formAttributes());
-                                                    logs().append(tree("Processing web server binary request.")
-                                                                    .withProperty("Binary request", binaryRequest.data())
-                                                            , LogLevel.DEBUG);
-                                                    final var binaryResponse = binaryProcessor.process(binaryRequest);
-                                                    response.putHeader("content-type", Format.JSON.mimeTypes());
-                                                    if (binaryResponse.hasData()) {
-                                                        return toBytes(binaryResponse.data().createToJsonPrintable()
-                                                                .toJsonString());
-                                                    }
-                                                    throw new DocumentNotFound(requestPath);
-                                                }, config.isSingleThreaded())
-                                                .onComplete(result -> handleResult(routingContext, result));
-                                    } else {
-                                        vertx.executeBlocking(() -> {
-                                                    try {
-                                                        final String requestPath = requestPath(routingContext).replace("%20", " ");
-                                                        logs().append(tree("Processing web server rendering request.")
-                                                                        .withProperty("Raw request path", routingContext.request().path())
-                                                                        .withProperty("Interpreted request path", requestPath)
-                                                                , LogLevel.DEBUG);
-                                                        /* TODO This style creates duplicate threads. Use a callback for the response instead.
-                                                         * Callbacks would also make the renderer queue requests,
-                                                         * which avoids holding one thread for each parallel request.
-                                                         */
-                                                        final UserSession user;
-                                                        if (routingContext.user() == null) {
-                                                            user = anonymous();
-                                                        } else {
-                                                            user = (UserSession) routingContext.user().attributes().getValue(LOGIN_KEY);
-                                                        }
-                                                        val content = Variable.<byte[]>variable();
-                                                        renderer.access((u, r) -> {
-                                                            final var result = r.render(renderRequest(trail(requestPath), Optional.empty(), user));
-                                                            if (result.data().isPresent()) {
-                                                                response.putHeader("content-type", result.data().get().getFormat());
-                                                                content.withValue(result.data().get().getContent());
-                                                            } else {
-                                                                throw new DocumentNotFound(requestPath);
-                                                            }
-                                                        }, user);
-                                                        return content.val();
-                                                    } catch (Exception e) {
-                                                        logs().fail(e);
-                                                        throw new RuntimeException(e);
-                                                    }
-                                                }, config.isSingleThreaded())
-                                                .onComplete(result -> handleResult(routingContext, result));
-                                    }
-                                });
-                        router.errorHandler(500, e -> {
-                            if (e.failure() instanceof SSLHandshakeException sslHandshakeException) {
-                                // Avoid stack trace for error, that is present on the client and not this program.
-                                logs().append(tree("Could not establish SSL connection.").withProperty("reason", sslHandshakeException.getMessage()), ERROR);
-                            } else {
-                                logs().fail(e.failure());
-                            }
-                        });
-                        vertx.createHttpServer(webServerOptions)
-                                .requestHandler(router)
-                                .exceptionHandler(th ->
-                                        // TODO Avoid logging stack traces for connection issues. Filter appropriate stack traces. When filtering is added, at least log the type of filtered exceptions and not just the message.
-                                        logs().fail(tree("An error occurred at the HTTP server.").with(th)))
-                                .listen();
-                    }
-                }, deploymentOptions);
                 final var deployWaiter = semaphore(1);
                 final List<Throwable> errors = list();
                 try {
@@ -416,12 +279,150 @@ public class Server {
                 } catch (Throwable t) {
                     throw ExecutionException.execException("Could not start HTTP server.", t);
                 }
-                deployResult.onComplete(result -> {
-                    if (result.failed()) {
-                        errors.add(result.cause());
+                final var deployResult = vertx.deployVerticle(new AbstractVerticle() {
+                    @Override
+                    public void start(Promise<Void> startPromise) {
+                        try {
+                            // TODO Errors are not logged.
+                            final var webServerOptions = new HttpServerOptions();
+                            if (config.isSecured()) {
+                                webServerOptions.setSsl(true)//
+                                        .setKeyCertOptions(new PfxOptions()
+                                                .setPath(config.sslKeystoreFile().orElseThrow().toString())
+                                                .setPassword(config.sslKeystorePassword().orElseThrow()))
+                                        .setTrustOptions(new PfxOptions()
+                                                .setPath(config.sslKeystoreFile().orElseThrow().toString())
+                                                .setPassword(config.sslKeystorePassword().orElseThrow()));
+                            } else if (configValue(SslEnabled.class)) {
+                                webServerOptions.setSsl(true)//
+                                        .setKeyCertOptions(new PemKeyCertOptions()
+                                                .setKeyValue(buffer(configValue(PrivateIdentityPemStore.class)
+                                                        .orElseThrow()))
+                                                .setCertValue(buffer(configValue(PublicIdentityPemStore.class)
+                                                        .orElseThrow())));
+                            } else {
+                                logs().append(tree("Webserver is not secured!"), WARNING);
+                            }
+                            webServerOptions.setMaxFormAttributeSize(100_000_000);
+                            webServerOptions.setPort(config.openPort());
+                            final var router = Router.router(vertx);
+                            router.route("/favicon.ico").handler(a -> {
+                                /* TODO Nothing needs to be done for now, as this is not supported yet,
+                                 * but a response is required.
+                                 */
+
+                            });
+                            final var authenticator = BasicAuthHandler.create(fileBasedAuthenticationProvider());
+                            final var authenticationEnabled = configValue(PasswordAuthenticationEnabled.class);
+                            /* The BodyHandler ensures, that all parts of a multipart request are available
+                             * at the next handler in a multithreaded context,
+                             * by downloading/receiving all data from the request.
+                             */
+                            router.route().useNormalizedPath(true)
+                                    .handler(BodyHandler.create())
+                                    .handler(new BasicAuthHandler() {
+                                        @Override
+                                        public void handle(RoutingContext routingContext) {
+                                            if (authenticationEnabled) {
+                                                renderer.access((u, r) -> {
+                                                    if (r.requiresAuthentication(renderRequest(trail(requestPath(routingContext))
+                                                            , Optional.empty(), u))) {
+                                                        authenticator.handle(routingContext);
+                                                    } else {
+                                                        routingContext.next();
+                                                    }
+                                                }, anonymousLogin());
+                                            } else {
+                                                routingContext.next();
+                                            }
+                                        }
+                                    })
+                                    // TODO Consider using a blocking handler here instead, which avoids using a nested executeBlocking.
+                                    .handler(routingContext -> {
+                                        HttpServerResponse response = routingContext.response();
+                                        if (routingContext.request().isExpectMultipart()) {
+                                            vertx.executeBlocking(() -> {
+                                                        val requestPath = routingContext.request().path();
+                                                        final UserSession user;
+                                                        if (routingContext.user() == null) {
+                                                            user = anonymous();
+                                                        } else {
+                                                            user = (UserSession) routingContext.user().attributes().getValue(LOGIN_KEY);
+                                                        }
+                                                        final var binaryRequest = parseBinaryRequest(requestPath
+                                                                , user
+                                                                , routingContext.request().formAttributes());
+                                                        logs().append(tree("Processing web server binary request.")
+                                                                        .withProperty("Binary request", binaryRequest.data())
+                                                                , LogLevel.DEBUG);
+                                                        final var binaryResponse = binaryProcessor.process(binaryRequest);
+                                                        response.putHeader("content-type", Format.JSON.mimeTypes());
+                                                        if (binaryResponse.hasData()) {
+                                                            return toBytes(binaryResponse.data().createToJsonPrintable()
+                                                                    .toJsonString());
+                                                        }
+                                                        throw new DocumentNotFound(requestPath);
+                                                    }, config.isSingleThreaded())
+                                                    .onComplete(result -> handleResult(routingContext, result));
+                                        } else {
+                                            vertx.executeBlocking(() -> {
+                                                        try {
+                                                            final String requestPath = requestPath(routingContext).replace("%20", " ");
+                                                            logs().append(tree("Processing web server rendering request.")
+                                                                            .withProperty("Raw request path", routingContext.request().path())
+                                                                            .withProperty("Interpreted request path", requestPath)
+                                                                    , LogLevel.DEBUG);
+                                                            /* TODO This style creates duplicate threads. Use a callback for the response instead.
+                                                             * Callbacks would also make the renderer queue requests,
+                                                             * which avoids holding one thread for each parallel request.
+                                                             */
+                                                            final UserSession user;
+                                                            if (routingContext.user() == null) {
+                                                                user = anonymous();
+                                                            } else {
+                                                                user = (UserSession) routingContext.user().attributes().getValue(LOGIN_KEY);
+                                                            }
+                                                            val content = Variable.<byte[]>variable();
+                                                            renderer.access((u, r) -> {
+                                                                final var result = r.render(renderRequest(trail(requestPath), Optional.empty(), user));
+                                                                if (result.data().isPresent()) {
+                                                                    response.putHeader("content-type", result.data().get().getFormat());
+                                                                    content.withValue(result.data().get().getContent());
+                                                                } else {
+                                                                    throw new DocumentNotFound(requestPath);
+                                                                }
+                                                            }, user);
+                                                            return content.val();
+                                                        } catch (Exception e) {
+                                                            logs().fail(e);
+                                                            throw new RuntimeException(e);
+                                                        }
+                                                    }, config.isSingleThreaded())
+                                                    .onComplete(result -> handleResult(routingContext, result));
+                                        }
+                                    });
+                            router.errorHandler(500, e -> {
+                                if (e.failure() instanceof SSLHandshakeException sslHandshakeException) {
+                                    // Avoid stack trace for error, that is present on the client and not this program.
+                                    logs().append(tree("Could not establish SSL connection.").withProperty("reason", sslHandshakeException.getMessage()), ERROR);
+                                } else {
+                                    logs().fail(e.failure());
+                                }
+                            });
+                            vertx.createHttpServer(webServerOptions)
+                                    .requestHandler(router)
+                                    .exceptionHandler(th ->
+                                            // TODO Avoid logging stack traces for connection issues. Filter appropriate stack traces. When filtering is added, at least log the type of filtered exceptions and not just the message.
+                                            logs().fail(tree("An error occurred at the HTTP server.").with(th)))
+                                    .listen();
+                        } catch (Throwable t) {
+                            errors.add(t);
+                        } finally {
+                            // Using an onComplete on deployVerticle does not work as it is seemingly only executed when the verticle is stopped.
+                            deployWaiter.releasePermit();
+                        }
                     }
-                    deployWaiter.releasePermit();
-                });
+                }, deploymentOptions);
                 try {
                     deployWaiter.acquirePermit();
                 } catch (Throwable t) {
