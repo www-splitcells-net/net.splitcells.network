@@ -3,6 +3,7 @@
  */
 package net.splitcells.gel.solution.optimization.primitive.repair;
 
+import lombok.val;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.List;
@@ -75,7 +76,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
             (int minimumConstraintGroupPath, int numberOfGroupsSelectedPerDefiance) {
-        final var randomness = randomness();
+        val randomness = randomness();
         return new ConstraintGroupBasedRepair
                 (repairConfig().withGroupSelector(groupSelector(randomness, minimumConstraintGroupPath
                         , numberOfGroupsSelectedPerDefiance)));
@@ -94,8 +95,8 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
 
     @Override
     public void optimize(Solution solution) {
-        final var groupsOfConstraintGroup = groupOfConstraintGroup(solution);
-        final var demandGroupings = groupsOfConstraintGroup
+        val groupsOfConstraintGroup = groupOfConstraintGroup(solution);
+        val demandGroupings = groupsOfConstraintGroup
                 .stream()
                 .map(e -> e
                         .lastValue()
@@ -106,7 +107,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
                 .forEach(e -> e
                         .lastValue()
                         .ifPresent(f -> freeDefyingGroupOfConstraintGroup(solution, f)));
-        final var demandGrouping = demandGroupings
+        val demandGrouping = demandGroupings
                 .stream()
                 .reduce(map(), (a, b) -> a.withMergedEntries(b, Set::with));
         repair(solution, demandGrouping);
@@ -123,7 +124,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
 
     public void freeDefyingGroupOfConstraintGroup(Solution solution, Constraint constraint) {
         if (config.freeDefyingGroupOfConstraintGroup()) {
-            final var incomingGroups = Sets.setOfUniques
+            val incomingGroups = Sets.setOfUniques
                     (constraint
                             .lineProcessing()
                             .columnView(INCOMING_CONSTRAINT_GROUP)
