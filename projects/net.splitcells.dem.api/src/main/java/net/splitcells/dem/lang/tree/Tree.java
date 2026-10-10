@@ -934,10 +934,6 @@ public interface Tree extends TreeView, Convertible {
         return jsonString.toString();
     }
 
-    private boolean isJsonPrimitive() {
-        return children().isEmpty();
-    }
-
     private boolean containsOneJsonMember() {
         return children().size() == 1
                 && (children().get(0).children().isEmpty()
