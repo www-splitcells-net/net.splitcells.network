@@ -279,7 +279,7 @@ public class Server {
                 } catch (Throwable t) {
                     throw ExecutionException.execException("Could not start HTTP server.", t);
                 }
-                val deployResult = vertx.deployVerticle(new AbstractVerticle() {
+                vertx.deployVerticle(new AbstractVerticle() {
                     @Override
                     public void start(Promise<Void> startPromise) {
                         try {
