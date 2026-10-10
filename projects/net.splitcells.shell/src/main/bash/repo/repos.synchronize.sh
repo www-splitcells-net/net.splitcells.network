@@ -5,4 +5,4 @@
 # Pulls and pushes to already configured mirrors. Use repos.synchronize.with to do this and to configure it.
 # This command assumes, that the repo has no uncommited changes.
 # TODO Clone missing sub repositories via "repo.clone.into.current".
-repos.pull && repos.push.at.all
+repos.pull && repos.push
