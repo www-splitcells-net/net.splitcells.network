@@ -27,6 +27,10 @@ import static net.splitcells.dem.utils.StringUtils.multiple;
 
 public class TreeTest {
 
+    @UnitTest public void testAsXhtmlList() {
+        requireEquals(tree("a").withChildren(tree("a"), tree("b")).asXhtmlList(), "<ol><li>a</li><ol><li>a</li><li>b</li></ol></ol>");
+    }
+
     @UnitTest public void testPathOfValueTree() {
         val a = tree("a");
         val b = tree("b");
