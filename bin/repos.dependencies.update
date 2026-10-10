@@ -7,8 +7,10 @@ set -e
 cd ../net.splitcells.network.bom
 # These commands increase all dependencies by at most one version increment, if an update is available.
 # This leads to more tests, but on the other hand makes it easier to understand, which version exactly introduced a problem.
-mvn versions:use-next-releases -DprocessParent=true
-mvn versions:update-properties -DprocessParent=true
+# TODO `next()` does not seem to work correctly. It does not increment by one.
+mvn toolbox:versions -Dapply=true -DartifactVersionSelectorSpec=next()
+
+vn toolbox:versions -Dapply=true # Toolbox makes it easier to update Maven
 
 cd ../net.splitcells.network.hub
 mvn clean install # Check if the project can be build, after the update.
