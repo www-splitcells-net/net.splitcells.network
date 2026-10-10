@@ -16,6 +16,7 @@ import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.CommonMarkConfig.commonMarkConfig;
+import static net.splitcells.dem.lang.tree.JsonConfig.jsonConfig;
 import static net.splitcells.dem.lang.tree.Tree.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Trail.trail;
@@ -138,6 +139,15 @@ public class TreeTest {
                         , TreeI.tree("deck", SEW));
         requireEquals(testSubject.toXmlString(true)
                 , "<article xmlns=\"http://splitcells.net/sew.xsd\"><content><deck/></content></article>");
+    }
+
+    @UnitTest public void testToJsonString() {
+        requireEquals(tree("a").withChild(tree("b")).toJsonString(), "{\"a\":\"b\"}");
+        requireEquals(tree("a").toJsonString(), "[\"a\"]");
+        requireEquals(tree(JSON_ARRAY, JSON).withChildren(tree("1"), tree("2")).toJsonString(), "[\"1\",\"2\"]");
+        requireThrow(() ->
+                tree(JSON_OBJECT, JSON).withChildren(tree("1"), tree("2")).toJsonString());
+        requireEquals(tree("a").withPath(tree("b"), tree(JSON_ARRAY, JSON)).toJsonString(), "{\"a\":{\"b\":\"array\"}}");
     }
 
     @UnitTest public void testToJsonStringWithPathToDictionary() {
