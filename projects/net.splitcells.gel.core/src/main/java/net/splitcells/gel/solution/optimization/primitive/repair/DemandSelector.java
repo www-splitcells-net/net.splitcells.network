@@ -12,5 +12,11 @@ import net.splitcells.gel.solution.Solution;
 
 @FunctionalInterface
 public interface DemandSelector {
+    /**
+     * 
+     * @param constraint
+     * @param solution
+     * @return The mappings key should be from {@link Constraint#RESULTING_CONSTRAINT_GROUP}.
+     */
     Map<GroupId, Set<Line>> demandGrouping(Constraint constraint, Solution solution);
 }
