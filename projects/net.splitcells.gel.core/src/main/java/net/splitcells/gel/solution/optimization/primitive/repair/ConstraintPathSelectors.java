@@ -10,23 +10,23 @@ import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.gel.constraint.Constraint.incomingGroupsOfConstraintPath;
 
-public class GroupSelectors {
-    private GroupSelectors() {
+public class ConstraintPathSelectors {
+    private ConstraintPathSelectors() {
         throw constructorIllegal();
     }
 
     /**
-     * This helper method, makes it easier to create a {@link GroupSelector} instead of a {@link FluentGroupSelector}
+     * This helper method, makes it easier to create a {@link ConstraintPathSelector} instead of a {@link FluentConstraintPathSelector}
      * with a lambda and without casting.
      * 
-     * @param groupSelector This is the {@link GroupSelector}, which is typically defined in a lambda.
+     * @param groupSelector This is the {@link ConstraintPathSelector}, which is typically defined in a lambda.
      * @return This is the given argument.
      */
-    public static GroupSelector groupSelector(GroupSelector groupSelector) {
+    public static ConstraintPathSelector constraintPathSelector(ConstraintPathSelector groupSelector) {
         return groupSelector;
     }
 
-    public static GroupSelector groupSelector(Randomness randomness, int minimumConstraintGroupPath
+    public static ConstraintPathSelector constraintPathSelector(Randomness randomness, int minimumConstraintGroupPath
             , int numberOfGroupsSelectedPerDefiance) {
         return allocationsGroups -> {
             final var candidates = allocationsGroups

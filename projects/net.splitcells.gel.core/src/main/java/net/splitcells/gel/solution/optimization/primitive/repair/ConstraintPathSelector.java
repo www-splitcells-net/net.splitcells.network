@@ -9,7 +9,7 @@ import net.splitcells.gel.constraint.Constraint;
 import java.util.function.Function;
 
 @FunctionalInterface
-public interface GroupSelector extends Function<List<List<Constraint>>, List<List<Constraint>>>, FluentGroupSelector {
+public interface ConstraintPathSelector extends Function<List<List<Constraint>>, List<List<Constraint>>>, FluentConstraintPathSelector {
     List<List<Constraint>> apply(List<List<Constraint>> constraintPaths);
 
     default List<List<Constraint>> apply(Constraint rootConstraint) {

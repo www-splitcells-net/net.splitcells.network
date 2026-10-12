@@ -17,7 +17,6 @@ import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
@@ -27,7 +26,7 @@ import static net.splitcells.gel.constraint.Constraint.RATING;
 import static net.splitcells.gel.data.table.TableEvent.tableEvent;
 import static net.splitcells.gel.data.table.history.TableEventType.REMOVAL;
 import static net.splitcells.gel.rating.type.Cost.noCost;
-import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
+import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintPathSelectors.constraintPathSelector;
 import static net.splitcells.gel.solution.optimization.primitive.repair.RepairConfig.repairConfig;
 
 /**
@@ -50,7 +49,7 @@ import static net.splitcells.gel.solution.optimization.primitive.repair.RepairCo
 public class ConstraintGroupBasedRepair implements OnlineOptimization {
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
-            (FluentGroupSelector groupSelector, SupplySelector supplySelector, boolean repairCompliants) {
+            (FluentConstraintPathSelector groupSelector, SupplySelector supplySelector, boolean repairCompliants) {
         return new ConstraintGroupBasedRepair(repairConfig()
                 .withGroupSelector(groupSelector)
                 .withSupplySelector(supplySelector)
@@ -58,14 +57,14 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
     }
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
-            (FluentGroupSelector groupSelector, SupplySelector supplySelector) {
+            (FluentConstraintPathSelector groupSelector, SupplySelector supplySelector) {
         return new ConstraintGroupBasedRepair(repairConfig()
                 .withGroupSelector(groupSelector)
                 .withSupplySelector(supplySelector));
     }
 
     public static ConstraintGroupBasedRepair simpleConstraintGroupBasedRepair
-            (FluentGroupSelector groupSelector) {
+            (FluentConstraintPathSelector groupSelector) {
         return new ConstraintGroupBasedRepair(repairConfig().withGroupSelector(groupSelector));
     }
 
@@ -77,7 +76,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
             (int minimumConstraintGroupPath, int numberOfGroupsSelectedPerDefiance) {
         val randomness = randomness();
         return new ConstraintGroupBasedRepair
-                (repairConfig().withGroupSelector(groupSelector(randomness, minimumConstraintGroupPath
+                (repairConfig().withGroupSelector(ConstraintPathSelectors.constraintPathSelector(randomness, minimumConstraintGroupPath
                         , numberOfGroupsSelectedPerDefiance)));
     }
 

@@ -7,6 +7,6 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.gel.constraint.Constraint;
 
 @FunctionalInterface
-public interface FluentGroupSelector {
+public interface FluentConstraintPathSelector {
     List<List<Constraint>> apply(Constraint rootConstraint);
 }

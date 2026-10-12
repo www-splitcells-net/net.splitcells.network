@@ -21,7 +21,7 @@ import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
 import static net.splitcells.gel.solution.history.History.*;
 import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.DemandSelectors.demandSelector;
-import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
+import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintPathSelectors.constraintPathSelector;
 
 public class ConstraintGroupBasedRepairTest {
 
@@ -76,7 +76,7 @@ public class ConstraintGroupBasedRepairTest {
             solution.optimize(offlineLinearInitialization());
             final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(
                     // Select the first defying group.
-                    groupSelector(constraintGroup -> list(constraintGroup.get(6)))
+                    constraintPathSelector(constraintGroup -> list(constraintGroup.get(6)))
                     , freeDemandGroups -> currentSolution -> {
                         freeDemandGroups.entrySet().forEach(freeGroup -> {
                             freeGroup.getValue().forEach(freeDemand -> {

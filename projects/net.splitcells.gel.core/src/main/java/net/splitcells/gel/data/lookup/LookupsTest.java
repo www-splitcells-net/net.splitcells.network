@@ -15,7 +15,7 @@ import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.rating.rater.lib.RaterBasedOnLineValue.lineValueRater;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
-import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
+import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintPathSelectors.constraintPathSelector;
 
 public class LookupsTest {
     @Test

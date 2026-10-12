@@ -8,6 +8,7 @@ import net.splitcells.gel.Gel;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.problem.Problem;
 import net.splitcells.gel.rating.type.Cost;
+import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintPathSelectors;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +27,7 @@ import static net.splitcells.gel.solution.optimization.meta.hill.climber.Functio
 import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearInitialization.onlineLinearInitialization;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
-import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
+import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintPathSelectors.constraintPathSelector;
 
 public class SolutionTest {
 
@@ -72,7 +73,7 @@ public class SolutionTest {
                 .asSolution();
         testSubject.history().processWithoutHistory(() -> {
             testSubject.optimize(onlineLinearInitialization());
-            simpleConstraintGroupBasedRepair(groupSelector(randomness(), 1
+            simpleConstraintGroupBasedRepair(ConstraintPathSelectors.constraintPathSelector(randomness(), 1
                     , 1), a -> solution -> {
             }, false).optimize(testSubject);
         });

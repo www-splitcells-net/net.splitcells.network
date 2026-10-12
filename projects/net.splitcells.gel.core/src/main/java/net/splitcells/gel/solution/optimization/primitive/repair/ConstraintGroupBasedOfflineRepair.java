@@ -27,7 +27,7 @@ import static net.splitcells.gel.constraint.Constraint.*;
 import static net.splitcells.gel.rating.type.Cost.noCost;
 import static net.splitcells.gel.solution.optimization.OptimizationEvent.optimizationEvent;
 import static net.splitcells.gel.solution.optimization.StepType.REMOVAL;
-import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
+import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintPathSelectors.constraintPathSelector;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -58,17 +58,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ConstraintGroupBasedOfflineRepair implements OfflineOptimization {
 
     public static ConstraintGroupBasedOfflineRepair simpleConstraintGroupBasedOfflineRepair
-            (GroupSelector groupSelector, SupplyOfflineSelector repairer) {
+            (ConstraintPathSelector groupSelector, SupplyOfflineSelector repairer) {
         return new ConstraintGroupBasedOfflineRepair(groupSelector, repairer);
     }
 
     public static ConstraintGroupBasedOfflineRepair simpleConstraintGroupBasedOfflineRepair
-            (GroupSelector groupSelector, SupplyOfflineSelector repairer, boolean repairCompliants) {
+            (ConstraintPathSelector groupSelector, SupplyOfflineSelector repairer, boolean repairCompliants) {
         return new ConstraintGroupBasedOfflineRepair(groupSelector, repairer, repairCompliants);
     }
 
     public static ConstraintGroupBasedOfflineRepair simpleConstraintGroupBasedOfflineRepair
-            (GroupSelector groupSelector) {
+            (ConstraintPathSelector groupSelector) {
         return new ConstraintGroupBasedOfflineRepair(groupSelector, SupplyOfflineSelectors.supplySelector());
     }
 
@@ -79,20 +79,20 @@ public class ConstraintGroupBasedOfflineRepair implements OfflineOptimization {
     public static ConstraintGroupBasedOfflineRepair simpleConstraintGroupBasedOfflineRepair
             (int minimumConstraintGroupPath, int numberOfGroupsSelectedPerDefiance) {
         final var randomness = randomness();
-        return new ConstraintGroupBasedOfflineRepair(groupSelector(randomness, minimumConstraintGroupPath
+        return new ConstraintGroupBasedOfflineRepair(ConstraintPathSelectors.constraintPathSelector(randomness, minimumConstraintGroupPath
                 , numberOfGroupsSelectedPerDefiance)
                 , SupplyOfflineSelectors.supplySelector());
     }
 
-    private final GroupSelector groupSelector;
+    private final ConstraintPathSelector groupSelector;
     private final SupplyOfflineSelector supplyOfflineSelector;
     private final boolean repairCompliants;
 
-    private ConstraintGroupBasedOfflineRepair(GroupSelector groupSelector, SupplyOfflineSelector repairer) {
+    private ConstraintGroupBasedOfflineRepair(ConstraintPathSelector groupSelector, SupplyOfflineSelector repairer) {
         this(groupSelector, repairer, true);
     }
 
-    private ConstraintGroupBasedOfflineRepair(GroupSelector groupSelector, SupplyOfflineSelector repairer, boolean repairCompliants) {
+    private ConstraintGroupBasedOfflineRepair(ConstraintPathSelector groupSelector, SupplyOfflineSelector repairer, boolean repairCompliants) {
         this.groupSelector = groupSelector;
         this.supplyOfflineSelector = repairer;
         this.repairCompliants = repairCompliants;

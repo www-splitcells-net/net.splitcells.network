@@ -10,7 +10,7 @@ import net.splitcells.gel.solution.Solution;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
-import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
+import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintPathSelectors.constraintPathSelector;
 
 /**
  * This config class is created in order to easily add new parameters to {@link ConstraintGroupBasedRepair}.
@@ -30,7 +30,7 @@ public class RepairConfig {
     @Deprecated
     private int minimumConstraintGroupPath = 1;
 
-    private FluentGroupSelector groupSelector = GroupSelectors.groupSelector(randomness(), minimumConstraintGroupPath
+    private FluentConstraintPathSelector groupSelector = ConstraintPathSelectors.constraintPathSelector(randomness(), minimumConstraintGroupPath
             , numberOfGroupsSelectedPerDefiance);
     private SupplySelector supplySelector = SupplySelectors.supplySelector();
 
@@ -44,12 +44,12 @@ public class RepairConfig {
     }
 
     private void setupGroupSelector() {
-        groupSelector = GroupSelectors.groupSelector(randomness(), minimumConstraintGroupPath
+        groupSelector = ConstraintPathSelectors.constraintPathSelector(randomness(), minimumConstraintGroupPath
                 , numberOfGroupsSelectedPerDefiance);
     }
 
     /**
-     * @deprecated Create a {@link FluentGroupSelector} builder instead.
+     * @deprecated Create a {@link FluentConstraintPathSelector} builder instead.
      * @param minimumConstraintGroupPathArg
      * @return
      */
@@ -61,7 +61,7 @@ public class RepairConfig {
     }
 
     /**
-     * @deprecated Create a {@link FluentGroupSelector} builder instead.
+     * @deprecated Create a {@link FluentConstraintPathSelector} builder instead.
      * @param numberOfGroupsSelectedPerDefianceArg
      * @return
      */
@@ -84,7 +84,7 @@ public class RepairConfig {
         return this;
     }
 
-    public FluentGroupSelector groupSelector() {
+    public FluentConstraintPathSelector groupSelector() {
         return groupSelector;
     }
 
@@ -92,7 +92,7 @@ public class RepairConfig {
      * Sets {@link #groupSelector()} in such a way,
      * that only the root {@link net.splitcells.gel.constraint.Constraint} is selected.
      *
-     * @deprecated Create a {@link FluentGroupSelector} builder instead.
+     * @deprecated Create a {@link FluentConstraintPathSelector} builder instead.
      * @return The current {@link RepairConfig} state.
      */
     @Deprecated
@@ -100,7 +100,7 @@ public class RepairConfig {
         return withGroupSelector(rootConstraint -> list(list(rootConstraint)));
     }
 
-    public RepairConfig withGroupSelector(FluentGroupSelector groupSelector) {
+    public RepairConfig withGroupSelector(FluentConstraintPathSelector groupSelector) {
         this.groupSelector = groupSelector;
         return this;
     }

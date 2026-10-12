@@ -11,7 +11,6 @@ import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.data.set.map.Maps;
 import net.splitcells.dem.environment.config.IsDeterministic;
-import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.dem.resource.communication.log.IsEchoToFile;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
 import net.splitcells.dem.testing.annotations.DisabledTest;
@@ -28,6 +27,7 @@ import net.splitcells.gel.solution.optimization.OnlineOptimization;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.solution.optimization.StepType;
 import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair;
+import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintPathSelectors;
 import net.splitcells.sep.Network;
 
 import java.util.Optional;
@@ -60,7 +60,7 @@ import static net.splitcells.gel.solution.optimization.primitive.OnlineLinearIni
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair;
 import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair;
 import static net.splitcells.gel.solution.optimization.primitive.OfflineLinearInitialization.offlineLinearInitialization;
-import static net.splitcells.gel.solution.optimization.primitive.repair.GroupSelectors.groupSelector;
+import static net.splitcells.gel.solution.optimization.primitive.repair.ConstraintPathSelectors.constraintPathSelector;
 import static net.splitcells.gel.solution.optimization.primitive.repair.SupplySelectors.hillClimber;
 import static net.splitcells.sep.Network.network;
 
@@ -129,7 +129,7 @@ public class SchoolCourseSchedulingTest {
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
                 network.process(RAILS_FOR_SCHOOL_SCHEDULING, s -> s.createStandardAnalysis(1));*/
                 network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, onlineLinearInitialization());
-                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, simpleConstraintGroupBasedRepair(groupSelector(randomness(), 3
+                network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, simpleConstraintGroupBasedRepair(ConstraintPathSelectors.constraintPathSelector(randomness(), 3
                                 , 1), hillClimber(), false)
                         , (currentSolution, step) -> step <= 10 && !currentSolution.isOptimal());
 
@@ -191,7 +191,7 @@ public class SchoolCourseSchedulingTest {
                         , (currentSolution, step) -> step <= 100 && !currentSolution.isOptimal());
                 network.process(RAILS_FOR_SCHOOL_SCHEDULING, s -> s.createStandardAnalysis(1));*/
                     network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, onlineLinearInitialization());
-                    network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, simpleConstraintGroupBasedRepair(groupSelector(randomness(), 3
+                    network.withOptimization(RAILS_FOR_SCHOOL_SCHEDULING, simpleConstraintGroupBasedRepair(ConstraintPathSelectors.constraintPathSelector(randomness(), 3
                                     , 1), hillClimber(), false)
                             , (currentSolution, step) -> step <= 10 && !currentSolution.isOptimal());
 
@@ -281,7 +281,7 @@ public class SchoolCourseSchedulingTest {
      */
     private static OnlineOptimization teacherAllocationForCoursesOptimization() {
         final var randomness = randomness();
-        return simpleConstraintGroupBasedRepair(groupSelector(randomness, 2, 1)
+        return simpleConstraintGroupBasedRepair(ConstraintPathSelectors.constraintPathSelector(randomness, 2, 1)
                 , freeCoursesByGroupId -> solution -> {
                     final Map<Integer, Set<Line>> allFreeCoursesById = Maps.map();
                     {
@@ -362,7 +362,7 @@ public class SchoolCourseSchedulingTest {
     private static OfflineOptimization railsForSchoolSchedulingOptimization(int minimumConstraintGroupPath, boolean repairCompliants) {
         final var randomness = randomness();
         // TODO Split up into multiple methods for better overview and documentation.
-        return ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(groupSelector(randomness, minimumConstraintGroupPath
+        return ConstraintGroupBasedOfflineRepair.simpleConstraintGroupBasedOfflineRepair(ConstraintPathSelectors.constraintPathSelector(randomness, minimumConstraintGroupPath
                         , 1)
                 , (freeDemandGroups, freeSupplies) -> solution -> {
                     final List<OptimizationEvent> optimization = list();
