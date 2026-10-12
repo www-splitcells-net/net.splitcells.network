@@ -10,7 +10,6 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.constraint.GroupId;
-import net.splitcells.gel.data.table.history.TableEventType;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.proposal.Proposal;
 import net.splitcells.gel.rating.type.Cost;
@@ -95,22 +94,17 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
 
     @Override
     public void optimize(Solution solution) {
-        val groupsOfConstraintGroup = groupOfConstraintGroup(solution);
-        val demandGroupings = groupsOfConstraintGroup
-                .stream()
-                .map(e -> e
-                        .lastValue()
-                        .map(f -> config.demandSelector().demandGrouping(f, solution))
-                        .orElseGet(() -> map()))
-                .collect(toList());
-        groupsOfConstraintGroup
+        val constraintPaths = constraintPaths(solution);
+        final Map<GroupId, Set<Line>> demandGroupings = map();
+        constraintPaths.forEach(e -> e
+                .lastValue()
+                .map(f -> config.demandSelector().demandGrouping(f, solution))
+                .ifPresent(cg -> demandGroupings.withMerged(cg, Set::with)));
+        constraintPaths
                 .forEach(e -> e
                         .lastValue()
                         .ifPresent(f -> freeDefyingGroupOfConstraintGroup(solution, f)));
-        val demandGrouping = demandGroupings
-                .stream()
-                .reduce(map(), (a, b) -> a.withMergedEntries(b, Set::with));
-        repair(solution, demandGrouping);
+        repair(solution, demandGroupings);
     }
 
     public void repair(Solution solution
@@ -118,7 +112,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
         config.supplySelector().apply(freeDemandGroups).optimize(solution);
     }
 
-    public List<List<Constraint>> groupOfConstraintGroup(Solution solution) {
+    public List<List<Constraint>> constraintPaths(Solution solution) {
         return config.groupSelector().apply(solution.constraint());
     }
 

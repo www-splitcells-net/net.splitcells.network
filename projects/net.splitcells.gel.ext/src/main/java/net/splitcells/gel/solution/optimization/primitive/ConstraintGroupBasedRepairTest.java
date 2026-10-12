@@ -85,7 +85,7 @@ public class ConstraintGroupBasedRepairTest {
                         });
                     }
             );
-            final var groupsOfConstraintGroup = testSubject.groupOfConstraintGroup(solution);
+            final var groupsOfConstraintGroup = testSubject.constraintPaths(solution);
             final var demandClassifications = groupsOfConstraintGroup
                     .stream()
                     .map(e -> e
