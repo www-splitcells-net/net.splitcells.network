@@ -203,7 +203,7 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
     }
 
     /**
-     * Is this a duplicate of {@link #computeIfAbsent(Object, Function)}, but it is easier to use.
+     * This is a duplicate of {@link #computeIfAbsent(Object, Function)}, but it is easier to use.
      * 
      * @param key
      * @param valueSupplier
