@@ -203,9 +203,11 @@ public interface Map<Key, Value> extends java.util.Map<Key, Value> {
     }
 
     /**
-     * TODO Is this a duplicate of {@link #computeIfAbsent(Object, Function)}?
-     * <p>
-     * RENAME
+     * Is this a duplicate of {@link #computeIfAbsent(Object, Function)}, but it is easier to use.
+     * 
+     * @param key
+     * @param valueSupplier
+     * @return
      */
     default Value addIfAbsent(Key key, Supplier<Value> valueSupplier) {
         Value rVal = get(key);
