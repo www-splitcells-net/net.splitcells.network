@@ -10,8 +10,6 @@ cd ../net.splitcells.network.bom
 # TODO `next()` does not seem to work correctly. It does not increment by one.
 mvn toolbox:versions -Dapply=true -DartifactVersionSelectorSpec='next()'
 
-vn toolbox:versions -Dapply=true # Toolbox makes it easier to update Maven
-
 cd ../net.splitcells.network.hub
 mvn clean install # Check if the project can be build, after the update.
 
