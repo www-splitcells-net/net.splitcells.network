@@ -16,13 +16,12 @@ import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.Solution;
 import net.splitcells.gel.solution.optimization.OnlineOptimization;
 
+import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
-import static net.splitcells.gel.constraint.Constraint.INCOMING_CONSTRAINT_GROUP;
-import static net.splitcells.gel.constraint.Constraint.LINE;
-import static net.splitcells.gel.constraint.Constraint.RATING;
+import static net.splitcells.gel.constraint.Constraint.*;
 import static net.splitcells.gel.data.table.TableEvent.tableEvent;
 import static net.splitcells.gel.data.table.history.TableEventType.REMOVAL;
 import static net.splitcells.gel.rating.type.Cost.noCost;
@@ -102,7 +101,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
         constraintPaths
                 .forEach(e -> e
                         .lastValue()
-                        .ifPresent(f -> freeDefyingGroupOfConstraintGroup(solution, f)));
+                        .ifPresent(f -> freeDefyingGroupOfConstraintGroup(solution, f, demandGroupings)));
         repair(solution, demandGroupings);
     }
 
@@ -115,9 +114,16 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
         return config.groupSelector().apply(solution.constraint());
     }
 
-    public void freeDefyingGroupOfConstraintGroup(Solution solution, Constraint constraint) {
+    /**
+     *
+     * @param solution
+     * @param constraint
+     * @param demandGroupings Its format corresponds to {@link DemandSelector#demandGrouping(Constraint, Solution)}.
+     *                        Freed {@link Line}s are add to this.
+     */
+    public void freeDefyingGroupOfConstraintGroup(Solution solution, Constraint constraint, Map<GroupId, Set<Line>> demandGroupings) {
         if (config.freeDefyingGroupOfConstraintGroup()) {
-            val incomingGroups = Sets.setOfUniques
+            val incomingGroups = setOfUniques
                     (constraint
                             .lineProcessing()
                             .columnView(INCOMING_CONSTRAINT_GROUP)
@@ -146,7 +152,18 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
                         }
                         return true;
                     })
-                    .forEach(alloc -> solution.process(tableEvent(alloc, REMOVAL).setReason(tree("Delete defying allocations."))));
+                    .forEach(alloc -> {
+                        val resultingGroup = constraint
+                                .lineProcessing()
+                                .columnView(LINE)
+                                .lookup(alloc)
+                                .unorderedLines()
+                                .get(0)
+                                .value(RESULTING_CONSTRAINT_GROUP);
+                        demandGroupings.addIfAbsent(resultingGroup, () -> setOfUniques())
+                                .add(solution.demandOfAssignment(alloc));
+                        solution.process(tableEvent(alloc, REMOVAL).setReason(tree("Delete defying allocations.")));
+                    });
         }
     }
 }

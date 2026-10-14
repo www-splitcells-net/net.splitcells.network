@@ -148,9 +148,9 @@ public class ConstraintGroupBasedRepairTest {
         solution.unorderedLines().requireSizeOf(7);
 
         final var testSubject = ConstraintGroupBasedRepair.simpleConstraintGroupBasedRepair(0);
-        testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintA);
+        testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintA, map());
         solution.unorderedLines().requireSizeOf(3);
-        testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintB);
+        testSubject.freeDefyingGroupOfConstraintGroup(solution, defyingConstraintB, map());
         solution.unorderedLines().requireSizeOf(1);
     }
 
