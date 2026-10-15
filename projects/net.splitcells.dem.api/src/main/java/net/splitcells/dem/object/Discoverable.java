@@ -39,9 +39,10 @@ public interface Discoverable {
     String EXPLICIT_NO_CONTEXT_ROOT = "no-context";
 
     /**
-     * This is just like {@link #NO_CONTEXT}, but with the difference,
+     * <p>This is just like {@link #NO_CONTEXT}, but with the difference,
      * that other {@link Discoverable} can use this as a parent,
-     * without becoming a {@link Discoverable} with a context.
+     * without becoming a {@link Discoverable} with a context.</p>
+     * <p>TODO Consider renaming this to `ANONYMOUS_CONTEXT`.</p>
      */
     Discoverable EXPLICIT_NO_CONTEXT = () -> list(EXPLICIT_NO_CONTEXT_ROOT);
 
