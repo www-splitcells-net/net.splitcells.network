@@ -3,11 +3,8 @@
  */
 package net.splitcells.dem.object;
 
-import lombok.val;
-import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
-import net.splitcells.dem.environment.config.ProgramRepresentative;
 
 import java.util.Optional;
 
@@ -48,22 +45,18 @@ public interface Discoverable {
     Discoverable EXPLICIT_NO_CONTEXT = () -> list(EXPLICIT_NO_CONTEXT_ROOT);
 
     /**
-     * Works like {@link #isNoContext()}, but can recycle the path list instance.
-     * @param path
-     * @return
+     * Works like {@link #isAnonymous()}, but can recycle the path list instance.
+     *
+     * @param path An object created via {@link #path()}.
+     * @return Returns true, if path not part of the discovery tree.
+     *         Such objects can be considered to be temporary objects.
      */
     static boolean isAnonymous(ListView<String> path) {
         return path.hasElements() && EXPLICIT_NO_CONTEXT_ROOT.equals(path.getFirst());
     }
-
-    /**
-     * @return Returns true, if there is no path, which means,
-     * that there is semantically no parent or owning element for this {@link Discoverable}.
-     * Such objects can be considered to be temporary objects,
-     * that most of the time are not integrated in persistent data structures.
-     */
-    default boolean isNoContext() {
-        return path().isEmpty() || EXPLICIT_NO_CONTEXT_ROOT.equals(path().get(0));
+    
+    default boolean isAnonymous() {
+        return isAnonymous(path());
     }
 
     static Discoverable discoverable(List<String> path) {
