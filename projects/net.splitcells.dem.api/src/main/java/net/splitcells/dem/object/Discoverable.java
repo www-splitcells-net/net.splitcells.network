@@ -34,7 +34,6 @@ public interface Discoverable {
      * <p>TODO Rename this variable to a name that denotes its relation to the root more directly
      * Maybe name it `ROOT`.</p>
      */
-    @Deprecated
     Discoverable NO_CONTEXT = () -> list();
 
     String EXPLICIT_NO_CONTEXT_ROOT = "no-context";
