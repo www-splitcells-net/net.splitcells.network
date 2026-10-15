@@ -29,8 +29,10 @@ import static net.splitcells.dem.utils.reflection.ClassesRelated.simplifiedName;
 public interface Discoverable {
 
     /**
-     * This is basically the null value of {@link Discoverable} and states,
-     * that the respective object is not part of a {@link Discoverable} tree.
+     * <p>This is basically the null value of {@link Discoverable} and states,
+     * that the respective object is the root's  direct child of the {@link Discoverable} tree.</p>
+     * <p>TODO Rename this variable to a name that denotes its relation to the root more directly
+     * Maybe name it `ROOT`.</p>
      */
     @Deprecated
     Discoverable NO_CONTEXT = () -> list();
