@@ -26,6 +26,8 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT_ROOT;
+import static net.splitcells.dem.object.Discoverable.isAnonymous;
 import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.utils.ExecutionException.execException;
@@ -92,12 +94,16 @@ public class ObjectsRendererI implements ProjectRenderer {
     }
 
     public synchronized ObjectsRendererI withObject(DiscoverableRenderer object, Optional<Object> subject) {
-        var path = Path.of(publicPath(object.path()));
+        val originalPath = object.path();
+        if (isAnonymous(originalPath)) {
+            return this;
+        }
+        var path = Path.of(publicPath(originalPath));
         if (objects.hasKey(path)) {
             // This makes it easier to analyze problems, when the same path is present multiple times.
             int i = 0;
             do {
-                path = Path.of(publicPath(object.path()) + "." + ++i);
+                path = Path.of(publicPath(originalPath) + "." + ++i);
             } while (objects.hasKey(path));
             logs().warn(tree("Discoverable path is already registered. Using alternative path for rendering instead.")
                             .withProperty("object", object.toString())
@@ -112,12 +118,16 @@ public class ObjectsRendererI implements ProjectRenderer {
     }
 
     public synchronized ObjectsRendererI withObject(CsvRenderer object) {
-        var path = Path.of(publicPath(object.path()));
+        val originalPath = object.path();
+        if (isAnonymous(originalPath)) {
+            return this;
+        }
+        var path = Path.of(publicPath(originalPath));
         if (csvRenderers.hasKey(path)) {
             // This makes it easier to analyze problems, when the same path is present multiple times.
             int i = 0;
             do {
-                path = Path.of(publicPath(object.path()) + "." + ++i);
+                path = Path.of(publicPath(originalPath) + "." + ++i);
             } while (csvRenderers.hasKey(path));
             logs().warn(tree("Discoverable path is already registered. Using alternative path for rendering instead.")
                             .withProperty("object", object.toString())
