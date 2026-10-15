@@ -46,7 +46,12 @@ public interface Discoverable {
      * <p>TODO Consider renaming this to `ANONYMOUS_CONTEXT`.</p>
      */
     Discoverable EXPLICIT_NO_CONTEXT = () -> list(EXPLICIT_NO_CONTEXT_ROOT);
-    
+
+    /**
+     * Works like {@link #isNoContext()}, but can recycle the path list instance.
+     * @param path
+     * @return
+     */
     static boolean isAnonymous(ListView<String> path) {
         return path.hasElements() && EXPLICIT_NO_CONTEXT_ROOT.equals(path.getFirst());
     }
