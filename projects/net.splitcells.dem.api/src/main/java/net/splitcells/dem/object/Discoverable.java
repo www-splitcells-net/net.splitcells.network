@@ -3,6 +3,7 @@
  */
 package net.splitcells.dem.object;
 
+import lombok.val;
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
@@ -45,6 +46,10 @@ public interface Discoverable {
      * <p>TODO Consider renaming this to `ANONYMOUS_CONTEXT`.</p>
      */
     Discoverable EXPLICIT_NO_CONTEXT = () -> list(EXPLICIT_NO_CONTEXT_ROOT);
+    
+    static boolean isAnonymous(ListView<String> path) {
+        return path.hasElements() && EXPLICIT_NO_CONTEXT_ROOT.equals(path.getFirst());
+    }
 
     /**
      * @return Returns true, if there is no path, which means,
