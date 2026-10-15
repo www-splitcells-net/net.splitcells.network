@@ -48,7 +48,7 @@ public interface Discoverable {
      * Works like {@link #isAnonymous()}, but can recycle the path list instance.
      *
      * @param path An object created via {@link #path()}.
-     * @return Returns true, if path not part of the discovery tree.
+     * @return Returns true, if path is not part of the discovery tree.
      *         Such objects can be considered to be temporary objects.
      */
     static boolean isAnonymous(ListView<String> path) {
