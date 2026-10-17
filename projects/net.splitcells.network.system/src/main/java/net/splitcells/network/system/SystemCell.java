@@ -143,7 +143,7 @@ public class SystemCell implements Cell {
                 .withAdditionalProjectsRendererExtension(sportCourseExample())
                 .withLicensePage(trailLink("Licensing Info of The Core Project net.splitcells.network", "/net/splitcells/network/LICENSE.html"))
                 .withLicensePage(trailLink("Copyright Notice", "/net/splitcells/network/NOTICE.html"))
-                .withLicensePage(trailLink("License Overview of All Documents", "net/splitcells/website/layout-license.html"))
+                .withLicensePage(trailLink("License Inventory of All Documents", "net/splitcells/website/layout-license.html"))
                 .withLicensePage(trailLink("Developer Certificate of Origin Version 1.1", "/net/splitcells/network/legal/Developer_Certificate_of_Origin.v1.1.html"))
                 .withLicensePage(trailLink("Apache License - Version 2.0, January 2004", "/net/splitcells/network/legal/licenses/Apache-2.0.html"))
                 .withLicensePage(trailLink("BSD 2 Clause License", "/net/splitcells/network/legal/licenses/BSD-2-Clause.html"))
