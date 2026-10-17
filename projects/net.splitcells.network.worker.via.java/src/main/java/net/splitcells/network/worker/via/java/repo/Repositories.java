@@ -31,6 +31,19 @@ public class Repositories implements Repository {
     @Override
     public Repository commitAll() {
         try {
+            return commitAll("Committed by \""
+                    + System.getProperty("user.name")
+                    + "\" via the Network Worker on \""
+                    + InetAddress.getLocalHost().getHostName()
+                    + "\".");
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Repository commitAll(String commitMessage) {
+        try {
             final int numberOfFilesChanged = gitIntegration.add()
                     .addFilepattern("src/")
                     .setUpdate(false)
@@ -38,11 +51,7 @@ public class Repositories implements Repository {
                     .getEntryCount();
             if (numberOfFilesChanged > 0) {
                 gitIntegration.commit()
-                        .setMessage("Committed by \""
-                                + System.getProperty("user.name")
-                                + "\" via the Network Worker on \""
-                                + InetAddress.getLocalHost().getHostName()
-                                + "\".")
+                        .setMessage(commitMessage)
                         .call();
             }
         } catch (Throwable e) {

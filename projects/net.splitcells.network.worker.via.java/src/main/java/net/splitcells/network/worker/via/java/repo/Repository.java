@@ -6,6 +6,6 @@ package net.splitcells.network.worker.via.java.repo;
 import net.splitcells.dem.lang.annotations.ReturnsThis;
 
 public interface Repository {
-    @ReturnsThis
-    Repository commitAll();
+    @ReturnsThis Repository commitAll();
+    @ReturnsThis Repository commitAll(String commitMessage);
 }
