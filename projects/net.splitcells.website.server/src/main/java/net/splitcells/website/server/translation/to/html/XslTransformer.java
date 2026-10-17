@@ -18,7 +18,9 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 
 /**
  * The <a href="http://saxon.sourceforge.net/">SAXON The XSLT and XQuery
@@ -116,7 +118,7 @@ public class XslTransformer {
 
     public void transform(InputStream input, OutputStream output) {
         try {
-            Source source = new StreamSource(input);
+            StreamSource source = new StreamSource(input);
             Result result = new StreamResult(output);
             transformer.transform(source, result);
         } catch (TransformerException e) {
@@ -134,7 +136,7 @@ public class XslTransformer {
         try (final var input = new BufferedInputStream(new ByteArrayInputStream(content.getBytes()))) {
             return transform(input);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw execException(tree("Could not read content.").withProperty("Content", content), e);
         }
     }
 
