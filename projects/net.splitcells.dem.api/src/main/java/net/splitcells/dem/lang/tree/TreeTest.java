@@ -77,6 +77,12 @@ public class TreeTest {
         Tree.subtree(testData, list("a", "b")).requireEqualsTo(b);
     }
 
+    @UnitTest public void testPropertiesWithValue() {
+        requireEquals(tree("").withProperty("a", STRING, "b").withProperty("a", STRING, "b")
+                        .propertiesWithValue("a", STRING, "b")
+                , list(tree("a", STRING).withChild(tree("b", STRING)), tree("a", STRING).withChild(tree("b", STRING))));
+    }
+
     @UnitTest public void testPropertyInstance() {
         requireEquals(tree("").propertyInstance("something"), Optional.empty());
         requireEquals(tree("").propertyInstance("something", STRING), Optional.empty());
