@@ -16,6 +16,7 @@ import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
 import org.junit.platform.launcher.TestPlan;
 
+import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -27,6 +28,7 @@ import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.ContentType.CSV;
 import static net.splitcells.dem.resource.communication.log.LogLevel.WARNING;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
+import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.network.worker.via.java.LogEntryProperty.logEntryProperty;
 import static net.splitcells.network.worker.via.java.repo.Repositories.repository;
 import static org.junit.platform.engine.TestExecutionResult.Status.SUCCESSFUL;
@@ -154,8 +156,17 @@ public class Logger implements TestExecutionListener {
     }
 
     public void commit() {
-        logProject.javaLegacyPath().ifPresentOrElse(path -> repository(path).commitAll()
-                , () -> logs().append("Persistence for network log not supported.", WARNING));
+        try {
+            val commitMessage = "Log tester results #30\n\nCommitted by \""
+                    + System.getProperty("user.name")
+                    + "\" via the Network Worker on \""
+                    + InetAddress.getLocalHost().getHostName()
+                    + "\".";
+            logProject.javaLegacyPath().ifPresentOrElse(path -> repository(path).commitAll(commitMessage)
+                    , () -> logs().append("Persistence for network log not supported.", WARNING));
+        } catch (Throwable t) {
+            throw execException(t);
+        }
     }
 
     @Override
