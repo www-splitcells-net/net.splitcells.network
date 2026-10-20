@@ -15,6 +15,7 @@ import net.splitcells.gel.rating.framework.Rating;
 import java.util.function.Function;
 
 import static java.util.stream.IntStream.range;
+import static net.splitcells.dem.Dem.noOp;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
@@ -78,6 +79,7 @@ public class SupplySelectors {
                     }
                     if (solution.demandsFree().isRawLine(freeDemand.index())) {
                         val bestSupply = Variable.<Line>variable();
+                        val bestIndex = Variable.<Integer>variable();
                         val bestRating = variable(solution.constraint().rating());
                         solution.history().processWithoutHistory(() -> {
                             range(0, tries).filter(i -> i < freeSupplies.size()).forEach(i -> {
@@ -85,23 +87,27 @@ public class SupplySelectors {
                                     return;
                                 }
                                 // Using a free supply multiple times creates an error and therefore it is avoided.
-                                val nextSupply = freeSupplies.switchVal(rnd.integer(0, freeSupplies.size() - 1), null);
-                                if (nextSupply == null) {
-                                    return;
-                                }
+                                val nextIndex = rnd.integer(0, freeSupplies.size() - 1);
+                                val nextSupply = freeSupplies.switchVal(nextIndex, null);
                                 val assignment = assignmentEvent(freeDemand, nextSupply, ADDITION).setReason(tree("Checking rating for potential assignment."));
                                 solution.process(assignment);
                                 val nextRating = solution.constraint().rating();
                                 solution.process(tableEvent(assignment.getAssignment().orElseThrow(), REMOVAL).setReason(tree("Removing allocation after rating check.")));
                                 if (bestSupply.isNull() || nextRating.betterThan(bestRating.val())) {
                                     bestSupply.withValue(nextSupply);
+                                    bestIndex.withValue(nextIndex);
                                     bestRating.withValue(nextRating);
                                 }
+                                freeSupplies.set(nextIndex, nextSupply);
                             });
                         });
                         if (bestSupply.hasValue()) {
                             solution.process(assignmentEvent(freeDemand, bestSupply.val(), ADDITION)
                                     .setReason(tree("Using best supply for demand.")));
+                            freeSupplies.removeAt(bestIndex.val());
+                        } else {
+                            // No supply is available.
+                            noOp();
                         }
                     }
                 }
