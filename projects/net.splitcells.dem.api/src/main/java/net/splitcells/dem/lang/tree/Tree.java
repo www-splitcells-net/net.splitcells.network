@@ -358,7 +358,12 @@ public interface Tree extends TreeView, Convertible {
     }
 
     default String toHtmlString() {
-        final var htmlString = StringUtils.stringBuilder();
+        val htmlString = stringBuilder();
+        toHtmlString(htmlString);
+        return htmlString.toString();
+    }
+
+    default void toHtmlString(StringBuilder htmlString) {
         if (nameSpace().equals(HTML)) {
             if (children().isEmpty()) {
                 htmlString.append("<" + name() + "/>");
@@ -375,18 +380,18 @@ public interface Tree extends TreeView, Convertible {
                     });
                 }
                 htmlString.append(">");
-                htmlString.append(children().stream().map(Tree::toHtmlString).reduce((a, b) -> a + b).orElse(""));
+                children().forEach(c -> c.toHtmlString(htmlString));
                 htmlString.append("</" + name() + ">");
             }
         } else if (nameSpace().equals(STRING)) {
             htmlString.append(name());
-            htmlString.append(children().stream().map(Tree::toHtmlString).reduce((a, b) -> a + b).orElse(""));
+            children().forEach(c -> c.toHtmlString(htmlString));
         } else if (nameSpace().equals(NATURAL) || nameSpace().equals(DEN)) {
             if (children().isEmpty()) {
                 htmlString.append("<" + name() + "/>");
             } else {
                 htmlString.append("<" + name() + ">");
-                htmlString.append(children().stream().map(Tree::toHtmlString).reduce((a, b) -> a + b).orElse(""));
+                children().forEach(c -> c.toHtmlString(htmlString));
                 htmlString.append("</" + name() + ">");
             }
         } else if (nameSpace().isXmlAttribute().orElse(false)) {
@@ -394,7 +399,6 @@ public interface Tree extends TreeView, Convertible {
         } else {
             throw ExecutionException.execException("Unsupported namespace `" + nameSpace().uri() + "` for value `" + name() + "`.");
         }
-        return htmlString.toString();
     }
 
     default String toXmlString() {
