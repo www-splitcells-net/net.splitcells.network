@@ -153,6 +153,7 @@ public class DemandSelectors {
                         return true;
                     })
                     .filter(processing -> {
+                        // TODO Should only selecting demand, if there are no proposals, not be an optional thing, that is configured?
                         final var demandProcessing = solution.demandOfAssignment(processing.value(Constraint.LINE));
                         final var proposal = propose(solution, restrictingConstraintPath, list(demandProcessing));
                         // If true the restrictingConstraintPath does not prohibit allocations for demandProcessing.
