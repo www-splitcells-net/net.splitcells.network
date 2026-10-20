@@ -15,6 +15,7 @@ import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.random.RandomnessViaList.randomnessViaList;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
@@ -43,7 +44,7 @@ public class SupplySelectorsTest {
                 .optimize(testProblem);
         testProblem.unorderedLines().requireSizeOf(1);
         val worstAllocation = testProblem.unorderedLines().get(0);
-        Assertions.requireEquals(worstAllocation.values(), list(1, 1));
+        requireEquals(worstAllocation.values(), list(1, 1));
         testProblem.remove(worstAllocation);
         testProblem.unorderedLines().requireEmpty();
         val testSubjectForBest = hillClimber(10, randomnessViaList(list(0d, 1d, 2d, 3d, 5d, 6d, 7d, 8d, 9d, 4d)));
@@ -52,6 +53,6 @@ public class SupplySelectorsTest {
                                 , setOfUniques(testProblem.demandsFree().unorderedLines())))
                 .optimize(testProblem);
         testProblem.unorderedLines().requireSizeOf(1);
-        Assertions.requireEquals(testProblem.unorderedLines().get(0).values(), list(1, 5));
+        requireEquals(testProblem.unorderedLines().get(0).values(), list(1, 5));
     }
 }
