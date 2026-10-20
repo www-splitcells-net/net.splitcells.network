@@ -3,6 +3,7 @@
  */
 package net.splitcells.gel.solution.optimization.primitive.repair;
 
+import lombok.val;
 import net.splitcells.dem.data.atom.Thing;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.Sets;
@@ -162,17 +163,16 @@ public class DemandSelectors {
                                 .stream()
                                 .anyMatch(l -> l.equalContents(demandProcessing));
                     })
-                    .map(processing -> pair(processing.value(Constraint.RESULTING_CONSTRAINT_GROUP)
-                            , processing.value(LINE)))
                     .forEach(processing -> {
+                        val resultGroup = processing.value(Constraint.RESULTING_CONSTRAINT_GROUP);
                         final Set<Line> group;
-                        if (!demandGrouping.containsKey(processing.getKey())) {
+                        if (!demandGrouping.containsKey(resultGroup)) {
                             group = setOfUniques();
-                            demandGrouping.put(processing.getKey(), group);
+                            demandGrouping.put(resultGroup, group);
                         } else {
-                            group = demandGrouping.get(processing.getKey());
+                            group = demandGrouping.get(resultGroup);
                         }
-                        group.with(solution.demandOfAssignment(processing.getValue()));
+                        group.with(solution.demandOfAssignment(processing.value(LINE)));
                     });
             return demandGrouping;
         };
