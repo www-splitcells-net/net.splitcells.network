@@ -4,21 +4,16 @@
 package net.splitcells.cin.raters;
 
 import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.testing.annotations.DisabledTest;
-import net.splitcells.dem.testing.annotations.IntegrationTest;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
-import net.splitcells.gel.Gel;
 import net.splitcells.gel.constraint.Constraint;
-import net.splitcells.gel.proposal.Proposal;
 
 import static net.splitcells.cin.raters.CommitmentAdherence.commitmentAdherence;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
 import static net.splitcells.gel.proposal.Proposal.*;
 import static net.splitcells.gel.proposal.Proposals.proposalsForGroups;
-import static net.splitcells.gel.proposal.Proposals.propose;
 
 public class CommitmentAdherenceTest {
 
@@ -47,12 +42,12 @@ public class CommitmentAdherenceTest {
         testProposal1.get(1).contextAssignments().orderedLines().requireSizeOf(1);
         testProposal1.get(1).proposedAssignments().orderedLines().requireSizeOf(1);
         final var proposedAssignment1 = testProposal1.get(1).proposedAssignments().orderedLines().get(0);
-        requireEquals(proposedAssignment1.value(ASSIGNMENT_PROPOSAL_TYPE), PROPOSE_UNCHANGED);
+        Assertions.requireEquals(proposedAssignment1.value(ASSIGNMENT_PROPOSAL_TYPE), PROPOSE_UNCHANGED);
         testSubject.headerView().forEach(attribute -> {
             if (demandingAttribute.equals(attribute)) {
-                requireEquals(proposedAssignment1.value(attribute), 1);
+                Assertions.requireEquals(proposedAssignment1.value(attribute), 1);
             } else {
-                requireEquals(proposedAssignment1.value(attribute), null);
+                Assertions.requireEquals(proposedAssignment1.value(attribute), null);
             }
         });
         testSubject.assign(testSubject.demands().orderedLine(1)
@@ -61,12 +56,12 @@ public class CommitmentAdherenceTest {
         testProposal2.get(1).contextAssignments().unorderedLines().requireSizeOf(2);
         testProposal2.get(1).proposedAssignments().unorderedLines().requireSizeOf(1);
         final var proposedAssignment2 = testProposal2.get(1).proposedAssignments().orderedLines().get(0);
-        requireEquals(proposedAssignment2.value(ASSIGNMENT_PROPOSAL_TYPE), PROPOSE_UNCHANGED);
+        Assertions.requireEquals(proposedAssignment2.value(ASSIGNMENT_PROPOSAL_TYPE), PROPOSE_UNCHANGED);
         testSubject.headerView().forEach(attribute -> {
             if (demandingAttribute.equals(attribute)) {
-                requireEquals(proposedAssignment2.value(attribute), 1);
+                Assertions.requireEquals(proposedAssignment2.value(attribute), 1);
             } else {
-                requireEquals(proposedAssignment2.value(attribute), null);
+                Assertions.requireEquals(proposedAssignment2.value(attribute), null);
             }
         });
         testSubject.init();
@@ -75,20 +70,20 @@ public class CommitmentAdherenceTest {
         testProposal3.get(1).proposedAssignments().unorderedLines().requireSizeOf(2);
         final var proposedAssignment31 = testProposal3.get(1).proposedAssignments().orderedLines().get(0);
         final var proposedAssignment32 = testProposal3.get(1).proposedAssignments().orderedLines().get(1);
-        requireEquals(proposedAssignment31.value(ASSIGNMENT_PROPOSAL_TYPE), PROPOSE_UNCHANGED);
-        requireEquals(proposedAssignment32.value(ASSIGNMENT_PROPOSAL_TYPE), PROPOSE_UNCHANGED);
+        Assertions.requireEquals(proposedAssignment31.value(ASSIGNMENT_PROPOSAL_TYPE), PROPOSE_UNCHANGED);
+        Assertions.requireEquals(proposedAssignment32.value(ASSIGNMENT_PROPOSAL_TYPE), PROPOSE_UNCHANGED);
         testSubject.headerView().forEach(attribute -> {
             if (demandingAttribute.equals(attribute)) {
-                requireEquals(proposedAssignment31.value(attribute), 1);
+                Assertions.requireEquals(proposedAssignment31.value(attribute), 1);
             } else {
-                requireEquals(proposedAssignment31.value(attribute), null);
+                Assertions.requireEquals(proposedAssignment31.value(attribute), null);
             }
         });
         testSubject.headerView().forEach(attribute -> {
             if (demandingAttribute.equals(attribute)) {
-                requireEquals(proposedAssignment32.value(attribute), 2);
+                Assertions.requireEquals(proposedAssignment32.value(attribute), 2);
             } else {
-                requireEquals(proposedAssignment32.value(attribute), null);
+                Assertions.requireEquals(proposedAssignment32.value(attribute), null);
             }
         });
     }

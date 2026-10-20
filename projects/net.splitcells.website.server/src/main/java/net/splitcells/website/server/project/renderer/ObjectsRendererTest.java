@@ -5,13 +5,13 @@ package net.splitcells.website.server.project.renderer;
 
 import lombok.val;
 import net.splitcells.dem.data.set.list.ListView;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import java.nio.file.Path;
 import java.util.Optional;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.website.server.project.renderer.ObjectsRendererI.objectsRenderer;
 
 public class ObjectsRendererTest {
@@ -33,6 +33,6 @@ public class ObjectsRendererTest {
             }
         };
         objectsRenderer.withObject(testRenderer, Optional.of(subject));
-        requireEquals(objectsRenderer.publicLinkOfSubject(subject).orElseThrow(), "http://localhost:8443/./98/a/0/g");
+        Assertions.requireEquals(objectsRenderer.publicLinkOfSubject(subject).orElseThrow(), "http://localhost:8443/./98/a/0/g");
     }
 }

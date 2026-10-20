@@ -10,7 +10,6 @@ import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
@@ -33,6 +32,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.data.set.map.Map;
 import net.splitcells.dem.lang.tree.Tree;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.utils.ExecutionException;
 import net.splitcells.gel.data.table.*;
 import net.splitcells.gel.data.table.history.TableEventType;
@@ -381,11 +381,11 @@ public class AssignmentsI implements Assignments {
         if (ENFORCING_UNIT_CONSISTENCY) {
             list(demand.context()).requireContainsOneOf(demands, demandsUsed);
             list(supply.context()).requireContainsOneOf(supplies, suppliesUsed);
-            requireEquals(allocation.context(), assignments);
+            Assertions.requireEquals(allocation.context(), assignments);
             usedDemandIndexesToAllocationIndexes.get(demand.index()).requirePresenceOf(allocation.index());
             usedSupplyIndexesToAllocationIndexes.get(supply.index()).requirePresenceOf(allocation.index());
-            requireEquals(allocationsIndexToUsedDemandIndex.get(allocation.index()), demand.index());
-            requireEquals(allocationsIndexToUsedSupplyIndex.get(allocation.index()), supply.index());
+            Assertions.requireEquals(allocationsIndexToUsedDemandIndex.get(allocation.index()), demand.index());
+            Assertions.requireEquals(allocationsIndexToUsedSupplyIndex.get(allocation.index()), supply.index());
         }
         beforeRemovalSubscriptions.forEach(subscriber -> subscriber.registerBeforeRemoval(event));
         assignments.remove(allocation);

@@ -5,9 +5,9 @@ package net.splitcells.dem.resource;
 
 import lombok.val;
 import net.splitcells.dem.Dem;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 
-import java.time.Instant;
 import java.util.function.Consumer;
 
 import static java.util.stream.IntStream.rangeClosed;
@@ -16,7 +16,6 @@ import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.environment.config.framework.Variable.variable;
 import static net.splitcells.dem.execution.AtomicEffect.atomicEffect;
 import static net.splitcells.dem.resource.Semaphore.semaphore;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 
 /**
  * TODO Test execution time of each test. Every one of these should take a minimum amount of time,
@@ -72,6 +71,6 @@ public class SemaphoreTest {
             Dem.sleepAtLeast(2_000L);
             // We wait, until the check is set to true by the last thread.
         });
-        requireEquals(check.value(), 7);
+        Assertions.requireEquals(check.value(), 7);
     }
 }

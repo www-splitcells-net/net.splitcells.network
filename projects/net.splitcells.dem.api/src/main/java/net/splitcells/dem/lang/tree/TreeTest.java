@@ -4,10 +4,8 @@
 package net.splitcells.dem.lang.tree;
 
 import lombok.val;
-import net.splitcells.dem.lang.namespace.NameSpaces;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
-import net.splitcells.dem.utils.StringUtils;
 
 import java.util.Optional;
 
@@ -16,12 +14,10 @@ import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.CommonMarkConfig.commonMarkConfig;
-import static net.splitcells.dem.lang.tree.JsonConfig.jsonConfig;
 import static net.splitcells.dem.lang.tree.Tree.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
 import static net.splitcells.dem.utils.StringUtils.multiple;
@@ -29,7 +25,7 @@ import static net.splitcells.dem.utils.StringUtils.multiple;
 public class TreeTest {
 
     @UnitTest public void testAsXhtmlList() {
-        requireEquals(tree("a").withChildren(tree("a"), tree("b")).asXhtmlList(), "<ol><li>a</li><ol><li>a</li><li>b</li></ol></ol>");
+        Assertions.requireEquals(tree("a").withChildren(tree("a"), tree("b")).asXhtmlList(), "<ol><li>a</li><ol><li>a</li><li>b</li></ol></ol>");
     }
 
     @UnitTest public void testPathOfValueTree() {
@@ -38,7 +34,7 @@ public class TreeTest {
         val c = tree("c");
         final var testData = TreeI.tree("test data").withPath(a, b, c);
         testData.pathOfValueTree("test data", "a", "b", "c").orElseThrow().requireEquals(list(a, b, c));
-        requireEquals(testData.pathOfValueTree("test data", "b", "b", "c"), Optional.empty());
+        Assertions.requireEquals(testData.pathOfValueTree("test data", "b", "b", "c"), Optional.empty());
     }
 
     @UnitTest public void testExtendWith() {
@@ -57,7 +53,7 @@ public class TreeTest {
         val c = tree(VAL, DEN).withProperty(NAME, DEN, "c");
         final var testData = TreeI.tree("test data").withPath(a, b, c);
         testData.pathOfDenValueTree("a/b/c").orElseThrow().requireEquals(list(a, b, c));
-        requireEquals(testData.pathOfDenValueTree("test data/a/b/c"), Optional.empty());
+        Assertions.requireEquals(testData.pathOfDenValueTree("test data/a/b/c"), Optional.empty());
     }
 
     @UnitTest public void testSubtreeByName() {
@@ -78,26 +74,26 @@ public class TreeTest {
     }
 
     @UnitTest public void testPropertiesWithValue() {
-        requireEquals(tree("").withProperty("a", STRING, "b").withProperty("a", STRING, "b")
+        Assertions.requireEquals(tree("").withProperty("a", STRING, "b").withProperty("a", STRING, "b")
                         .propertiesWithValue("a", STRING, "b")
                 , list(tree("a", STRING).withChild(tree("b", STRING)), tree("a", STRING).withChild(tree("b", STRING))));
     }
 
     @UnitTest public void testPropertyInstance() {
-        requireEquals(tree("").propertyInstance("something"), Optional.empty());
-        requireEquals(tree("").propertyInstance("something", STRING), Optional.empty());
-        requireEquals(tree("").withProperty("a", STRING, "b").propertyInstance("a", STRING), Optional.of(tree("a", STRING).withChild(tree("b", STRING))));
+        Assertions.requireEquals(tree("").propertyInstance("something"), Optional.empty());
+        Assertions.requireEquals(tree("").propertyInstance("something", STRING), Optional.empty());
+        Assertions.requireEquals(tree("").withProperty("a", STRING, "b").propertyInstance("a", STRING), Optional.of(tree("a", STRING).withChild(tree("b", STRING))));
     }
 
     @UnitTest public void testChildNamed() {
         val testData = tree("").withChild(tree("something", STRING).withChild(tree("abc")));
-        requireEquals(testData.childNamed("anything", STRING), Optional.empty());
-        requireEquals(testData.childNamed("something", STRING), Optional.of(tree("something", STRING).withChild(tree("abc"))));
+        Assertions.requireEquals(testData.childNamed("anything", STRING), Optional.empty());
+        Assertions.requireEquals(testData.childNamed("something", STRING), Optional.of(tree("something", STRING).withChild(tree("abc"))));
     }
 
     @UnitTest public void testToMultilineStringPathsDescription() {
-        requireEquals(toMultilineStringPathsDescription(list("a", "b")), "a\\nb");
-        requireEquals(toMultilineStringPathsDescription(list()), "");
+        Assertions.requireEquals(toMultilineStringPathsDescription(list("a", "b")), "a\\nb");
+        Assertions.requireEquals(toMultilineStringPathsDescription(list()), "");
     }
 
     @UnitTest public void testToXmlStringWithPrefixes() {
@@ -106,23 +102,23 @@ public class TreeTest {
                         .withChild(tree("path-end")
                                 .withProperty("a", TEXT, tree("b", STRING))
                                 .withOptionalProperty("b", Optional.of("c"))));
-        requireEquals(testSubject.toXmlStringWithPrefixes(), "<nt:test><nt:path-start><nt:path-end><nt:a>b</nt:a><nt:b>c</nt:b></nt:path-end></nt:path-start></nt:test>");
-        requireEquals(tree("").toXmlStringWithPrefixes(), "<empty/>");
-        requireEquals(tree("a&b").toXmlStringWithPrefixes(), "a&amp;b");
-        requireEquals(tree("a&b").withProperty("t", "c&d").toXmlStringWithPrefixes(), "<d:val name=\"a&amp;b\"><nt:t>c&amp;d</nt:t></d:val>");
-        requireEquals(tree("html", HTML).toXmlStringWithPrefixes(), "<x:html/>");
-        requireEquals(tree("html", HTML).withChild(tree("body", HTML)).toXmlStringWithPrefixes(), "<x:html><x:body/></x:html>");
-        requireEquals(tree("some text", NATURAL).toXmlStringWithPrefixes(), "some text");
-        requireEquals(tree("some text", DEN).toXmlStringWithPrefixes(), "some text");
-        requireEquals(tree("some-text", NATURAL).toXmlStringWithPrefixes(), "<n:some-text/>");
-        requireEquals(tree("some-wrapped-text", NATURAL).withChild(tree("wrap", NATURAL)).toXmlStringWithPrefixes(), "<n:some-wrapped-text><n:wrap/></n:some-wrapped-text>");
-        requireEquals(tree("some-text", DEN).toXmlStringWithPrefixes(), "<d:some-text/>");
-        requireEquals(tree("some-wrapped-text", DEN).withValue("wrap", DEN).toXmlStringWithPrefixes(), "<d:some-wrapped-text><d:wrap/></d:some-wrapped-text>");
+        Assertions.requireEquals(testSubject.toXmlStringWithPrefixes(), "<nt:test><nt:path-start><nt:path-end><nt:a>b</nt:a><nt:b>c</nt:b></nt:path-end></nt:path-start></nt:test>");
+        Assertions.requireEquals(tree("").toXmlStringWithPrefixes(), "<empty/>");
+        Assertions.requireEquals(tree("a&b").toXmlStringWithPrefixes(), "a&amp;b");
+        Assertions.requireEquals(tree("a&b").withProperty("t", "c&d").toXmlStringWithPrefixes(), "<d:val name=\"a&amp;b\"><nt:t>c&amp;d</nt:t></d:val>");
+        Assertions.requireEquals(tree("html", HTML).toXmlStringWithPrefixes(), "<x:html/>");
+        Assertions.requireEquals(tree("html", HTML).withChild(tree("body", HTML)).toXmlStringWithPrefixes(), "<x:html><x:body/></x:html>");
+        Assertions.requireEquals(tree("some text", NATURAL).toXmlStringWithPrefixes(), "some text");
+        Assertions.requireEquals(tree("some text", DEN).toXmlStringWithPrefixes(), "some text");
+        Assertions.requireEquals(tree("some-text", NATURAL).toXmlStringWithPrefixes(), "<n:some-text/>");
+        Assertions.requireEquals(tree("some-wrapped-text", NATURAL).withChild(tree("wrap", NATURAL)).toXmlStringWithPrefixes(), "<n:some-wrapped-text><n:wrap/></n:some-wrapped-text>");
+        Assertions.requireEquals(tree("some-text", DEN).toXmlStringWithPrefixes(), "<d:some-text/>");
+        Assertions.requireEquals(tree("some-wrapped-text", DEN).withValue("wrap", DEN).toXmlStringWithPrefixes(), "<d:some-wrapped-text><d:wrap/></d:some-wrapped-text>");
 
     }
 
     @UnitTest public void testXmlName() {
-        requireEquals(tree("&<>\"'~").xmlName(), "&amp;&lt;&gt;&quot;&apos;&Tilde;");
+        Assertions.requireEquals(tree("&<>\"'~").xmlName(), "&amp;&lt;&gt;&quot;&apos;&Tilde;");
     }
 
     @UnitTest public void testToXmlString() {
@@ -130,30 +126,30 @@ public class TreeTest {
         final var content = TreeI.tree("content", SEW);
         content.withChild(TreeI.tree("deck", SEW));
         article.withChild(content);
-        requireEquals(article.toXmlString(true)
+        Assertions.requireEquals(article.toXmlString(true)
                 , "<article xmlns=\"http://splitcells.net/sew.xsd\"><content><deck/></content></article>");
-        requireEquals(tree("").toXmlString(false), "<empty/>");
-        requireEquals(tree("body", HTML).toXmlString(false), "<body/>");
-        requireEquals(tree("html", HTML).withChild(tree("body", HTML)).toXmlString(false), "<html><body/></html>");
-        requireEquals(tree("value", DEN).toXmlString(false), "<value/>");
-        requireEquals(tree("article", SEW).toXmlString(true), "<article xmlns=\"http://splitcells.net/sew.xsd\"/>");
+        Assertions.requireEquals(tree("").toXmlString(false), "<empty/>");
+        Assertions.requireEquals(tree("body", HTML).toXmlString(false), "<body/>");
+        Assertions.requireEquals(tree("html", HTML).withChild(tree("body", HTML)).toXmlString(false), "<html><body/></html>");
+        Assertions.requireEquals(tree("value", DEN).toXmlString(false), "<value/>");
+        Assertions.requireEquals(tree("article", SEW).toXmlString(true), "<article xmlns=\"http://splitcells.net/sew.xsd\"/>");
     }
 
     @UnitTest public void testWithPath() {
         final var testSubject = TreeI.tree("article", SEW)
                 .withPath(TreeI.tree("content", SEW)
                         , TreeI.tree("deck", SEW));
-        requireEquals(testSubject.toXmlString(true)
+        Assertions.requireEquals(testSubject.toXmlString(true)
                 , "<article xmlns=\"http://splitcells.net/sew.xsd\"><content><deck/></content></article>");
     }
 
     @UnitTest public void testToJsonString() {
-        requireEquals(tree("a").withChild(tree("b")).toJsonString(), "{\"a\":\"b\"}");
-        requireEquals(tree("a").toJsonString(), "[\"a\"]");
-        requireEquals(tree(JSON_ARRAY, JSON).withChildren(tree("1"), tree("2")).toJsonString(), "[\"1\",\"2\"]");
+        Assertions.requireEquals(tree("a").withChild(tree("b")).toJsonString(), "{\"a\":\"b\"}");
+        Assertions.requireEquals(tree("a").toJsonString(), "[\"a\"]");
+        Assertions.requireEquals(tree(JSON_ARRAY, JSON).withChildren(tree("1"), tree("2")).toJsonString(), "[\"1\",\"2\"]");
         requireThrow(() ->
                 tree(JSON_OBJECT, JSON).withChildren(tree("1"), tree("2")).toJsonString());
-        requireEquals(tree("a").withPath(tree("b"), tree(JSON_ARRAY, JSON)).toJsonString(), "{\"a\":{\"b\":\"array\"}}");
+        Assertions.requireEquals(tree("a").withPath(tree("b"), tree(JSON_ARRAY, JSON)).toJsonString(), "{\"a\":{\"b\":\"array\"}}");
     }
 
     @UnitTest public void testToJsonStringWithPathToDictionary() {
@@ -162,7 +158,7 @@ public class TreeTest {
                         .withChild(tree("path end")
                                 .withProperty("a", "b")
                                 .withProperty("b", "c")));
-        requireEquals(testSubject.toJsonString(), "{\"\":{\"path start\":{\"path end\":{\"a\":\"b\",\"b\":\"c\"}}}}");
+        Assertions.requireEquals(testSubject.toJsonString(), "{\"\":{\"path start\":{\"path end\":{\"a\":\"b\",\"b\":\"c\"}}}}");
     }
 
     @UnitTest public void testToJsonWithExplicitArray() {
@@ -171,7 +167,7 @@ public class TreeTest {
                 , tree("children").withChild(tree(JSON_ARRAY, JSON).withChildren(tree("2")))
                 , tree(JSON_ARRAY, JSON).withChildren(tree("3"), tree("5"))
         );
-        requireEquals(testSubject.toJsonString(), "{\"\":[[\"1\"],\"children\":[\"2\"],[\"3\",\"5\"]]}");
+        Assertions.requireEquals(testSubject.toJsonString(), "{\"\":[[\"1\"],\"children\":[\"2\"],[\"3\",\"5\"]]}");
     }
 
     @UnitTest public void testToJsonWithExplicitObject() {
@@ -179,7 +175,7 @@ public class TreeTest {
                 tree(JSON_OBJECT, JSON).withChildren(tree("1").withChild(tree("2")))
                 , tree("4").withChild(tree("5"))
         );
-        requireEquals(testSubject.toJsonString(), "{{\"1\":\"2\"},\"4\":\"5\"}");
+        Assertions.requireEquals(testSubject.toJsonString(), "{{\"1\":\"2\"},\"4\":\"5\"}");
     }
 
     @UnitTest public void testToJsonStringWithPathToArray() {
@@ -187,19 +183,19 @@ public class TreeTest {
                 .withChild(tree("path start")
                         .withChild(tree("path end")
                                 .withChildren(tree("1"), tree("2"))));
-        requireEquals(testSubject.toJsonString(), "{\"\":{\"path start\":{\"path end\":[\"1\",\"2\"]}}}");
+        Assertions.requireEquals(testSubject.toJsonString(), "{\"\":{\"path start\":{\"path end\":[\"1\",\"2\"]}}}");
     }
 
     @UnitTest public void testToJsonStringWithNamedArray() {
         final var testSubject = tree("")
                 .withChild(tree("name")
                         .withChildren(tree("3"), tree("4")));
-        requireEquals(testSubject.toJsonString(), "{\"\":{\"name\":[\"3\",\"4\"]}}");
+        Assertions.requireEquals(testSubject.toJsonString(), "{\"\":{\"name\":[\"3\",\"4\"]}}");
     }
 
     @UnitTest public void testEncodeJsonString() {
         final var testSubject = tree("").withChild(tree("\\\n\r\t\""));
-        requireEquals(testSubject.toJsonString(), "{\"\":\"\\\\\\n\\r\\t\\\"\"}");
+        Assertions.requireEquals(testSubject.toJsonString(), "{\"\":\"\\\\\\n\\r\\t\\\"\"}");
     }
 
     @UnitTest public void testToJsonStringWithArray() {
@@ -207,7 +203,7 @@ public class TreeTest {
                 .withChild(tree("1\n"))
                 .withChild(tree("2\r"))
                 .withChild(tree("3"));
-        requireEquals(testSubject.toJsonString(), "{\"\":[\"1\\n\",\"2\\r\",\"3\"]}");
+        Assertions.requireEquals(testSubject.toJsonString(), "{\"\":[\"1\\n\",\"2\\r\",\"3\"]}");
     }
 
     @UnitTest public void testToJsonStringWithDictionary() {
@@ -215,7 +211,7 @@ public class TreeTest {
                 .withProperty("1", "2\n")
                 .withProperty("3", "4")
                 .withProperty("4", "5\r");
-        requireEquals(testSubject.toJsonString(), "{\"\":{\"1\":\"2\\n\",\"3\":\"4\",\"4\":\"5\\r\"}}");
+        Assertions.requireEquals(testSubject.toJsonString(), "{\"\":{\"1\":\"2\\n\",\"3\":\"4\",\"4\":\"5\\r\"}}");
     }
 
     @UnitTest public void testToJsonStringWithNamedDictionary() {
@@ -224,7 +220,7 @@ public class TreeTest {
                         .withProperty("1", "2")
                         .withProperty("3", "4")
                         .withProperty("4", "5"));
-        requireEquals(testSubject.toJsonString(), "{\"\":{\"name\\r\\n\":{\"1\":\"2\",\"3\":\"4\",\"4\":\"5\"}}}");
+        Assertions.requireEquals(testSubject.toJsonString(), "{\"\":{\"name\\r\\n\":{\"1\":\"2\",\"3\":\"4\",\"4\":\"5\"}}}");
     }
 
     @UnitTest public void testToJsonStringWithNestedDictionary() {
@@ -235,7 +231,7 @@ public class TreeTest {
                         .withProperty("c", "d\n")
                 )
                 .withProperty("3", "4");
-        requireEquals(testSubject.toJsonString(), "{\"\":{\"1\":\"2\",\"test\":{\"a\":\"b\\r\",\"c\":\"d\\n\"},\"3\":\"4\"}}");
+        Assertions.requireEquals(testSubject.toJsonString(), "{\"\":{\"1\":\"2\",\"test\":{\"a\":\"b\\r\",\"c\":\"d\\n\"},\"3\":\"4\"}}");
     }
 
     @UnitTest public void testPrintCommonMarkString() {
@@ -249,7 +245,7 @@ public class TreeTest {
                         .withProperty("el ultrices erat luctus lacinia", "Donec vestibulum semper ipsum"))
                 .withProperty("sed pretium felis", "Aliquam orci nunc");
         testData.printCommonMarkString(stringSender(resultData));
-        requireEquals(resultData.toString(),
+        Assertions.requireEquals(resultData.toString(),
                 """
                         * Lorem ipsum dolor sit amet:
                             * consectetur adipiscing elit: Cras lobortis mi risus
@@ -267,29 +263,29 @@ public class TreeTest {
     @UnitTest public void testToXmlStringWithPrefixesAndGenericNameSpaceCase() {
         final var resultData = TreeI.tree("test", SEW).withChild(TreeI.tree("case", SEW))
                 .toXmlStringWithPrefixes();
-        requireEquals(resultData, "<s:test><s:case/></s:test>");
+        Assertions.requireEquals(resultData, "<s:test><s:case/></s:test>");
     }
 
     @UnitTest public void testToXmlStringWithAllNameSpaceDeclarationsAtTop() {
         final var resultData = TreeI.tree("test", SEW).withChild(TreeI.tree("case", SEW))
                 .toXmlStringWithAllNameSpaceDeclarationsAtTop();
-        requireEquals(resultData, "<s:test xmlns:s=\"http://splitcells.net/sew.xsd\" ><s:case/></s:test>");
+        Assertions.requireEquals(resultData, "<s:test xmlns:s=\"http://splitcells.net/sew.xsd\" ><s:case/></s:test>");
     }
 
     @UnitTest public void testToHtmlString() {
         final var simpleSubject = tree("html", HTML)
                 .withProperty("xmlns", HTML_ATTRIBUTE, "http://www.w3.org/1999/xhtml")
                 .withChild(tree("body", HTML));
-        requireEquals(simpleSubject.toHtmlString(), "<html xmlns=\"http://www.w3.org/1999/xhtml\"><body/></html>");
+        Assertions.requireEquals(simpleSubject.toHtmlString(), "<html xmlns=\"http://www.w3.org/1999/xhtml\"><body/></html>");
         final var stringTest = tree("html", HTML)
                 .withChild(tree("test", STRING));
-        requireEquals(stringTest.toHtmlString(), "<html>test</html>");
+        Assertions.requireEquals(stringTest.toHtmlString(), "<html>test</html>");
         final var simpleNaturalTest = tree("html", HTML)
                 .withChild(tree("test", NATURAL));
-        requireEquals(simpleNaturalTest.toHtmlString(), "<html><test/></html>");
+        Assertions.requireEquals(simpleNaturalTest.toHtmlString(), "<html><test/></html>");
         final var complexNaturalTest = tree("html", HTML)
                 .withChild(tree("test", NATURAL).withChild(tree("content", NATURAL)));
-        requireEquals(complexNaturalTest.toHtmlString(), "<html><test><content/></test></html>");
+        Assertions.requireEquals(complexNaturalTest.toHtmlString(), "<html><test><content/></test></html>");
         requireThrow(() -> tree("test", JSON).toHtmlString());
     }
 
@@ -297,21 +293,21 @@ public class TreeTest {
         final var testSubject = tree("root");
         testSubject.withProperty("attribute", "value");
         testSubject.withChild(tree("child"));
-        requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>root<ol><li>attribute<ol><li>value</li></ol></li><li>child</li></ol></li></ol>");
+        Assertions.requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>root<ol><li>attribute<ol><li>value</li></ol></li><li>child</li></ol></li></ol>");
     }
 
     @UnitTest public void testAsCompactXhtmlListWithEmptyNodes() {
         final var testSubject = tree("");
         testSubject.withProperty("attribute", "value");
         testSubject.withChild(tree("child"));
-        requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>attribute<ol><li>value</li></ol></li><li>child</li></ol>");
+        Assertions.requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>attribute<ol><li>value</li></ol></li><li>child</li></ol>");
     }
 
     @UnitTest public void testAsCompactXhtmlListWithNestedEmptyNodes() {
         final var testSubject = tree("");
         testSubject.withProperty("attribute", "value");
         testSubject.withProperty("", tree("").withProperty("", "child"));
-        requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>attribute<ol><li>value</li></ol></li><li>child</li></ol>");
+        Assertions.requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>attribute<ol><li>value</li></ol></li><li>child</li></ol>");
     }
 
     @UnitTest public void testAsCompactXhtmlListWithNestedEmptyNodesWithEmptyNodes() {
@@ -321,7 +317,7 @@ public class TreeTest {
         testSubject.withChild(tree(""));
         testSubject.withProperty("", tree("").withChild(tree(""))
                 .withProperty("", "child"));
-        requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>attribute<ol><li>value</li></ol></li><li>child</li></ol>");
+        Assertions.requireEquals(testSubject.asCompactXhtmlList(), "<ol><li>attribute<ol><li>value</li></ol></li><li>child</li></ol>");
     }
 
     @UnitTest public void testWithMerged() {
@@ -330,18 +326,18 @@ public class TreeTest {
         final var argument = tree("b").withProperty("c", tree("d").withProperty("f", "g"));
         //System.out.println(testSubject.withMerged(argument).asCompactXhtmlList());
         final var testResult = testSubject.withMerged(argument);
-        requireEquals(testResult.name(), "a");
-        requireEquals(testResult.childrenPath(0).name(), "b");
+        Assertions.requireEquals(testResult.name(), "a");
+        Assertions.requireEquals(testResult.childrenPath(0).name(), "b");
         testResult.children().requireSizeOf(1);
-        requireEquals(testResult.childrenPath(0, 0).name(), "c");
+        Assertions.requireEquals(testResult.childrenPath(0, 0).name(), "c");
         testResult.childrenPath(0, 0).children().requireSizeOf(1);
-        requireEquals(testResult.childrenPath(0, 0, 0).name(), "d");
+        Assertions.requireEquals(testResult.childrenPath(0, 0, 0).name(), "d");
         testResult.childrenPath(0, 0, 0).children().requireSizeOf(2);
-        requireEquals(testResult.childrenPath(0, 0, 0, 0).name(), "e");
+        Assertions.requireEquals(testResult.childrenPath(0, 0, 0, 0).name(), "e");
         testResult.childrenPath(0, 0, 0, 0).children().requireEmpty();
-        requireEquals(testResult.childrenPath(0, 0, 0, 1).name(), "f");
+        Assertions.requireEquals(testResult.childrenPath(0, 0, 0, 1).name(), "f");
         testResult.childrenPath(0, 0, 0, 1).children().requireSizeOf(1);
-        requireEquals(testResult.childrenPath(0, 0, 0, 1, 0).name(), "g");
+        Assertions.requireEquals(testResult.childrenPath(0, 0, 0, 1, 0).name(), "g");
         testResult.childrenPath(0, 0, 0, 1, 0).children().requireEmpty();
     }
 
@@ -361,10 +357,10 @@ public class TreeTest {
     @UnitTest public void testChildrenPath() {
         final var testSubject = tree("a");
         testSubject.withProperty("b", tree("c").withChildren(tree("e"), tree("f")));
-        requireEquals(testSubject.childrenPath(0, 0, 0).name(), "e");
-        requireEquals(testSubject.childrenPath(0, 0, 1).name(), "f");
-        requireEquals(testSubject.childrenPathTravel(0, 0, 0, 0).name(), "e");
-        requireEquals(testSubject.childrenPathTravel(1, 0, 0, 0).name(), "c");
+        Assertions.requireEquals(testSubject.childrenPath(0, 0, 0).name(), "e");
+        Assertions.requireEquals(testSubject.childrenPath(0, 0, 1).name(), "f");
+        Assertions.requireEquals(testSubject.childrenPathTravel(0, 0, 0, 0).name(), "e");
+        Assertions.requireEquals(testSubject.childrenPathTravel(1, 0, 0, 0).name(), "c");
     }
 
     @UnitTest public void testEquals() {
@@ -395,21 +391,21 @@ public class TreeTest {
     }
 
     @UnitTest public void testToCompactTree() {
-        requireEquals(tree("1"), tree("1").toCompactTree());
-        requireEquals("* 1: 2: 3: 4\n"
+        Assertions.requireEquals(tree("1"), tree("1").toCompactTree());
+        Assertions.requireEquals("* 1: 2: 3: 4\n"
                 , tree("1").withPath(tree("2"), tree("3"), tree("4"))
                         .toCompactTree()
                         .toCommonMarkString());
-        requireEquals("* 1: 2:\n    * a\n    * b\n"
+        Assertions.requireEquals("* 1: 2:\n    * a\n    * b\n"
                 , tree("1").withPath(tree("2").withChildren(tree("a"), tree("b")))
                         .toCompactTree()
                         .toCommonMarkString());
     }
 
     @UnitTest public void testToCommonMarkString() {
-        requireEquals("```\n" + multiple("3", 300) + "\n```\n", tree(multiple("3", 300))
+        Assertions.requireEquals("```\n" + multiple("3", 300) + "\n```\n", tree(multiple("3", 300))
                 .toCommonMarkString());
-        requireEquals("* " + multiple("3", 300) + "\n", tree(multiple("3", 300))
+        Assertions.requireEquals("* " + multiple("3", 300) + "\n", tree(multiple("3", 300))
                 .toCommonMarkString(commonMarkConfig().setUseBlockQuotesForLongNames(false)));
     }
 }

@@ -4,7 +4,6 @@
 package net.splitcells.dem.resource;
 
 import lombok.val;
-import net.splitcells.dem.data.set.list.Lists;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.utils.ExecutionException;
@@ -18,47 +17,46 @@ import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.Trail.withoutPrefixElements;
 import static net.splitcells.dem.resource.Trail.withoutSuffixElements;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 
 public class TrailTest {
     @UnitTest public void testParentCount() {
-        requireEquals(parentCount("../../.."), 3);
-        requireEquals(parentCount("../../../a/../../b/../c/.."), 3);
-        requireEquals(parentCount("/../../../a/../../b/../c/.."), 0);
-        requireEquals(parentCount("/a/../../../a/../../b/../c/.."), 0);
+        Assertions.requireEquals(parentCount("../../.."), 3);
+        Assertions.requireEquals(parentCount("../../../a/../../b/../c/.."), 3);
+        Assertions.requireEquals(parentCount("/../../../a/../../b/../c/.."), 0);
+        Assertions.requireEquals(parentCount("/a/../../../a/../../b/../c/.."), 0);
     }
 
     @UnitTest public void testUnixPathString() {
-        requireEquals(trail("../abc").unixPathString(), "../abc");
-        requireEquals(trail("abc").unixPathString(), "abc");
-        requireEquals(trail("a", "b", "c").unixPathString(), "a/b/c");
-        requireEquals(trail().unixPathString(), "");
-        requireEquals(trail("", "", "").unixPathString(), "");
-        requireEquals(trail("a", "", "c").unixPathString(), "a/c");
+        Assertions.requireEquals(trail("../abc").unixPathString(), "../abc");
+        Assertions.requireEquals(trail("abc").unixPathString(), "abc");
+        Assertions.requireEquals(trail("a", "b", "c").unixPathString(), "a/b/c");
+        Assertions.requireEquals(trail().unixPathString(), "");
+        Assertions.requireEquals(trail("", "", "").unixPathString(), "");
+        Assertions.requireEquals(trail("a", "", "c").unixPathString(), "a/c");
     }
 
     @UnitTest public void testWithoutPrefixElements() {
-        requireEquals(withoutPrefixElements("a/b/c", 0), "a/b/c");
-        requireEquals(withoutPrefixElements("a/b/c", 1), "b/c");
-        requireEquals(withoutPrefixElements("a/b/c", 2), "c");
-        requireEquals(withoutPrefixElements("a/b/c", 3), "");
-        requireEquals(withoutPrefixElements("a//////////////b//c", 0), "a/b/c");
-        requireEquals(withoutPrefixElements("../../..", 0), "../../..");
-        requireEquals(withoutPrefixElements("../../..", 1), "../..");
-        requireEquals(withoutPrefixElements("../../..", 2), "..");
-        requireEquals(withoutPrefixElements("../../..", 3), "");
+        Assertions.requireEquals(withoutPrefixElements("a/b/c", 0), "a/b/c");
+        Assertions.requireEquals(withoutPrefixElements("a/b/c", 1), "b/c");
+        Assertions.requireEquals(withoutPrefixElements("a/b/c", 2), "c");
+        Assertions.requireEquals(withoutPrefixElements("a/b/c", 3), "");
+        Assertions.requireEquals(withoutPrefixElements("a//////////////b//c", 0), "a/b/c");
+        Assertions.requireEquals(withoutPrefixElements("../../..", 0), "../../..");
+        Assertions.requireEquals(withoutPrefixElements("../../..", 1), "../..");
+        Assertions.requireEquals(withoutPrefixElements("../../..", 2), "..");
+        Assertions.requireEquals(withoutPrefixElements("../../..", 3), "");
     }
 
     @UnitTest public void testWithoutSuffixElements() {
-        requireEquals(withoutSuffixElements("a/b/c", 0), "a/b/c");
-        requireEquals(withoutSuffixElements("a/b/c", 1), "a/b");
-        requireEquals(withoutSuffixElements("a/b/c", 2), "a");
-        requireEquals(withoutSuffixElements("a/b/c", 3), "");
-        requireEquals(withoutSuffixElements("a//////////////b//c", 0), "a/b/c");
-        requireEquals(withoutSuffixElements("../../..", 0), "../../..");
-        requireEquals(withoutSuffixElements("../../..", 1), "../..");
-        requireEquals(withoutSuffixElements("../../..", 2), "..");
-        requireEquals(withoutSuffixElements("../../..", 3), "");
+        Assertions.requireEquals(withoutSuffixElements("a/b/c", 0), "a/b/c");
+        Assertions.requireEquals(withoutSuffixElements("a/b/c", 1), "a/b");
+        Assertions.requireEquals(withoutSuffixElements("a/b/c", 2), "a");
+        Assertions.requireEquals(withoutSuffixElements("a/b/c", 3), "");
+        Assertions.requireEquals(withoutSuffixElements("a//////////////b//c", 0), "a/b/c");
+        Assertions.requireEquals(withoutSuffixElements("../../..", 0), "../../..");
+        Assertions.requireEquals(withoutSuffixElements("../../..", 1), "../..");
+        Assertions.requireEquals(withoutSuffixElements("../../..", 2), "..");
+        Assertions.requireEquals(withoutSuffixElements("../../..", 3), "");
     }
 
     @UnitTest public void testWithoutPrefixElementsIllegalRemoval() {
@@ -74,22 +72,22 @@ public class TrailTest {
     }
 
     @UnitTest public void testElementCount() {
-        requireEquals(elementCount("////////"), 0);
-        requireEquals(elementCount("///a/////"), 1);
-        requireEquals(elementCount("..///a/////"), 2);
-        requireEquals(elementCount("///aaa/////"), 1);
-        requireEquals(elementCount("///a//a/a//"), 3);
+        Assertions.requireEquals(elementCount("////////"), 0);
+        Assertions.requireEquals(elementCount("///a/////"), 1);
+        Assertions.requireEquals(elementCount("..///a/////"), 2);
+        Assertions.requireEquals(elementCount("///aaa/////"), 1);
+        Assertions.requireEquals(elementCount("///a//a/a//"), 3);
     }
 
     @UnitTest public void testToString() {
         val testPath = "../abc";
-        requireEquals(trail(testPath).unixPathString(), testPath);
-        requireEquals(trail(testPath).toString(), testPath);
+        Assertions.requireEquals(trail(testPath).unixPathString(), testPath);
+        Assertions.requireEquals(trail(testPath).toString(), testPath);
     }
 
     @UnitTest public void testJavaLegacyPath() {
         val testPath = "../abc";
-        requireEquals(trail(testPath).javaLegacyPath(), Path.of(testPath));
+        Assertions.requireEquals(trail(testPath).javaLegacyPath(), Path.of(testPath));
     }
 
     @UnitTest public void testEquals() {

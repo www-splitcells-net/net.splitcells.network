@@ -4,9 +4,9 @@
 package net.splitcells.gel.solution.optimization.primitive;
 
 import net.splitcells.dem.Dem;
-import net.splitcells.dem.data.atom.Bools;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.config.IsDeterministic;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.gel.constraint.Constraint;
 import net.splitcells.gel.solution.optimization.OptimizationEvent;
 import net.splitcells.gel.solution.optimization.primitive.repair.ConstraintGroupBasedOfflineRepair;
@@ -18,7 +18,6 @@ import static net.splitcells.dem.data.atom.Bools.truthful;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.constraint.type.ForAlls.forAllWithValue;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.constraint.type.Then.then;
@@ -223,6 +222,6 @@ public class ConstraintGroupBasedOfflineRepairTest {
                         , solution);
         testProduct.requireSizeOf(1);
         testProduct.values().iterator().next().requireSetSizeOf(2);
-        testProduct.values().iterator().next().forEach(line -> requireEquals(line.value(b), invalidValueB));
+        testProduct.values().iterator().next().forEach(line -> Assertions.requireEquals(line.value(b), invalidValueB));
     }
 }

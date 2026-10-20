@@ -3,13 +3,13 @@
  */
 package net.splitcells.dem.environment.config.framework;
 
+import net.splitcells.dem.testing.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
 import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.environment.config.framework.Variable.variable;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 
 public class VariableTest {
     @Test
@@ -17,6 +17,6 @@ public class VariableTest {
         final Variable<Integer> testSubject = variable();
         require(testSubject.value().isEmpty());
         testSubject.withValue(Optional.of(1));
-        requireEquals(testSubject.value().orElseThrow(), 1);
+        Assertions.requireEquals(testSubject.value().orElseThrow(), 1);
     }
 }

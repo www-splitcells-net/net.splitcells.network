@@ -5,13 +5,12 @@
 package net.splitcells.website.server.project.renderer;
 
 import net.splitcells.dem.data.set.Set;
-import net.splitcells.dem.data.set.Sets;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.resource.FileSystemView;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.utils.BinaryUtils;
 import net.splitcells.dem.utils.StringUtils;
-import net.splitcells.website.Format;
 import net.splitcells.website.server.Config;
 import net.splitcells.website.server.processor.BinaryMessage;
 import net.splitcells.website.server.project.LayoutConfig;
@@ -23,8 +22,6 @@ import java.util.Optional;
 
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
-import static net.splitcells.dem.utils.BinaryUtils.equalBytes;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.website.Format.BINARY;
@@ -45,7 +42,7 @@ public class ObjectsMediaRendererTest {
                 return Optional.of(binaryMessage(toBytes("test-content"), BINARY));
             }
         });
-        requireEquals(testSubject.render("/folder/file", Config.create(), new ProjectRenderer() {
+        Assertions.requireEqualsDeprecated(testSubject.render("/folder/file", Config.create(), new ProjectRenderer() {
                     @Override public FileSystemView projectFileSystem() {
                         throw notImplementedYet();
                     }

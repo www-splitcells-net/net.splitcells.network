@@ -4,7 +4,6 @@
 package net.splitcells.dem;
 
 import lombok.val;
-import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.environment.Cell;
 import net.splitcells.dem.environment.Environment;
 import net.splitcells.dem.environment.EnvironmentI;
@@ -19,9 +18,9 @@ import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
 import net.splitcells.dem.resource.communication.log.Logs;
 import net.splitcells.dem.resource.communication.log.MessageFilter;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.utils.ExecutionException;
 
-import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -36,7 +35,6 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Semaphore.semaphore;
 import static net.splitcells.dem.resource.communication.log.LogLevel.INFO;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.ConstructorIllegal.constructorIllegal;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.throwableToString;
@@ -287,7 +285,7 @@ public class Dem {
     public static void testSerializeConfiguration(Class<? extends Cell> cellClass, String expectedCommonMarkSerialization) {
         val actualConfig = serializeConfiguration(cellClass).toCommonMarkString();
         try {
-            requireEquals(expectedCommonMarkSerialization, actualConfig);
+            Assertions.requireEquals(actualConfig, expectedCommonMarkSerialization);
         } catch (Throwable t) {
             logs().append("Actual Configuration:\n" + actualConfig, LogLevel.ERROR);
             throw t;

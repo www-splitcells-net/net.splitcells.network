@@ -8,7 +8,6 @@ import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listOfShallowCopies;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 
 public class ListTest {
     @UnitTest
@@ -23,6 +22,6 @@ public class ListTest {
 
     @UnitTest
     public void testListOfShallowCopies() {
-        requireEquals(listOfShallowCopies(list(1, 2), 3), list(list(1, 2), list(1, 2), list(1, 2)));
+        Assertions.requireEquals(listOfShallowCopies(list(1, 2), 3), list(list(1, 2), list(1, 2), list(1, 2)));
     }
 }

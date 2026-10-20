@@ -5,6 +5,9 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2026-10-20\#32** requireEquals takes actual value first and expected value second like other methods and
+  as it is done implicitly via AssertJ's assertThat method.
+  Existing calls where migrated via automatic refactoring requireEqualsDeprecated, in order to not break code.
 * **2026-04-17\#32** Rename FileSystems to PathFileSystem in order to show,
   that it is based on Java's file system drivers that are provided by Java's Path.
 * **2026-03-09\#37** Move SetLegacyWrapper class to `net.splitcells.dem.data.set.legacy` package.

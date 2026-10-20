@@ -7,14 +7,11 @@ import lombok.val;
 import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.editor.geal.lang.*;
-import net.splitcells.gel.editor.lang.*;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
-import static net.splitcells.gel.constraint.type.ForAlls.FOR_ALL_COMBINATIONS_OF;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
 import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
 import static net.splitcells.gel.data.view.attribute.AttributeI.*;
@@ -314,7 +311,7 @@ public class EditorTest {
                 ## Argumentation
                 
                 There is no argumentation, as there are no errors in the solution, that need reasoning.""";
-        requireEquals(solution.constraint().commonMarkRatingReport(), firstReport);
+        Assertions.requireEquals(solution.constraint().commonMarkRatingReport(), firstReport);
         solution.assign(demands.rawLine(1), supplies.rawLine(1));
         // TODO A dedicated variable is used, as the Java11Parser has a bug regarding multi line strings as arguments.
         final var secondReport = """
@@ -331,9 +328,9 @@ public class EditorTest {
                         * For all groups of date attribute values: where value is `1`:
                             * For all groups of shift attribute values: where value is `1`: Then size should be 1, but is 2
                 """;
-        requireEquals(solution.constraint().commonMarkRatingReport(), secondReport);
+        Assertions.requireEquals(solution.constraint().commonMarkRatingReport(), secondReport);
         solution.assign(demands.rawLine(2), supplies.rawLine(2));
-        requireEquals(solution.constraint().commonMarkRatingReport(), secondReport);
+        Assertions.requireEquals(solution.constraint().commonMarkRatingReport(), secondReport);
         solution.assign(demands.rawLine(3), supplies.rawLine(3));
         final var thirdReport = """
                 # Constraint Rating Report
@@ -350,7 +347,7 @@ public class EditorTest {
                             * For all groups of shift attribute values: where value is `1`: Then size should be 1, but is 2
                             * For all groups of shift attribute values: where value is `2`: Then size should be 1, but is 2
                 """;
-        requireEquals(solution.constraint().commonMarkRatingReport(), thirdReport);
+        Assertions.requireEquals(solution.constraint().commonMarkRatingReport(), thirdReport);
     }
 
     @UnitTest public void testMinimalParsing() {

@@ -3,11 +3,11 @@
  */
 package net.splitcells.gel.solution.optimization.space;
 
+import net.splitcells.dem.testing.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static net.splitcells.dem.data.atom.Bools.bool;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
 import static net.splitcells.gel.data.view.attribute.AttributeI.integerAttribute;
 import static net.splitcells.gel.solution.SolutionBuilder.defineProblem;
@@ -74,58 +74,58 @@ public class EnumerableOptimizationSpaceTest {
 
             // Test allocation of first free demand and supply.
             testSubject = testSubject.child(0);
-            requireEquals(testSubject.currentState().columnView(demandAttribute).get(0), 1);
-            requireEquals(testSubject.currentState().columnView(supplyAttribute).get(0), 5);
+            Assertions.requireEquals(testSubject.currentState().columnView(demandAttribute).get(0), 1);
+            Assertions.requireEquals(testSubject.currentState().columnView(supplyAttribute).get(0), 5);
             testSubject.currentState().unorderedLines().requireSizeOf(1);
 
             // Test allocation of first free demand and last free supply.
             testSubject = testSubject.child(2);
-            requireEquals(testSubject.currentState().columnView(demandAttribute).get(0), 1);
-            requireEquals(testSubject.currentState().columnView(supplyAttribute).get(0), 5);
-            requireEquals(testSubject.currentState().columnView(demandAttribute).get(1), 2);
-            requireEquals(testSubject.currentState().columnView(supplyAttribute).get(1), 8);
+            Assertions.requireEquals(testSubject.currentState().columnView(demandAttribute).get(0), 1);
+            Assertions.requireEquals(testSubject.currentState().columnView(supplyAttribute).get(0), 5);
+            Assertions.requireEquals(testSubject.currentState().columnView(demandAttribute).get(1), 2);
+            Assertions.requireEquals(testSubject.currentState().columnView(supplyAttribute).get(1), 8);
             testSubject.currentState().unorderedLines().requireSizeOf(2);
 
             // Test allocation of last free demand  and first free supply.
             testSubject = testSubject.child(2);
-            requireEquals(testSubject.currentState().columnView(demandAttribute).get(0), 1);
-            requireEquals(testSubject.currentState().columnView(supplyAttribute).get(0), 5);
-            requireEquals(testSubject.currentState().columnView(demandAttribute).get(1), 2);
-            requireEquals(testSubject.currentState().columnView(supplyAttribute).get(1), 8);
-            requireEquals(testSubject.currentState().columnView(demandAttribute).get(2), 4);
-            requireEquals(testSubject.currentState().columnView(supplyAttribute).get(2), 6);
+            Assertions.requireEquals(testSubject.currentState().columnView(demandAttribute).get(0), 1);
+            Assertions.requireEquals(testSubject.currentState().columnView(supplyAttribute).get(0), 5);
+            Assertions.requireEquals(testSubject.currentState().columnView(demandAttribute).get(1), 2);
+            Assertions.requireEquals(testSubject.currentState().columnView(supplyAttribute).get(1), 8);
+            Assertions.requireEquals(testSubject.currentState().columnView(demandAttribute).get(2), 4);
+            Assertions.requireEquals(testSubject.currentState().columnView(supplyAttribute).get(2), 6);
             testSubject.currentState().unorderedLines().requireSizeOf(3);
 
             testSubject = testSubject.child(0);
-            requireEquals(testSubject.currentState().columnView(demandAttribute).get(0), 1);
-            requireEquals(testSubject.currentState().columnView(supplyAttribute).get(0), 5);
-            requireEquals(testSubject.currentState().columnView(demandAttribute).get(1), 2);
-            requireEquals(testSubject.currentState().columnView(supplyAttribute).get(1), 8);
-            requireEquals(testSubject.currentState().columnView(demandAttribute).get(2), 4);
-            requireEquals(testSubject.currentState().columnView(supplyAttribute).get(2), 6);
-            requireEquals(testSubject.currentState().columnView(demandAttribute).get(3), 3);
-            requireEquals(testSubject.currentState().columnView(supplyAttribute).get(3), 7);
+            Assertions.requireEquals(testSubject.currentState().columnView(demandAttribute).get(0), 1);
+            Assertions.requireEquals(testSubject.currentState().columnView(supplyAttribute).get(0), 5);
+            Assertions.requireEquals(testSubject.currentState().columnView(demandAttribute).get(1), 2);
+            Assertions.requireEquals(testSubject.currentState().columnView(supplyAttribute).get(1), 8);
+            Assertions.requireEquals(testSubject.currentState().columnView(demandAttribute).get(2), 4);
+            Assertions.requireEquals(testSubject.currentState().columnView(supplyAttribute).get(2), 6);
+            Assertions.requireEquals(testSubject.currentState().columnView(demandAttribute).get(3), 3);
+            Assertions.requireEquals(testSubject.currentState().columnView(supplyAttribute).get(3), 7);
             testSubject.currentState().unorderedLines().requireSizeOf(4);
 
             testSubject = testSubject.parent().orElseThrow();
-            requireEquals(testSubject.currentState().columnView(demandAttribute).get(0), 1);
-            requireEquals(testSubject.currentState().columnView(supplyAttribute).get(0), 5);
-            requireEquals(testSubject.currentState().columnView(demandAttribute).get(1), 2);
-            requireEquals(testSubject.currentState().columnView(supplyAttribute).get(1), 8);
-            requireEquals(testSubject.currentState().columnView(demandAttribute).get(2), 4);
-            requireEquals(testSubject.currentState().columnView(supplyAttribute).get(2), 6);
+            Assertions.requireEquals(testSubject.currentState().columnView(demandAttribute).get(0), 1);
+            Assertions.requireEquals(testSubject.currentState().columnView(supplyAttribute).get(0), 5);
+            Assertions.requireEquals(testSubject.currentState().columnView(demandAttribute).get(1), 2);
+            Assertions.requireEquals(testSubject.currentState().columnView(supplyAttribute).get(1), 8);
+            Assertions.requireEquals(testSubject.currentState().columnView(demandAttribute).get(2), 4);
+            Assertions.requireEquals(testSubject.currentState().columnView(supplyAttribute).get(2), 6);
             testSubject.currentState().unorderedLines().requireSizeOf(3);
 
             testSubject = testSubject.parent().get();
-            requireEquals(testSubject.currentState().columnView(demandAttribute).get(0), 1);
-            requireEquals(testSubject.currentState().columnView(supplyAttribute).get(0), 5);
-            requireEquals(testSubject.currentState().columnView(demandAttribute).get(1), 2);
-            requireEquals(testSubject.currentState().columnView(supplyAttribute).get(1), 8);
+            Assertions.requireEquals(testSubject.currentState().columnView(demandAttribute).get(0), 1);
+            Assertions.requireEquals(testSubject.currentState().columnView(supplyAttribute).get(0), 5);
+            Assertions.requireEquals(testSubject.currentState().columnView(demandAttribute).get(1), 2);
+            Assertions.requireEquals(testSubject.currentState().columnView(supplyAttribute).get(1), 8);
             testSubject.currentState().unorderedLines().requireSizeOf(2);
 
             testSubject = testSubject.parent().get();
-            requireEquals(testSubject.currentState().columnView(demandAttribute).get(0), 1);
-            requireEquals(testSubject.currentState().columnView(supplyAttribute).get(0), 5);
+            Assertions.requireEquals(testSubject.currentState().columnView(demandAttribute).get(0), 1);
+            Assertions.requireEquals(testSubject.currentState().columnView(supplyAttribute).get(0), 5);
             testSubject.currentState().unorderedLines().requireSizeOf(1);
 
             testSubject = testSubject.parent().get();

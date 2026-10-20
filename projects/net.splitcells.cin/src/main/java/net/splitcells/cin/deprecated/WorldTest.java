@@ -3,13 +3,13 @@
  */
 package net.splitcells.cin.deprecated;
 
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.cin.deprecated.World.WORLD_HISTORY;
 import static net.splitcells.cin.deprecated.World.worldHistory;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireIllegalDefaultConstructor;
 import static net.splitcells.gel.proposal.Proposals.propose;
 
@@ -36,7 +36,7 @@ public class WorldTest {
                 , list(testSubject.constraint(), testSubject.constraint().child(0))
                 , testSubject.demands().unorderedLines());
         testProposal.proposedAllocations().demands().unorderedLines().requireSizeOf(1);
-        requireEquals(testProposal.proposedAllocations().demands().orderedLine(0).values()
+        Assertions.requireEquals(testProposal.proposedAllocations().demands().orderedLine(0).values()
                 , testSubject.demands().orderedLine(1).values());
     }
 }

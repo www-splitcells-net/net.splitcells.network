@@ -5,6 +5,7 @@ package net.splitcells.gel.data.table;
 
 import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.TestSuiteI;
 import net.splitcells.gel.constraint.type.framework.ConstraintMultiThreading;
 import net.splitcells.gel.data.view.Line;
@@ -22,7 +23,6 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireNull;
 import static net.splitcells.dem.testing.Mocking.anyObject;
 import static net.splitcells.dem.testing.TestTypes.UNIT_TEST;
@@ -181,10 +181,10 @@ public class TableTest extends TestSuiteI {
         when(line.context()).thenReturn(voidDatabase);
         when(line.value(any(Attribute.class))).thenReturn(1);
         when(line.index()).thenReturn(2);
-        requireEquals(voidDatabase.addTranslated(list()).index(), 0);
-        requireEquals(voidDatabase.add(line).index(), 2);
-        requireEquals(voidDatabase.addTranslated(list()).index(), 1);
-        requireEquals(voidDatabase.addTranslated(list()).index(), 3);
+        Assertions.requireEquals(voidDatabase.addTranslated(list()).index(), 0);
+        Assertions.requireEquals(voidDatabase.add(line).index(), 2);
+        Assertions.requireEquals(voidDatabase.addTranslated(list()).index(), 1);
+        Assertions.requireEquals(voidDatabase.addTranslated(list()).index(), 3);
     }
 
     @Tag(UNIT_TEST) @TestFactory public Stream<DynamicTest> subscription_tests() {

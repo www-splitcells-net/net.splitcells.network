@@ -8,7 +8,7 @@ import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.resource.communication.log.LogLevel;
-import net.splitcells.dem.utils.ExecutionException;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
 import net.splitcells.gel.data.view.attribute.Attribute;
@@ -25,7 +25,6 @@ import static net.splitcells.dem.lang.Xml.elementWithChildren;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
 import static net.splitcells.dem.resource.communication.log.LogLevel.DEBUG;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.dem.testing.Assertions.requireNull;
 import static net.splitcells.dem.utils.ExecutionException.execException;
@@ -75,7 +74,7 @@ public class TableMetaAspect implements Table {
                     , () -> "path: " + path().toString() + ", line.index(): " + line.index())
                     .required();
             range(0, table.headerView().size()).forEach(i -> {
-                requireEquals(table.headerView().get(i), line.context().headerView().get(i));
+                Assertions.requireEquals(table.headerView().get(i), line.context().headerView().get(i));
             });
         }
         return table.add(line);

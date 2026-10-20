@@ -100,19 +100,10 @@ public class Assertions {
     }
 
     public static <T> void requireEquals(T actual, T expected) {
-        requireEquals(expected, actual, a -> a + "", (a, b) -> a.equals(b));
+        requireEqualsDeprecated(expected, actual, a -> a + "", (a, b) -> a.equals(b));
     }
 
-    /**
-     * Explicit checks for nulls are done here, as normal code of {@code comparison} is not expected to handle nulls. 
-     * 
-     * @param expected
-     * @param actual
-     * @param printer
-     * @param comparison
-     * @param <T>
-     */
-    public static <T> void requireEquals(T expected, T actual, Function<T, String> printer, BiFunction<T, T, Boolean> comparison) {
+    public static <T> void requireEquals(T actual, T expected, Function<T, String> printer, BiFunction<T, T, Boolean> comparison) {
         boolean equals = false;
         if (expected == null) {
             equals = actual == null;
@@ -129,6 +120,21 @@ public class Assertions {
                     .withProperty("Expected", "`" + expectedStr + "`")
                     .withProperty("Diff", createUnifiedRawDiff(expectedStr, actualStr)));
         }
+    }
+
+    /**
+     * Explicit checks for nulls are done here, as normal code of {@code comparison} is not expected to handle nulls. 
+     * 
+     * @deprecated Use {@link #requireEquals(Object, Object, Function, BiFunction)} instead, in order to improve argument order.
+     * @param expected
+     * @param actual
+     * @param printer
+     * @param comparison
+     * @param <T>
+     */
+    @Deprecated
+    public static <T> void requireEqualsDeprecated(T expected, T actual, Function<T, String> printer, BiFunction<T, T, Boolean> comparison) {
+        requireEqualsDeprecated(actual, expected, printer, comparison);
     }
 
     public static <T> void requireDistinct(T a, T b) {

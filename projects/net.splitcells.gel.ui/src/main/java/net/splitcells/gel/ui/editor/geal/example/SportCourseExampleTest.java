@@ -3,15 +3,15 @@
  */
 package net.splitcells.gel.ui.editor.geal.example;
 
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.ui.editor.geal.example.SportCourseExample.*;
 
 public class SportCourseExampleTest {
     @UnitTest public void testStudentChoicesCsv() {
-        requireEquals(studentChoicesCsv(randomness(1), 2),
+        Assertions.requireEquals(studentChoicesCsv(randomness(1), 2),
                 """
                         Student,Chosen Sport, Chosen Sport Type, Is Secondary Choice
                         Ottfried Amberger,Volleyball,Team sport,0
@@ -29,7 +29,7 @@ public class SportCourseExampleTest {
     }
 
     @UnitTest public void testAvailableSemestersCsv() {
-        requireEquals(availableSemestersCsv(4,3,2),
+        Assertions.requireEquals(availableSemestersCsv(4,3,2),
                 """
                         Assigned Semester
                         1
@@ -60,7 +60,7 @@ public class SportCourseExampleTest {
     }
 
     @UnitTest public void testAvailableCoursesCsv() {
-        requireEquals(availableCoursesCsv(randomness(1), 2, 2, 1, 2, 3),
+        Assertions.requireEquals(availableCoursesCsv(randomness(1), 2, 2, 1, 2, 3),
                 """
                         Assigned Course Number,Assigned Sport,Assigned Sport Type
                         1,Team sport,Handball

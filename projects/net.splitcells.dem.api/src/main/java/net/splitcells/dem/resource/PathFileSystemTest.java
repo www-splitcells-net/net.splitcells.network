@@ -5,6 +5,7 @@ package net.splitcells.dem.resource;
 
 import lombok.val;
 import net.splitcells.dem.data.set.list.List;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.dem.testing.annotations.UnitTestFactory;
 import org.junit.jupiter.api.DynamicTest;
@@ -15,7 +16,6 @@ import java.util.stream.Stream;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.Files.unclosedTemporaryFolder;
 import static net.splitcells.dem.resource.PathFileSystem.*;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
 
 public class PathFileSystemTest {
@@ -48,7 +48,7 @@ public class PathFileSystemTest {
         val testFile = Path.of("./test-file.txt");
         val testContent = "testUsersStateFiles";
         testSubject.writeToFile(testFile, testContent);
-        requireEquals(testSubject.readString(testFile), testContent);
+        Assertions.requireEquals(testSubject.readString(testFile), testContent);
     }
 
     /**
@@ -60,8 +60,8 @@ public class PathFileSystemTest {
             // The target folder is only available with Maven.
             val testSubject = pathFileSystemForMavenProject(Path.of("../").toAbsolutePath(), "net.splitcells.dem.api");
             val testResult = testSubject.license("src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/another-test.txt");
-            requireEquals(testResult.getSpdxCopyrightText().orElseThrow(), "Contributors To The `net.splitcells.*` Projects");
-            requireEquals(testResult.getSpdxLicenseIdentifier().orElseThrow(), "EPL-2.0 OR GPL-2.0-or-later");
+            Assertions.requireEquals(testResult.getSpdxCopyrightText().orElseThrow(), "Contributors To The `net.splitcells.*` Projects");
+            Assertions.requireEquals(testResult.getSpdxLicenseIdentifier().orElseThrow(), "EPL-2.0 OR GPL-2.0-or-later");
         }
     }
 }

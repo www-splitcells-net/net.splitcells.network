@@ -3,12 +3,12 @@
  */
 package net.splitcells.gel.data.view;
 
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.data.table.Tables;
 
 import static net.splitcells.dem.data.atom.Integers.requireEqualInts;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.LineWithValues.lineWithValues;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
@@ -26,14 +26,14 @@ public class LineWithValuesTest {
         final var indexedAttribute3 = indexedAttribute(attribute3, valueTypes);
         final var testIndex = 7;
         final var testSubject = lineWithValues(valueTypes, list(1, 2, 3), testIndex);
-        requireEquals(testSubject.context(), valueTypes);
+        Assertions.requireEquals(testSubject.context(), valueTypes);
         testSubject.values().requireEqualityTo(list(1, 2, 3));
         requireEqualInts(testSubject.index(), testIndex);
-        requireEquals(testSubject.value(attribute1), 1);
-        requireEquals(testSubject.value(attribute2), 2);
-        requireEquals(testSubject.value(attribute3), 3);
-        requireEquals(testSubject.value(indexedAttribute1), 1);
-        requireEquals(testSubject.value(indexedAttribute2), 2);
-        requireEquals(testSubject.value(indexedAttribute3), 3);
+        Assertions.requireEquals(testSubject.value(attribute1), 1);
+        Assertions.requireEquals(testSubject.value(attribute2), 2);
+        Assertions.requireEquals(testSubject.value(attribute3), 3);
+        Assertions.requireEquals(testSubject.value(indexedAttribute1), 1);
+        Assertions.requireEquals(testSubject.value(indexedAttribute2), 2);
+        Assertions.requireEquals(testSubject.value(indexedAttribute3), 3);
     }
 }

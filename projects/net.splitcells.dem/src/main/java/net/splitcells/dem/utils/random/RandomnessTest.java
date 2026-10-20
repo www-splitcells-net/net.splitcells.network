@@ -4,8 +4,6 @@
 package net.splitcells.dem.utils.random;
 
 import lombok.val;
-import net.splitcells.dem.data.set.list.Lists;
-import net.splitcells.dem.utils.MathUtils;
 import org.junit.jupiter.api.Test;
 
 import static java.util.stream.IntStream.rangeClosed;

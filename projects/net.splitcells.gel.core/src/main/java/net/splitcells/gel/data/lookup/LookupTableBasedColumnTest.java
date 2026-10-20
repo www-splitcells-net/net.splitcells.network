@@ -3,12 +3,12 @@
  */
 package net.splitcells.gel.data.lookup;
 
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.data.view.attribute.AttributeI;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.gel.data.lookup.LookupTables.lookupTable;
 import static net.splitcells.gel.data.table.Tables.table;
@@ -42,7 +42,7 @@ public class LookupTableBasedColumnTest {
         final var lookupTable = lookupTable(testData, "test-subject");
         final var testSubject = lookupTable.columnsView().get(0);
         lookupTable.register(testData.orderedLine(0));
-        requireEquals(testSubject.get(0), 0);
+        Assertions.requireEquals(testSubject.get(0), 0);
         requireThrow(() -> testSubject.get(1));
     }
 }

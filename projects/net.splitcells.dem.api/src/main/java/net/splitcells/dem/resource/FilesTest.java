@@ -5,6 +5,7 @@ package net.splitcells.dem.resource;
 
 import lombok.val;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import java.io.IOException;
@@ -18,7 +19,6 @@ import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.resource.Files.*;
 import static net.splitcells.dem.resource.Files.deleteDirectory;
 import static net.splitcells.dem.resource.Paths.path;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.StringUtils.multiple;
@@ -50,7 +50,7 @@ public class FilesTest {
     }
 
     @UnitTest public void testNewLine() {
-        requireEquals(newLine(), "\n");
+        Assertions.requireEquals(newLine(), "\n");
     }
 
     @UnitTest public void testDeleteDirectory() {
@@ -116,7 +116,7 @@ public class FilesTest {
             val testFile = p.resolve("test-file");
             appendToFile(testFile, "def");
             appendToFile(testFile, "hij");
-            requireEquals(readFileAsString(testFile), "defhij");
+            Assertions.requireEquals(readFileAsString(testFile), "defhij");
         });
     }
 
@@ -129,7 +129,7 @@ public class FilesTest {
             val testFile = p.resolve("test-file");
             writeToFile(testFile, "def");
             writeToFile(testFile, "hij");
-            requireEquals(readFileAsString(testFile), "hij");
+            Assertions.requireEquals(readFileAsString(testFile), "hij");
         });
     }
 
@@ -141,7 +141,7 @@ public class FilesTest {
             val file = p.resolve("test-file");
             val content = "423t";
             writeToFile(file, content);
-            requireEquals(readFileAsString(file), content);
+            Assertions.requireEquals(readFileAsString(file), content);
         });
     }
 
@@ -155,7 +155,7 @@ public class FilesTest {
             val content = "2353";
             writeToFile(file1, content);
             writeToFile(file2, tree(content));
-            requireEquals(parseString(readFileAsBytes(file1)), content);
+            Assertions.requireEquals(parseString(readFileAsBytes(file1)), content);
         });
     }
 
@@ -167,7 +167,7 @@ public class FilesTest {
             val file1 = p.resolve("test-file-1");
             val content = "2353";
             writeToFile(file1, content);
-            requireEquals(readAsString(newInputStream(file1)), content);
+            Assertions.requireEquals(readAsString(newInputStream(file1)), content);
         });
     }
 
@@ -180,7 +180,7 @@ public class FilesTest {
             val content = "3265";
             writeToFile(file, content);
             try {
-                requireEquals(parseString(newInputStream(file).readAllBytes()), content);
+                Assertions.requireEquals(parseString(newInputStream(file).readAllBytes()), content);
             } catch (IOException e) {
                 throw execException(e);
             }
@@ -197,7 +197,7 @@ public class FilesTest {
             val testFile2 = p.resolve("test-file-2");
             writeToFile(testFile1, "def");
             writeToFile(testFile2, "hij");
-            requireEquals(walkDirectChildren(p).count(), 2L);
+            Assertions.requireEquals(walkDirectChildren(p).count(), 2L);
         });
     }
 
@@ -237,7 +237,7 @@ public class FilesTest {
             val targetFolder = p.resolve("target");
             createDirectory(targetFolder);
             copyDirectory(sourceFolder, targetFolder);
-            requireEquals(walkDirectChildren(targetFolder).count(), 2L);
+            Assertions.requireEquals(walkDirectChildren(targetFolder).count(), 2L);
         });
     }
 
@@ -253,7 +253,7 @@ public class FilesTest {
             val target = p.resolve("target");
             writeToFile(source, content);
             copyFileFrom(source, target);
-            requireEquals(readFileAsString(target), content);
+            Assertions.requireEquals(readFileAsString(target), content);
         });
     }
 }

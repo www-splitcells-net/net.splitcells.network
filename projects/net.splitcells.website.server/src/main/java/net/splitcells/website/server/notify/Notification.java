@@ -5,6 +5,7 @@ package net.splitcells.website.server.notify;
 
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.object.DeepCloneable;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.website.Format;
 
 import java.time.ZonedDateTime;
@@ -15,7 +16,6 @@ import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.website.Format.HTML;
@@ -92,7 +92,7 @@ public class Notification implements DeepCloneable {
      */
     public String toHtml() {
         if (ENFORCING_UNIT_CONSISTENCY) {
-            requireEquals(format, HTML);
+            Assertions.requireEquals(format, HTML);
         }
         var html = "<span>" + NOTIFICATION_DATE.format(time) + "</span>";
         if (title.isEmpty() && link.isPresent()) {

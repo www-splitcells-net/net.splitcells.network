@@ -3,12 +3,12 @@
  */
 package net.splitcells.dem.object;
 
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.object.Discoveries.ENFORCE_PATH_IDENTITY;
 import static net.splitcells.dem.object.Discoveries.discoveryRoot;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
 
 public class DiscoveryTest {
@@ -17,10 +17,10 @@ public class DiscoveryTest {
         final var testSubject = discoveryRoot();
         final var firstChild = testSubject.createChild("test-value", "relative", "path");
         firstChild.path().content().requireEquals(list("relative", "path"));
-        requireEquals(firstChild, testSubject.childByPath("relative", "path"));
+        Assertions.requireEquals(firstChild, testSubject.childByPath("relative", "path"));
         final var secondChild = testSubject.createChild("another-value", "relative", "second", "path");
         secondChild.path().content().requireEquals(list("relative", "second", "path"));
-        requireEquals(secondChild, testSubject.childByPath("relative", "second", "path"));
+        Assertions.requireEquals(secondChild, testSubject.childByPath("relative", "second", "path"));
         testSubject.childByPath("relative", "second", "path").removeChild(secondChild);
         testSubject.childByPath("relative", "second", "path").children().requireEmpty();
     }

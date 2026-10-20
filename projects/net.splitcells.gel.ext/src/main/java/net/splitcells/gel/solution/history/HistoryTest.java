@@ -3,21 +3,17 @@
  */
 package net.splitcells.gel.solution.history;
 
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.dem.testing.annotations.BenchmarkTest;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
 import net.splitcells.gel.data.table.history.TableEventType;
 import net.splitcells.gel.solution.history.meta.type.AllocationRating;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
 
 import static java.util.stream.IntStream.rangeClosed;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
-import static net.splitcells.dem.testing.TestTypes.BENCHMARK_RUNTIME;
-import static net.splitcells.dem.testing.TestTypes.INTEGRATION_TEST;
 import static net.splitcells.gel.constraint.type.Then.then;
 import static net.splitcells.gel.rating.rater.lib.ConstantRater.constantRater;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -124,18 +120,18 @@ public class HistoryTest {
                                 , solution.supplies().rawLine(0));
                 solution.history().unorderedLines().requireSizeOf(1);
                 final var additionEvent = solution.history().rawLine(0);
-                requireEquals(additionEvent.value(EVENT_TYPE), TableEventType.ADDITION);
-                requireEquals(additionEvent.value(DEMAND), solution.demands().rawLine(0));
-                requireEquals(additionEvent.value(SUPPLY), solution.supplies().rawLine(0));
+                Assertions.requireEquals(additionEvent.value(EVENT_TYPE), TableEventType.ADDITION);
+                Assertions.requireEquals(additionEvent.value(DEMAND), solution.demands().rawLine(0));
+                Assertions.requireEquals(additionEvent.value(SUPPLY), solution.supplies().rawLine(0));
             }
             {
                 solution.history().unorderedLines().requireSizeOf(1);
                 solution.remove(0);
                 solution.history().unorderedLines().requireSizeOf(2);
                 final var removalEvent = solution.history().rawLine(1);
-                requireEquals(removalEvent.value(EVENT_TYPE), TableEventType.REMOVAL);
-                requireEquals(removalEvent.value(DEMAND), solution.demands().rawLine(0));
-                requireEquals(removalEvent.value(SUPPLY), solution.supplies().rawLine(0));
+                Assertions.requireEquals(removalEvent.value(EVENT_TYPE), TableEventType.REMOVAL);
+                Assertions.requireEquals(removalEvent.value(DEMAND), solution.demands().rawLine(0));
+                Assertions.requireEquals(removalEvent.value(SUPPLY), solution.supplies().rawLine(0));
             }
         });
     }
@@ -154,7 +150,7 @@ public class HistoryTest {
             final var demandValue = solution.assign
                     (solution.demands().rawLine(0)
                             , solution.supplies().rawLine(0));
-            requireEquals(solution
+            Assertions.requireEquals(solution
                             .history()
                             .rawLine(0)
                             .value(META_DATA)
@@ -164,7 +160,7 @@ public class HistoryTest {
                     , cost(7));
             {
                 solution.remove(demandValue);
-                requireEquals(solution
+                Assertions.requireEquals(solution
                                 .history()
                                 .rawLine(1)
                                 .value(META_DATA)

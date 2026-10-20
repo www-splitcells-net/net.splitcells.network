@@ -19,7 +19,6 @@ import static net.splitcells.dem.Dem.process;
 import static net.splitcells.dem.data.atom.DescribedBool.describedBool;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireNotNull;
 import static net.splitcells.gel.data.assignment.Assignmentss.assignments;
 import static net.splitcells.gel.data.table.Tables.table;
@@ -113,7 +112,7 @@ public class AssignmentsTest extends TestSuiteI {
         final var demands = Tables.table("demands");
         final var supplies = Tables.table("supplies");
         final var allocations = assignments("test", demands, supplies);
-        requireEquals(allocations.path(), list("demands", "test-assignment"));
+        Assertions.requireEquals(allocations.path(), list("demands", "test-assignment"));
     }
 
     @UnitTest
@@ -173,15 +172,15 @@ public class AssignmentsTest extends TestSuiteI {
         final var firstAllocation = testSubject
                 .assign(testSubject.demands().rawLinesView().get(0)
                         , testSubject.supplies().rawLinesView().get(0));
-        requireEquals(firstAllocation.value(demandAttribute), 1.0);
-        requireEquals(firstAllocation.value(supplyAttribute), 2);
+        Assertions.requireEquals(firstAllocation.value(demandAttribute), 1.0);
+        Assertions.requireEquals(firstAllocation.value(supplyAttribute), 2);
         final var secondAllocation = testSubject
                 .assign(testSubject.demands().rawLinesView().get(1)
                         , testSubject.supplies().rawLinesView().get(1));
-        requireEquals(secondAllocation.value(demandAttribute), 3.0);
-        requireEquals(secondAllocation.value(supplyAttribute), 4);
-        requireEquals(testSubject.size(), 2);
+        Assertions.requireEquals(secondAllocation.value(demandAttribute), 3.0);
+        Assertions.requireEquals(secondAllocation.value(supplyAttribute), 4);
+        Assertions.requireEquals(testSubject.size(), 2);
         testSubject.remove(firstAllocation);
-        requireEquals(testSubject.size(), 1);
+        Assertions.requireEquals(testSubject.size(), 1);
     }
 }

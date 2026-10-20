@@ -4,6 +4,7 @@
 package net.splitcells.cin.raters;
 
 import net.splitcells.cin.deprecated.raters.deprecated.Loneliness;
+import net.splitcells.dem.testing.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,6 @@ import static net.splitcells.cin.raters.TimeSteps.timeStepId;
 import static net.splitcells.cin.raters.TimeSteps.timeSteps;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.TestTypes.EXPERIMENTAL_TEST;
 import static net.splitcells.gel.Gel.defineProblem;
 import static net.splitcells.gel.common.Language.FOR_ALL;
@@ -59,13 +59,13 @@ public class TimeStepsTest {
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
-                .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + TimeSteps.WITH_EVEN_START_TIME));
+                .forEach(g -> Assertions.requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + TimeSteps.WITH_EVEN_START_TIME));
         testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
-                .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + TimeSteps.WITH_EVEN_START_TIME));
+                .forEach(g -> Assertions.requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + TimeSteps.WITH_EVEN_START_TIME));
         testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
@@ -193,13 +193,13 @@ public class TimeStepsTest {
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
-                .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME));
+                .forEach(g -> Assertions.requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME));
         testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()
                 .columnView(RESULTING_CONSTRAINT_GROUP)
                 .values()
-                .forEach(g -> requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME));
+                .forEach(g -> Assertions.requireEquals(g.name().get(), FOR_ALL.value() + " " + NO_TIME_STEP_GROUP + WITH_UNEVEN_START_TIME));
         testSubject.assign(testSubject.demandsFree().orderedLine(0)
                 , testSubject.suppliesFree().orderedLine(0));
         testSubject.constraint().childrenView().get(0).lineProcessing()

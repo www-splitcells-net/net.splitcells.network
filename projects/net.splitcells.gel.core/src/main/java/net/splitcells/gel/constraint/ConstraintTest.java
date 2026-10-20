@@ -6,6 +6,7 @@ package net.splitcells.gel.constraint;
 import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.dom.Domable;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.gel.data.table.Tables;
 import net.splitcells.gel.data.view.Line;
 import net.splitcells.gel.data.view.View;
@@ -18,7 +19,6 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.gel.constraint.GroupId.group;
 import static net.splitcells.gel.constraint.GroupId.rootGroup;
 import static net.splitcells.gel.constraint.type.ForAlls.forAll;
@@ -58,7 +58,7 @@ public class ConstraintTest {
                 .asSolution();
         solution.optimize(offlineLinearInitialization());
         val testResult = solution.constraint().naturalArgumentation().orElseThrow();
-        requireEquals(testResult.name(), "For all allocations");
+        Assertions.requireEquals(testResult.name(), "For all allocations");
         val child1 = tree("For all groups of a attribute values: where value is `1`", STRING)
                 .withChildren(tree("Then size should be 4, but is 2", STRING));
         require(testResult.children().stream().map(child -> child.equals(child1))

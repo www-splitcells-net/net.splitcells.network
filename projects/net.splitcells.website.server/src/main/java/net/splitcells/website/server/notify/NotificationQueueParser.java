@@ -4,6 +4,7 @@
 package net.splitcells.website.server.notify;
 
 import lombok.val;
+import net.splitcells.dem.testing.Assertions;
 import net.splitcells.website.server.project.renderer.PageMetaData;
 import net.splitcells.website.server.projects.ProjectsRenderer;
 import net.splitcells.website.server.projects.RenderRequest;
@@ -16,7 +17,6 @@ import java.util.regex.Pattern;
 
 import static net.splitcells.dem.data.set.list.Lists.listWithValuesOf;
 import static net.splitcells.dem.environment.config.StaticFlags.ENFORCING_UNIT_CONSISTENCY;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.utils.StringUtils.parseString;
 import static net.splitcells.dem.utils.TimeUtils.parseZonedDate;
 import static net.splitcells.website.Format.HTML;
@@ -141,7 +141,7 @@ public class NotificationQueueParser {
                     }
                 });
         if (ENFORCING_UNIT_CONSISTENCY) {
-            notificationQueue.notifications().forEach(n -> requireEquals(n.format(), HTML));
+            notificationQueue.notifications().forEach(n -> Assertions.requireEquals(n.format(), HTML));
         }
         return notificationQueue;
     }
