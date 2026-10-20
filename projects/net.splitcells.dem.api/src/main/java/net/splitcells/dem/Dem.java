@@ -86,6 +86,14 @@ public class Dem {
         });
     }
 
+    /**
+     *  This method does nothing and is used to fill empty if blocks and similar,
+     *  in order to put breaking points for the debugger via the IDE.
+     */
+    public static void noOp() {
+        
+    }
+
     public static void executeThread(Class<?> representer, Runnable program) {
         executeThread(representer.getName(), program);
     }
