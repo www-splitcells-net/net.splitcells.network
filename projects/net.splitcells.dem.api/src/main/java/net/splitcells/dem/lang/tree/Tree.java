@@ -95,7 +95,7 @@ public interface Tree extends TreeView, Convertible {
      * The path starts at the current index.
      */
     default Tree childrenPathTravel(int current, int... indexes) {
-        final var next = child(indexes[current]);
+        val next = child(indexes[current]);
         if (current >= indexes.length - 1) {
             return next;
         }
@@ -197,7 +197,7 @@ public interface Tree extends TreeView, Convertible {
     }
 
     default Optional<Tree> propertyInstance(String name, NameSpace nameSpace) {
-        final var propertyInstances = propertyInstances(name, nameSpace);
+        val propertyInstances = propertyInstances(name, nameSpace);
         assertThat(propertyInstances).hasSizeLessThan(2);
         if (propertyInstances.isEmpty()) {
             return Optional.ofNullable(null);
@@ -206,7 +206,7 @@ public interface Tree extends TreeView, Convertible {
     }
 
     default Optional<Tree> propertyInstance(String name) {
-        final var propertyInstances = propertyInstances(name);
+        val propertyInstances = propertyInstances(name);
         assertThat(propertyInstances).hasSizeLessThan(2);
         if (propertyInstances.isEmpty()) {
             return Optional.ofNullable(null);
@@ -215,7 +215,7 @@ public interface Tree extends TreeView, Convertible {
     }
 
     default Optional<Tree> childNamed(String name, NameSpace nameSpace) {
-        final var children = children().stream()
+        val children = children().stream()
                 .filter(child -> nameSpace.equals(child.nameSpace()) && name.equals(child.name()))
                 .collect(toList());
         if (children.isEmpty()) {
@@ -311,13 +311,13 @@ public interface Tree extends TreeView, Convertible {
      * @return Returns this.
      */
     default Tree withMerged(Tree arg) {
-        final var match = children().stream().filter(c -> c.name().equals(arg.name())
+        val match = children().stream().filter(c -> c.name().equals(arg.name())
                 && c.nameSpace().equals(arg.nameSpace())).findFirst();
         if (match.isPresent()) {
             arg.children().forEach(match.get()::withMerged);
             return this;
         }
-        final var argCopy = tree(arg.name(), arg.nameSpace());
+        val argCopy = tree(arg.name(), arg.nameSpace());
         arg.children().forEach(c -> argCopy.withMerged(c));
         return withChild(argCopy);
     }
@@ -350,7 +350,7 @@ public interface Tree extends TreeView, Convertible {
     default Tree withPath(Tree... path) {
         var current = this;
         for (int i = 0; i < path.length; ++i) {
-            final var next = path[i];
+            val next = path[i];
             current.withChild(next);
             current = next;
         }
@@ -499,7 +499,7 @@ public interface Tree extends TreeView, Convertible {
         name += children().stream()
                 .map(c -> {
                     if (c.nameSpace().equals(XML_SYNTAX) && c.name().equals("attribute")) {
-                        final var cName = c.child(0);
+                        val cName = c.child(0);
                         return cName.nameSpace().defaultPrefix()
                                 + ":"
                                 + cName.name()
@@ -528,7 +528,7 @@ public interface Tree extends TreeView, Convertible {
      */
     default String toXmlString(XmlConfig xmlConfig) {
         String xmlString = "";
-        final var childConfig = xmlConfig.deepClone();
+        val childConfig = xmlConfig.deepClone();
         if (xmlConfig.printNameSpaceAttributeAtTop()) {
             childConfig.withPrintNameSpaceAttributeAtTop(false);
         }
@@ -594,7 +594,7 @@ public interface Tree extends TreeView, Convertible {
     }
 
     private static String nameSpaceDeclarations(Set<NameSpace> nameSpaces) {
-        final var declarations = stringBuilder();
+        val declarations = stringBuilder();
         nameSpaces.forEach(n -> {
             declarations.append("xmlns:");
             declarations.append(n.defaultPrefix());
@@ -606,7 +606,7 @@ public interface Tree extends TreeView, Convertible {
     }
 
     private static String nameSpaceDeclarations(Set<NameSpace> nameSpaces, XmlConfig xmlConfig) {
-        final var declarations = stringBuilder();
+        val declarations = stringBuilder();
         nameSpaces.forEach(n -> {
             declarations.append(" xmlns:");
             declarations.append(n.defaultPrefix());
@@ -683,12 +683,12 @@ public interface Tree extends TreeView, Convertible {
         if (path.isEmpty()) {
             return this;
         }
-        final var next = path.remove(0);
-        final var match = children().stream()
+        val next = path.remove(0);
+        val match = children().stream()
                 .filter(child -> child.name().equals(next))
                 .findFirst();
         if (match.isEmpty()) {
-            final var nextPerspective = tree(next);
+            val nextPerspective = tree(next);
             this.withChild(nextPerspective);
             nextPerspective.extendWith(path);
         } else {
@@ -748,7 +748,7 @@ public interface Tree extends TreeView, Convertible {
 
     default String asCompactXhtmlList(boolean isRoot) {
         String htmlList;
-        final var nonEmptyElementsChildrens = nonEmptyElementsChildrens();
+        val nonEmptyElementsChildrens = nonEmptyElementsChildrens();
         if (isRoot && name().isEmpty()) {
             return "<ol>"
                     + nonEmptyElementsChildrens.stream().map(c -> c.asCompactXhtmlList(false))
@@ -769,7 +769,7 @@ public interface Tree extends TreeView, Convertible {
         } else if (nonEmptyElementsChildrens.isEmpty()) {
             htmlList = "<li>" + xmlName() + "</li>";
         } else {
-            final var tree = tree("");
+            val tree = tree("");
             tree.children().addAll(nonEmptyElementsChildrens);
             final String childrenHtmlList = tree.asCompactXhtmlList();
             if (name().isEmpty()) {
@@ -872,10 +872,10 @@ public interface Tree extends TreeView, Convertible {
             jsonString.append("{\"" + encodeJsonString(name()) + "\":\"\"}");
         } else {
             boolean isNotFirstChild = false;
-            final var hasAnyPrimitiveValues = children().stream()
+            val hasAnyPrimitiveValues = children().stream()
                     .anyMatch(c -> c.children().isEmpty() || (c.nameSpace().equals(JSON) && c.name().equals(JSON_ARRAY)));
-            final var isJsonArray = nameSpace().equals(JSON) && name().equals(JSON_ARRAY);
-            final var isJsonDictionary = nameSpace().equals(JSON) && name().equals(JSON_OBJECT);
+            val isJsonArray = nameSpace().equals(JSON) && name().equals(JSON_ARRAY);
+            val isJsonDictionary = nameSpace().equals(JSON) && name().equals(JSON_OBJECT);
             if (isJsonDictionary) {
                 if (hasAnyPrimitiveValues) {
                     throw ExecutionException.execException("JSON objects are not allowed to contain primitive values like arrays have. JSON objects are only allowed to have name/value pairs.");
@@ -906,7 +906,7 @@ public interface Tree extends TreeView, Convertible {
                     jsonString.append(encodeJsonString(name()) + "\":{");
                 }
             }
-            for (final var child : children()) {
+            for (val child : children()) {
                 if (isNotFirstChild) {
                     jsonString.append(",");
                 }
@@ -949,7 +949,7 @@ public interface Tree extends TreeView, Convertible {
     }
 
     default String toCommonMarkString(CommonMarkConfig config) {
-        final var commonMarkString = binaryOutputStream();
+        val commonMarkString = binaryOutputStream();
         printCommonMarkString(config, stringSender(commonMarkString));
         return commonMarkString.toString();
     }
@@ -975,27 +975,27 @@ public interface Tree extends TreeView, Convertible {
             }
             return;
         }
-        final var isProperty = children().size() == 1 && children().get(0).children().isEmpty();
+        val isProperty = children().size() == 1 && children().get(0).children().isEmpty();
         if (isProperty) {
             output.append(listPrefix + name() + ": " + children().get(0).name());
             return;
         }
         if (!name().isEmpty()) {
-            final var lastNameChar = name().charAt(name().length() - 1);
+            val lastNameChar = name().charAt(name().length() - 1);
             if (lastNameChar == '.' || lastNameChar == ':') {
                 output.append(listPrefix + name());
             } else {
                 output.append(listPrefix + name() + ":");
             }
         }
-        final var isSimpleList = children().stream().map(c -> c.children().isEmpty()).reduce(true, (a, b) -> a && b);
+        val isSimpleList = children().stream().map(c -> c.children().isEmpty()).reduce(true, (a, b) -> a && b);
         if (isSimpleList) {
-            final var newListPrefix = prefix + "    * ";
-            final var newPrefix = newListPrefix;
+            val newListPrefix = prefix + "    * ";
+            val newPrefix = newListPrefix;
             children().forEach(c -> c.printCommonMarkString(config, output, newPrefix, newListPrefix));
         } else {
-            final var newListPrefix = prefix + "    * ";
-            final var newPrefix = prefix + "    ";
+            val newListPrefix = prefix + "    * ";
+            val newPrefix = prefix + "    ";
             children().forEach(c -> c.printCommonMarkString(config, output, newPrefix, newListPrefix));
         }
     }
@@ -1013,8 +1013,8 @@ public interface Tree extends TreeView, Convertible {
         if (path.isEmpty()) {
             return tree;
         }
-        final var next = path.remove(0);
-        final var fittingChild = tree.children().stream()
+        val next = path.remove(0);
+        val fittingChild = tree.children().stream()
                 .filter(child -> child.nameIs(NameSpaces.VAL, NameSpaces.DEN))
                 .filter(child -> child.propertyInstances(NameSpaces.NAME, NameSpaces.DEN).stream()
                         .anyMatch(property -> property.value().get().name().equals(next)))
@@ -1030,7 +1030,7 @@ public interface Tree extends TreeView, Convertible {
         if (path.isEmpty()) {
             return this;
         }
-        final var next = path.remove(0);
+        val next = path.remove(0);
         return children().stream()
                 .filter(child -> child.name().equals(next))
                 .findFirst()
@@ -1043,8 +1043,8 @@ public interface Tree extends TreeView, Convertible {
             return this;
         }
         var current = this;
-        for (final var element : path) {
-            final var next = current.children().stream()
+        for (val element : path) {
+            val next = current.children().stream()
                     .filter(child -> child.name().equals(element))
                     .findFirst();
             if (next.isEmpty()) {
@@ -1088,11 +1088,11 @@ public interface Tree extends TreeView, Convertible {
         final List<Tree> path = listWithValuesOf();
         Tree currentNode = this;
         while (stringPath.hasElements()) {
-            final var currentPathElement = stringPath.remove(0);
-            final var nextPathPerspective = currentNode.children().stream()
+            val currentPathElement = stringPath.remove(0);
+            val nextPathPerspective = currentNode.children().stream()
                     .filter(c -> c.nameIs(VAL, DEN))
                     .filter(c -> {
-                        final var nameProp = c.propertyInstance(NAME, DEN);
+                        val nameProp = c.propertyInstance(NAME, DEN);
                         if (nameProp.isEmpty()) {
                             return false;
                         }
@@ -1129,8 +1129,8 @@ public interface Tree extends TreeView, Convertible {
             return Optional.empty();
         }
         while (stringPath.hasElements()) {
-            final var currentPathElement = stringPath.remove(0);
-            final var nextPathPerspective = currentNode.children().stream()
+            val currentPathElement = stringPath.remove(0);
+            val nextPathPerspective = currentNode.children().stream()
                     .filter(c -> c.name().equals(currentPathElement))
                     .findFirst();
             if (nextPathPerspective.isEmpty()) {
@@ -1151,7 +1151,7 @@ public interface Tree extends TreeView, Convertible {
             });
         } else {
             merger.stringNames().forEach(name -> {
-                final var existing = propertyInstance(name);
+                val existing = propertyInstance(name);
                 if (existing.isPresent()) {
                     children().delete(existing.get());
                     withProperty(name, merger.merge(name, existing.get().child(0).name()));
@@ -1168,7 +1168,7 @@ public interface Tree extends TreeView, Convertible {
     }
 
     default Tree with(String description, Throwable throwable) {
-        final var throwableTree = tree(description)
+        val throwableTree = tree(description)
                 .withChild(tree("message").withChild(tree(throwable.getMessage() + "")))
                 .withChild(tree("stack-trace").withChild(tree(throwableToString(throwable))));
         return withChild(throwableTree);
