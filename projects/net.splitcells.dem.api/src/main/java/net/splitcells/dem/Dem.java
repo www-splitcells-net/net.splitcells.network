@@ -91,7 +91,7 @@ public class Dem {
      *  in order to put breaking points for the debugger via the IDE.
      */
     public static void noOp() {
-        
+        return;
     }
 
     public static void executeThread(Class<?> representer, Runnable program) {
