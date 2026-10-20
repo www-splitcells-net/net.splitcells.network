@@ -26,7 +26,6 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.toList;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT_ROOT;
 import static net.splitcells.dem.object.Discoverable.isAnonymous;
 import static net.splitcells.dem.resource.FileSystemVoid.fileSystemVoid;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;

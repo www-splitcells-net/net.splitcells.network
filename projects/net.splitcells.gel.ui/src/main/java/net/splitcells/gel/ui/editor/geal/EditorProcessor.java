@@ -14,7 +14,6 @@ import net.splitcells.dem.resource.communication.log.LogMessage;
 import net.splitcells.dem.testing.Result;
 import net.splitcells.dem.testing.need.Need;
 import net.splitcells.dem.testing.reporting.ErrorReporter;
-import net.splitcells.dem.utils.StreamUtils;
 import net.splitcells.gel.editor.Editor;
 import net.splitcells.gel.editor.EditorData;
 import net.splitcells.website.server.processor.Processor;
@@ -25,12 +24,11 @@ import net.splitcells.website.server.security.access.AccessContainer;
 import java.util.Optional;
 
 import static net.splitcells.dem.Dem.configValue;
-import static net.splitcells.dem.Dem.handleInterrupt;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.CommonMarkUtils.joinDocuments;
 import static net.splitcells.dem.lang.tree.CommonMarkConfig.commonMarkConfig;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
+import static net.splitcells.dem.object.Discoverable.ROOT_PATH;
 import static net.splitcells.dem.resource.ContentType.TEXT;
 import static net.splitcells.dem.resource.Semaphore.semaphore;
 import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessage;
@@ -39,7 +37,6 @@ import static net.splitcells.dem.testing.need.NeedsCheck.runWithCheckedNeeds;
 import static net.splitcells.dem.utils.ExecutionException.execException;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.StringUtils.*;
-import static net.splitcells.dem.utils.TimeUtils.*;
 import static net.splitcells.gel.editor.Editor.editor;
 import static net.splitcells.gel.editor.EditorData.editorData;
 import static net.splitcells.website.Format.*;
@@ -221,7 +218,7 @@ public class EditorProcessor implements Processor<Tree, Tree> {
             result.optionalValue().ifPresent(ov -> ov.data().withProperty(ASYNC_ID, asyncIdUpdate.orElseThrow().valueName()));
         } else {
             result = runWithCheckedNeeds(
-                    () -> editorAccess.createAndAccess(session -> editor("editor-data-query", EXPLICIT_NO_CONTEXT)
+                    () -> editorAccess.createAndAccess(session -> editor("editor-data-query", ROOT_PATH)
                             , editor -> process(request, editor)
                             , userSession));
         }

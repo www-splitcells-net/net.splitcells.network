@@ -134,7 +134,7 @@ public class Assertions {
      */
     @Deprecated
     public static <T> void requireEqualsDeprecated(T expected, T actual, Function<T, String> printer, BiFunction<T, T, Boolean> comparison) {
-        requireEqualsDeprecated(actual, expected, printer, comparison);
+        requireEquals(actual, expected, printer, comparison);
     }
 
     public static <T> void requireDistinct(T a, T b) {

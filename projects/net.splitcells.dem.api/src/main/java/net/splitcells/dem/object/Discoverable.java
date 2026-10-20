@@ -32,17 +32,17 @@ public interface Discoverable {
      * <p>TODO Rename this variable to a name that denotes its relation to the root more directly
      * Maybe name it `ROOT`.</p>
      */
-    Discoverable NO_CONTEXT = () -> list();
+    Discoverable ROOT_PATH = () -> list();
 
-    String EXPLICIT_NO_CONTEXT_ROOT = "no-context";
+    String ANONYMOUS_ROOT = "anonymous";
 
     /**
-     * <p>This is just like {@link #NO_CONTEXT}, but with the difference,
-     * that other {@link Discoverable} can use this as a parent,
-     * without becoming a {@link Discoverable} with a context.</p>
-     * <p>TODO Consider renaming this to `ANONYMOUS_CONTEXT`.</p>
+     * <p>This is just like {@link #ROOT_PATH} and means there is no context.
+     * Other {@link Discoverable} can use this as a parent, in order to state,
+     * that these are not part of the regular discovery tree.
+     * This is often used for temporary objects.</p>
      */
-    Discoverable EXPLICIT_NO_CONTEXT = () -> list(EXPLICIT_NO_CONTEXT_ROOT);
+    Discoverable ANONYMOUS_PATH = () -> list(ANONYMOUS_ROOT);
 
     /**
      * Works like {@link #isAnonymous()}, but can recycle the path list instance.
@@ -52,7 +52,7 @@ public interface Discoverable {
      *         Such objects can be considered to be temporary objects.
      */
     static boolean isAnonymous(ListView<String> path) {
-        return path.hasElements() && EXPLICIT_NO_CONTEXT_ROOT.equals(path.getFirst());
+        return path.hasElements() && ANONYMOUS_ROOT.equals(path.getFirst());
     }
     
     default boolean isAnonymous() {

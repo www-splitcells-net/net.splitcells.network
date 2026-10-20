@@ -3,14 +3,13 @@
  */
 package net.splitcells.dem.resource.communication.log;
 
-import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.data.set.list.ListView;
 import net.splitcells.dem.object.Discoverable;
 
 public class LogMessageI<T> implements LogMessage<T> {
 
     public static <T> LogMessage<T> logMessage(T content, LogLevel priority) {
-        return new LogMessageI<>(content, Discoverable.EXPLICIT_NO_CONTEXT, priority);
+        return new LogMessageI<>(content, Discoverable.ANONYMOUS_PATH, priority);
     }
 
     public static <T> LogMessage<T> logMessage(T content, Discoverable context, LogLevel priority) {

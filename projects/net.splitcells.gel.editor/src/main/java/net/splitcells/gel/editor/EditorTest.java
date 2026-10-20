@@ -10,7 +10,7 @@ import net.splitcells.gel.editor.geal.lang.*;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
-import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
+import static net.splitcells.dem.object.Discoverable.ANONYMOUS_PATH;
 import static net.splitcells.dem.utils.StringUtils.toBytes;
 import static net.splitcells.gel.constraint.type.ForAlls.FOR_EACH_NAME;
 import static net.splitcells.gel.constraint.type.Then.THEN_NAME;
@@ -29,7 +29,7 @@ public class EditorTest {
 
     @UnitTest
     public void testGealInterpretation() {
-        final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
+        final var testSubject = editor("test-subject", ANONYMOUS_PATH);
         final var testData = SourceUnit.sourceUnitForTest(list(
                 variableDefinitionDesc(NameDesc.nameDescForTest("student")
                         , FunctionCallDesc.functionCallDescForTest(NameDesc.nameDescForTest("attribute")
@@ -143,7 +143,7 @@ public class EditorTest {
 
     @UnitTest
     public void testGealParsing() {
-        final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
+        final var testSubject = editor("test-subject", ANONYMOUS_PATH);
         final var testData = """
                 student    = attribute(String,  'student');
                 examiner   = attribute(String,  'examiner');
@@ -213,7 +213,7 @@ public class EditorTest {
 
     @UnitTest
     public void testInput() {
-        final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
+        final var testSubject = editor("test-subject", ANONYMOUS_PATH);
         final var testData = """
                 student    = attribute(String,  'student');
                 examiner   = attribute(String,  'examiner');
@@ -259,7 +259,7 @@ public class EditorTest {
 
     @UnitTest
     public void testRatingReport() {
-        final var testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
+        final var testSubject = editor("test-subject", ANONYMOUS_PATH);
         final var testData = """
                 student    = attribute(String,  'student');
                 date       = attribute(Integer, 'date');
@@ -351,7 +351,7 @@ public class EditorTest {
     }
 
     @UnitTest public void testMinimalParsing() {
-        val testSubject = editor("test-subject", EXPLICIT_NO_CONTEXT);
+        val testSubject = editor("test-subject", ANONYMOUS_PATH);
         val testData = new GelEditorFileSystem().defaultValue().readString("src/main/resources/html/net/splitcells/gel/editor/geal/examples/geal-minimal-example.txt");
         testSubject.interpret(parseGealSourceUnit(testData));
     }

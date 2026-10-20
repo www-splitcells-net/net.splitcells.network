@@ -4,12 +4,9 @@
 package net.splitcells.gel.editor.geal;
 
 import lombok.val;
-import net.splitcells.dem.Dem;
 import net.splitcells.dem.data.set.Set;
 import net.splitcells.dem.data.set.list.List;
-import net.splitcells.dem.environment.resource.HostUtilizationRecordService;
 import net.splitcells.dem.lang.tree.Tree;
-import net.splitcells.dem.lang.tree.XmlConfig;
 import net.splitcells.dem.object.Discoverable;
 import net.splitcells.dem.resource.Trail;
 import net.splitcells.gel.editor.geal.runners.FunctionCallRunnerParser;
@@ -23,13 +20,11 @@ import net.splitcells.website.server.projects.extension.impls.ProjectPathsReques
 import java.nio.file.Path;
 import java.util.Optional;
 
-import static net.splitcells.dem.data.order.Comparators.ASCENDING_STRINGS;
 import static net.splitcells.dem.data.order.Comparators.ascendingString;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.SEW;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
 import static net.splitcells.dem.resource.ContentType.HTML_TEXT;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.gel.editor.Editor.editor;
@@ -56,7 +51,7 @@ public class FunctionCallDoc implements ProjectsRendererExtension {
     }
 
     public static List<Tree> generateDoc() {
-        val editor = editor("Documentation Generation", Discoverable.EXPLICIT_NO_CONTEXT);
+        val editor = editor("Documentation Generation", Discoverable.ANONYMOUS_PATH);
         val subject = functionCallMetaExecutor();
         final List<Tree> doc = list();
         subject.parsers().sorted(ascendingString(FunctionCallRunnerParser::getName)).forEach(p -> {

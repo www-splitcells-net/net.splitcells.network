@@ -14,7 +14,7 @@ import net.splitcells.dem.utils.ExecutionException;
 import java.util.Optional;
 
 import static net.splitcells.dem.lang.tree.TreeI.tree;
-import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
+import static net.splitcells.dem.object.Discoverable.ROOT_PATH;
 import static net.splitcells.dem.resource.communication.log.LogLevel.ERROR;
 import static net.splitcells.dem.resource.communication.log.LogMessageI.logMessage;
 import static net.splitcells.dem.resource.communication.log.Logs.logs;
@@ -31,11 +31,11 @@ import static net.splitcells.dem.utils.StringUtils.throwableToString;
 public interface Log extends AppendableList<LogMessage<Tree>> {
 
     default Log append(String name) {
-        return append(logMessage(tree(name), NO_CONTEXT, LogLevel.DEBUG));
+        return append(logMessage(tree(name), ROOT_PATH, LogLevel.DEBUG));
     }
 
     default Log append(String message, LogLevel logLevel) {
-        return append(logMessage(tree(message), NO_CONTEXT, logLevel));
+        return append(logMessage(tree(message), ROOT_PATH, logLevel));
     }
 
     /**
@@ -82,15 +82,15 @@ public interface Log extends AppendableList<LogMessage<Tree>> {
     }
 
     default Log append(Domable domable, LogLevel logLevel) {
-        return append(logMessage(domable.toTree(), NO_CONTEXT, logLevel));
+        return append(logMessage(domable.toTree(), ROOT_PATH, logLevel));
     }
 
     default Log append(Tree tree, LogLevel logLevel) {
-        return append(logMessage(tree, NO_CONTEXT, logLevel));
+        return append(logMessage(tree, ROOT_PATH, logLevel));
     }
 
     default Log fail(Tree tree) {
-        return append(logMessage(tree, NO_CONTEXT, ERROR));
+        return append(logMessage(tree, ROOT_PATH, ERROR));
     }
 
     default Log append(Domable content, Discoverable context, LogLevel logLevel) {
@@ -98,7 +98,7 @@ public interface Log extends AppendableList<LogMessage<Tree>> {
     }
 
     default Log append(Domable content, Optional<Discoverable> context, LogLevel logLevel) {
-        return append(logMessage(content.toTree(), context.orElse(NO_CONTEXT), logLevel));
+        return append(logMessage(content.toTree(), context.orElse(ROOT_PATH), logLevel));
     }
 
     default Log append(Tree content, Discoverable context, LogLevel logLevel) {
@@ -121,7 +121,7 @@ public interface Log extends AppendableList<LogMessage<Tree>> {
                 cause.withProperty("stack-trace", throwableToString(throwable.getCause()));
                 error.withChild(cause);
             }
-            return append(logMessage(error, NO_CONTEXT, LogLevel.CRITICAL));
+            return append(logMessage(error, ROOT_PATH, LogLevel.CRITICAL));
         } catch (Throwable th) {
             // This is a fallback, if the error could not be logged.
             throwable.printStackTrace();
@@ -146,7 +146,7 @@ public interface Log extends AppendableList<LogMessage<Tree>> {
         final var warning = tree("warning");
         warning.withProperty("message", throwable.getMessage());
         warning.withProperty("stack-trace", throwableToString(throwable));
-        return append(logMessage(warning, NO_CONTEXT, LogLevel.CRITICAL));
+        return append(logMessage(warning, ROOT_PATH, LogLevel.CRITICAL));
     }
 
     /**
@@ -160,11 +160,11 @@ public interface Log extends AppendableList<LogMessage<Tree>> {
         final var message = tree("warning");
         message.withProperty("message", message);
         message.withProperty("stack-trace", throwableToString(exception));
-        return append(logMessage(warning, NO_CONTEXT, LogLevel.CRITICAL));
+        return append(logMessage(warning, ROOT_PATH, LogLevel.CRITICAL));
     }
 
     default Log warn(String warning) {
-        return append(logMessage(tree(warning), NO_CONTEXT, LogLevel.WARNING));
+        return append(logMessage(tree(warning), ROOT_PATH, LogLevel.WARNING));
     }
 
 
@@ -176,6 +176,6 @@ public interface Log extends AppendableList<LogMessage<Tree>> {
         final var throwablePerspective = tree("throwable");
         throwablePerspective.withProperty("message", throwable.getMessage());
         throwablePerspective.withProperty("stack-trace", throwableToString(throwable));
-        return append(logMessage(message.withChild(throwablePerspective), NO_CONTEXT, LogLevel.CRITICAL));
+        return append(logMessage(message.withChild(throwablePerspective), ROOT_PATH, LogLevel.CRITICAL));
     }
 }

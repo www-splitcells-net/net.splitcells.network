@@ -5,6 +5,8 @@
 # Changelog
 ## [Unreleased]
 ### Major Changes
+* **2026-10-20\#37** Rename `Discoverable#NO_CONTEXT` to `Discoverable#ROOT_PATH` and `Discoverable#EXPLICIT_NO_CONTEXT` to `Discoverable#ANONYMOUS_PATH`,
+       in order to better state its intent.
 * **2026-10-20\#32** requireEquals takes actual value first and expected value second like other methods and
   as it is done implicitly via AssertJ's assertThat method.
   Existing calls where migrated via automatic refactoring requireEqualsDeprecated, in order to not break code.

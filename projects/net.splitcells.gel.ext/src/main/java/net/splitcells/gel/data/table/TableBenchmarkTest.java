@@ -9,7 +9,7 @@ import org.openjdk.jmh.infra.Blackhole;
 
 import static java.util.stream.IntStream.range;
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.object.Discoverable.EXPLICIT_NO_CONTEXT;
+import static net.splitcells.dem.object.Discoverable.ANONYMOUS_PATH;
 import static net.splitcells.dem.testing.benchmark.JmhHelper.benchmark;
 import static net.splitcells.gel.data.table.Tables.table;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
@@ -20,7 +20,7 @@ public class TableBenchmarkTest {
     }
 
     @Benchmark public void testAddRemove(Blackhole blackhole) {
-        final var testSubject = table("test-subject", EXPLICIT_NO_CONTEXT, list(attribute(Integer.class)));
+        final var testSubject = table("test-subject", ANONYMOUS_PATH, list(attribute(Integer.class)));
         range(0, 1000).forEach(testSubject::addTranslated);
         range(0, 1000).forEach(testSubject::remove);
         blackhole.consume(testSubject);

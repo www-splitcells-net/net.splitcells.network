@@ -6,7 +6,7 @@ package net.splitcells.gel.data.allocation;
 import net.splitcells.dem.testing.annotations.UnitTest;
 
 import static net.splitcells.dem.data.set.list.Lists.list;
-import static net.splitcells.dem.object.Discoverable.NO_CONTEXT;
+import static net.splitcells.dem.object.Discoverable.ROOT_PATH;
 import static net.splitcells.dem.testing.Assertions.requireIllegalDefaultConstructor;
 import static net.splitcells.gel.data.allocation.Allocationss.allocations;
 import static net.splitcells.gel.data.view.attribute.AttributeI.attribute;
@@ -23,7 +23,7 @@ public class AllocationssTest {
         final var attribute2 = attribute(Integer.class, "2");
         final var attribute3 = attribute(Integer.class, "3");
         final var attribute4 = attribute(Integer.class, "4");
-        final var testSubject = allocations("testHeader", NO_CONTEXT
+        final var testSubject = allocations("testHeader", ROOT_PATH
                 , list(attribute1, attribute2), list(attribute3, attribute4));
         testSubject.headerView().requireEqualityTo(list(attribute1, attribute2, attribute3, attribute4));
     }
@@ -31,7 +31,7 @@ public class AllocationssTest {
     public void testAllocations() {
         final var attribute1 = attribute(Integer.class, "1");
         final var attribute2 = attribute(Integer.class, "2");
-        final var testSubject = allocations("testAllocations", NO_CONTEXT
+        final var testSubject = allocations("testAllocations", ROOT_PATH
                 , list(attribute1), list(attribute2));
         testSubject.demands().addTranslated(list(1));
         testSubject.supplies().addTranslated(list(1));
