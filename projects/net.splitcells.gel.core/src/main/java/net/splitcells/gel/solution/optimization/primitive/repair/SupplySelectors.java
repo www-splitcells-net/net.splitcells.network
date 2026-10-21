@@ -86,7 +86,7 @@ public class SupplySelectors {
                                 if (freeSupplies.isEmpty()) {
                                     return;
                                 }
-                                // Using a free supply multiple times creates an error and therefore it is avoided.
+                                // Using a free supply multiple times creates an error, and therefore it is avoided.
                                 val nextIndex = rnd.integer(0, freeSupplies.size() - 1);
                                 val nextSupply = freeSupplies.switchVal(nextIndex, null);
                                 val assignment = assignmentEvent(freeDemand, nextSupply, ADDITION).setReason(tree("Checking rating for potential assignment."));
