@@ -141,14 +141,14 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
                 .distinct()
                 .filter(allocation -> {
                     if (!config.repairCompliance()) {
-                        return !constraint
+                        return constraint
                                 .lineProcessing()
                                 .columnView(LINE)
                                 .lookup(allocation)
                                 .unorderedLines()
                                 .get(0)
                                 .value(RATING)
-                                .equalz(noCost());
+                                .notEquals(noCost());
                     }
                     return true;
                 })

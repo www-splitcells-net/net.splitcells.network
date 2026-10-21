@@ -62,4 +62,8 @@ public interface PartiallyOrdered<T> extends OrderingCheck<T> {
         return rBase.get().equals(Ordering.EQUAL);
     }
 
+    default boolean notEquals(T other) {
+        return !equalz(other);
+    }
+
 }
