@@ -91,8 +91,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
         config = argConfig;
     }
 
-    @Override
-    public void optimize(Solution solution) {
+    @Override public void optimize(Solution solution) {
         val constraintPaths = constraintPaths(solution);
         final Map<GroupId, Set<Line>> demandGroupings = map();
         constraintPaths.forEach(e -> e
