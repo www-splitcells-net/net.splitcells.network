@@ -3,11 +3,13 @@
  */
 package net.splitcells.gel.solution;
 
+import lombok.val;
 import net.splitcells.dem.data.set.list.List;
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.lang.tree.TreeI;
 import net.splitcells.dem.lang.tree.XmlConfig;
 import net.splitcells.dem.resource.host.ProcessPath;
+import net.splitcells.dem.utils.MathUtils;
 import net.splitcells.gel.problem.ProblemI;
 import net.splitcells.gel.rating.type.Cost;
 import net.splitcells.gel.solution.history.History;
@@ -30,6 +32,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.MathUtils.min;
 import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.resource.Files.*;
 import static net.splitcells.gel.rating.type.Cost.cost;
@@ -101,6 +104,10 @@ public interface SolutionView extends ProblemView {
 
     default boolean isOptimal() {
         return isComplete() && constraint().rating().equalz(cost(0));
+    }
+
+    default int maximumAllocationCount() {
+        return min(demands().size(), supplies().size());
     }
 
     default Path dataContainer() {

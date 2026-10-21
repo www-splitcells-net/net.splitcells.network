@@ -49,11 +49,18 @@ import java.util.function.Function;
 public interface Solution extends Problem, SolutionView {
 
     default String commonMarkRatingReport() {
-        final String summary;
+        String summary;
         if (isOptimal()) {
             summary = "The problem is optimally solved.";
         } else {
-            summary = "The problem is not fully optimized.";
+            summary = "The problem is not solved.";
+            if (!isComplete()) {
+                summary += " The solution is also not complete, as only "
+                        + size()
+                        + " out of "
+                        + maximumAllocationCount()
+                        + " allocations are done.";
+            }
         }
         return constraint().commonMarkRatingReport(summary);
     }
@@ -101,7 +108,7 @@ public interface Solution extends Problem, SolutionView {
     }
 
     /**
-     * 
+     *
      * @deprecated TODO This is too complicated. Such logic should be inside {@link OnlineOptimization} instances.
      * @param optimization
      * @return
@@ -113,7 +120,7 @@ public interface Solution extends Problem, SolutionView {
     }
 
     /**
-     * 
+     *
      * @deprecated TODO This is too complicated. Such logic should be inside {@link OnlineOptimization} instances.
      * @param optimization
      * @return
@@ -175,7 +182,7 @@ public interface Solution extends Problem, SolutionView {
     }
 
     /**
-     * 
+     *
      * @deprecated TODO This is too complicated. Such logic should be inside {@link OnlineOptimization} instances.
      * @param optimizationFunction
      * @param continuationCondition
@@ -319,7 +326,7 @@ public interface Solution extends Problem, SolutionView {
     }
 
     /**
-     * 
+     *
      * @deprecated TODO This is too complicated. Such logic should be inside {@link OnlineOptimization} instances.
      * @param optimization
      * @return
@@ -351,7 +358,7 @@ public interface Solution extends Problem, SolutionView {
         events.forEach(this::optimize);
         return this;
     }
-    
+
     @ReturnsThis
     default Solution optimize(List<OptimizationEvent> events, OptimizationParameters parameters) {
         events.forEach(e -> optimize(e, parameters));

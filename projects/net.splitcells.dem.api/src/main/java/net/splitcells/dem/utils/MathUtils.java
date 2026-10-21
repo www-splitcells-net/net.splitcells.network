@@ -203,6 +203,10 @@ public final class MathUtils {
         return Math.max(a, b);
     }
 
+    public static int min(int a, int b) {
+        return Math.min(a, b);
+    }
+
     public static double naturalLogarithm(double exponent) {
         return Math.log(exponent);
     }
