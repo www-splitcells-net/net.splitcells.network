@@ -20,6 +20,7 @@ import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.utils.NotImplementedYet.notImplementedYet;
 import static net.splitcells.dem.utils.random.RandomnessSource.randomness;
 import static net.splitcells.gel.constraint.Constraint.*;
 import static net.splitcells.gel.data.table.TableEvent.tableEvent;
@@ -115,6 +116,7 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
     }
 
     /**
+     * TODO Process {@link RepairConfig#freeDefyingGroupOfConstraintGroup()}.
      *
      * @param solution
      * @param constraint
@@ -122,48 +124,45 @@ public class ConstraintGroupBasedRepair implements OnlineOptimization {
      *                        Freed {@link Line}s are add to this.
      */
     public void freeDefyingGroupOfConstraintGroup(Solution solution, Constraint constraint, Map<GroupId, Set<Line>> demandGroupings) {
-        if (config.freeDefyingGroupOfConstraintGroup()) {
-            val incomingGroups = setOfUniques
-                    (constraint
-                            .lineProcessing()
-                            .columnView(INCOMING_CONSTRAINT_GROUP)
-                            .values());
-            incomingGroups
-                    .stream()
-                    .filter(group -> !constraint.defying(group).isEmpty())
-                    .map(group -> constraint
-                            .lineProcessing()
-                            .columnView(INCOMING_CONSTRAINT_GROUP)
-                            .lookup(group)
-                            .columnView(LINE)
-                            .values())
-                    .flatMap(streamOfLineList -> streamOfLineList.stream())
-                    .distinct()
-                    .filter(allocation -> {
-                        if (!config.repairCompliance()) {
-                            return !constraint
-                                    .lineProcessing()
-                                    .columnView(LINE)
-                                    .lookup(allocation)
-                                    .unorderedLines()
-                                    .get(0)
-                                    .value(RATING)
-                                    .equalz(noCost());
-                        }
-                        return true;
-                    })
-                    .forEach(alloc -> {
-                        val resultingGroup = constraint
+        val incomingGroups = setOfUniques(constraint
+                .lineProcessing()
+                .columnView(INCOMING_CONSTRAINT_GROUP)
+                .values());
+        incomingGroups
+                .stream()
+                .filter(group -> !constraint.defying(group).isEmpty())
+                .map(group -> constraint
+                        .lineProcessing()
+                        .columnView(INCOMING_CONSTRAINT_GROUP)
+                        .lookup(group)
+                        .columnView(LINE)
+                        .values())
+                .flatMap(streamOfLineList -> streamOfLineList.stream())
+                .distinct()
+                .filter(allocation -> {
+                    if (!config.repairCompliance()) {
+                        return !constraint
                                 .lineProcessing()
                                 .columnView(LINE)
-                                .lookup(alloc)
+                                .lookup(allocation)
                                 .unorderedLines()
                                 .get(0)
-                                .value(RESULTING_CONSTRAINT_GROUP);
-                        demandGroupings.addIfAbsent(resultingGroup, () -> setOfUniques())
-                                .add(solution.demandOfAssignment(alloc));
-                        solution.process(tableEvent(alloc, REMOVAL).setReason(tree("Delete defying allocations.")));
-                    });
-        }
+                                .value(RATING)
+                                .equalz(noCost());
+                    }
+                    return true;
+                })
+                .forEach(alloc -> {
+                    val resultingGroup = constraint
+                            .lineProcessing()
+                            .columnView(LINE)
+                            .lookup(alloc)
+                            .unorderedLines()
+                            .get(0)
+                            .value(RESULTING_CONSTRAINT_GROUP);
+                    demandGroupings.addIfAbsent(resultingGroup, () -> setOfUniques())
+                            .add(solution.demandOfAssignment(alloc));
+                    solution.process(tableEvent(alloc, REMOVAL).setReason(tree("Delete defying allocations.")));
+                });
     }
 }
