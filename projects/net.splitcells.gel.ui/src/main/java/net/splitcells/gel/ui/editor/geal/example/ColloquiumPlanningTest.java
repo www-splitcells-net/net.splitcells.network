@@ -3,7 +3,7 @@
  */
 package net.splitcells.gel.ui.editor.geal.example;
 
-import net.splitcells.dem.testing.annotations.UnitTest;
+import net.splitcells.dem.testing.annotations.CapabilityTest;
 import net.splitcells.gel.editor.GelEditorFileSystem;
 
 import static net.splitcells.dem.Dem.configValue;
@@ -17,7 +17,7 @@ import static net.splitcells.website.Format.CSV;
 
 public class ColloquiumPlanningTest {
     
-    @UnitTest public void testCompleteness() {
+    @CapabilityTest public void testCompleteness() {
         final var editor = editor("test-subject", ANONYMOUS_PATH);
         editor.saveData("demands.csv", editorData(CSV, toBytes(ColloquiumExample.demandsCsv())));
         editor.saveData("supplies.csv", editorData(CSV, toBytes(ColloquiumExample.suppliesCsv())));
