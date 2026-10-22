@@ -39,7 +39,7 @@
         <paragraph>During my master thesis I implemented a successor to the
             <link>
                 <text>previously mentioned solution program</text>
-                <url>net/splitcells/martins/avots/website/2017/04/22/origin-of-the-project-generic-allocator.html</url>
+                <post>net/splitcells/gel/history/origin-of-the-project-generic-allocator</post>
             </link>
             .
             For this I created a library that wrapped all dependencies and integrated these into the optimizer.
