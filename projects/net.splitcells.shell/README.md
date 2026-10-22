@@ -6,7 +6,7 @@
 	<img src="http://splitcells.net/net/splitcells/martins/avots/website/images/license.standard/bird_s.banner.jpg" width="200">
 	</div>
 
-# Operation System State Interface
+# The Shell Project
 
 ## Getting Started
 1. [Manifesto](src/main/md/net/splitcells/shell/manifesto.md)
