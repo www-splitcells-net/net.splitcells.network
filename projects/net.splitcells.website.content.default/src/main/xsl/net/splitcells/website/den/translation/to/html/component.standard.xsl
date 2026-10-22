@@ -834,7 +834,17 @@ document.addEventListener('DOMContentLoaded', function(){
                     <xsl:attribute name="href">
                         <xsl:value-of select="./s:url"/>
                     </xsl:attribute>
-                    <xsl:value-of select="./s:name"/>
+                    <xsl:choose>
+                        <xsl:when test="s:name">
+                            <xsl:value-of select="./s:name"/>
+                        </xsl:when>
+                        <xsl:when test="s:text">
+                            <xsl:apply-templates select="s:text"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:apply-templates select="node()"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </a>
             </xsl:when>
             <xsl:otherwise>
