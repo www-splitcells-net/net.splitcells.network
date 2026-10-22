@@ -32,7 +32,7 @@
             Regardless of that, keep in mind, that there is no guarantee of backwards
             compatibility.
         </paragraph>
-        <paragraph>If full backwards compatibility should every become a requirement,
+        <paragraph>If full backwards compatibility should ever become a requirement,
             a central stable API project should be created,
             that defines the backward compatible API for all other projects.
             This API should consist of one fluent build interface,
