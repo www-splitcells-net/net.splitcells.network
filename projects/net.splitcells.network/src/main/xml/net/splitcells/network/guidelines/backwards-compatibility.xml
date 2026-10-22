@@ -13,45 +13,29 @@
         </d:toDo>
     </meta>
     <chapter>
-        <title>Backwards Compatible Development</title>
-        <chapter>
-            <title>Technicals</title>
-            <paragraph>Make clear what is guaranteed and do this only via an explicit public interface.
-                Prefer backward compatible changes to backward incompatible changes.
-                Make as much undefined as possible in order to minimize the set of guarantees.
-                Breaking other software, because it relied on implementation specifics is better,
-                than breaking other software via incompatible API changes.
-                Feature flags are your friend.
-            </paragraph>
-            <paragraph>Exceptions are not considered to be part of the API.
-                Only unchecked exceptions are used.
-            </paragraph>
-        </chapter>
-        <chapter>
-            <title>Migration Based Development</title>
-            <paragraph>When a function is to be removed, that is important for code users and is used often,
-                prefer the following protocol, in order to avoid broken builds or functionality.
-                Steps can be skipped, if doing them are not useful for the project:
-            </paragraph>
-            <list>
-                <item>Mark the function as deprecated and thereby create compile time warnings.</item>
-                <item>Create a warning log message, when the deprecated method is executed.</item>
-                <item>Create error log message, in order to create urgency.</item>
-                <item>Create feature flag for function and enable function by default.</item>
-                <item>Make the feature disabled by default via the feature flag.</item>
-                <item>Drop support for the function and mark it as unsupported.</item>
-                <item>Delete the function, if it is not important enough.
-                    Alternatively move the function to a different deprecation project,
-                    so it's not included in the original project.
-                    Instead, the function will be injected into the original project via the deprecation project.
-                </item>
-            </list>
-            <paragraph>If many slow function removals are present,
-                this is called migration based development,
-                as it allows to change many things quickly at low cost in the near future.
-                This makes it possible to turn technical debt into a technical investment.
-            </paragraph>
-        </chapter>
+        <title>Migration Based Development</title>
+        <paragraph>When a function is to be removed, that is important for code users and is used often,
+            prefer the following protocol, in order to avoid broken builds or functionality.
+            Steps can be skipped, if doing them are not useful for the project:
+        </paragraph>
+        <list>
+            <item>Mark the function as deprecated and thereby create compile time warnings.</item>
+            <item>Create a warning log message, when the deprecated method is executed.</item>
+            <item>Create error log message, in order to create urgency.</item>
+            <item>Create feature flag for function and enable it by default.</item>
+            <item>Make the feature disabled by default via the feature flag.</item>
+            <item>Drop support for the function and mark it as unsupported.</item>
+            <item>Delete the function, if it is not important enough.
+                Alternatively move the function to a different deprecation project,
+                so it's not included in the original project.
+                Instead, the function will be injected into the original project via the deprecation project.
+            </item>
+        </list>
+        <paragraph>If many slow function removals are present,
+            this is called migration based development,
+            as it allows to change many things quickly at low cost in the near future.
+            This makes it possible to turn technical debt into a technical investment.
+        </paragraph>
     </chapter>
     <chapter>
         <title>No Backwards Compatibility Guarantees</title>
