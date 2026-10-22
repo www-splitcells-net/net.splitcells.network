@@ -138,14 +138,6 @@
             a maintenance burden. Minimize side effects between dependencies.
             For example, in an ideal case transitive dependencies are not shared between dependencies.
         </paragraph>
-        <paragraph>If there are not enough resources or if it is not optimal to develop
-            and maintain a piece of required functionality, then use a dependency in order to get this functionality
-            and declare the functionality of the dependency as something that is out of scope of the project.
-            The support, usage and extension of the dependency might still be part of the project.
-        </paragraph>
-        <paragraph>Minimize direct dependencies between different things inside the project
-            in order to easier analyse the effect of one piece of code to the rest of the project.
-        </paragraph>
     </chapter>
     <chapter>
         <title>Support</title>
