@@ -44,13 +44,10 @@
             These guidelines do not handle communities and other social interactions.
             The communities and co. has to do this by themselves.
         </paragraph>
-        <paragraph>For (programming) languages and document formats prefer
-            using the most official or the most common guidelines,
-            if there are no guidelines of this project applying to the
-            aspect in question.
-            In other words, language and documentation specific guidelines
-            of this project try to only override public guidelines instead of
-            writing complete custom guidelines from scratch.
+        <paragraph>For (programming) languages and document formats prefer using the most official or the most common guidelines,
+            if there are no guidelines in this project applying to the aspect in question.
+            In other words, language and documentation specific guidelines of this project try to only override public guidelines
+            instead of writing complete custom guidelines from scratch.
         </paragraph>
     </chapter>
     <chapter>
