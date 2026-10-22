@@ -24,7 +24,7 @@
 ## Administration
 1. [Open Tasks](src/main/md/net/splitcells/shell/tasks.md)
 
-## Guide Lines
+## Guidelines
 1. [Intended Development Workflow Using this Framework](src/main/md/net/splitcells/shell/process/development.workflow.md)
 1. [Dictionary](src/main/md/net/splitcells/shell/guide.lines/dictionary.md)
 1. [File Extension](src/main/md/net/splitcells/shell/guide.lines/file.extensions.md)
