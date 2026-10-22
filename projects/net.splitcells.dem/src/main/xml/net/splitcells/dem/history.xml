@@ -43,7 +43,7 @@
             </link>
             .
             For this I created a library that wrapped all dependencies and integrated these into the optimizer.
-            It worked as intended but was over engineered and I implemented too many things on my own.
+            It worked as intended but was overengineered and I implemented too many things on my own.
         </paragraph>
     </chapter>
     <chapter>
