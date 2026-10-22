@@ -24,8 +24,8 @@
         </paragraph>
     </chapter>
     <chapter>
-        <title>OS State Interface And Its Library</title>
-        <paragraph>OS state interface can be installed via the project's
+        <title>Shell Project and its Library</title>
+        <paragraph>The Shell Project can be installed via the project's
             <link>
                 <text>setup instructions</text>
                 <post>/net/splitcells/shell/manual/setup</post>
