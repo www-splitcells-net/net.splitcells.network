@@ -68,7 +68,7 @@
             where to look for a particular thing without knowing where the files are located.
             If this is not possible,
             it should be possible to find the thing in question by starting from the main/root document.
-            Here establishing and maintaining this is called project rooting.
+            In this project establishing and maintaining this is called project rooting.
         </paragraph>
     </chapter>
 </article>
