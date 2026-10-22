@@ -14,7 +14,7 @@
         </title>
     </meta>
     <chapter>
-        <title>Deployment By Build</title>
+        <title>Deployment by Build</title>
         <paragraph>There is currently no ready to go deployment pipeline based on public artifact repositories or distributors.
             Therefore, the software needs to be build manually, which is described in the
             <link>
