@@ -19,6 +19,7 @@
         SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
         SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+        TODO Remove this, as the den/perspective tree has no use case anymore.
         TODO Rename den to tree.
         TODO Rename perspective mode to tree.
     -->
