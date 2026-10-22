@@ -24,7 +24,7 @@
             While implementing
             <link>
                 <text>an solution program</text>
-                <url>net/splitcells/martins/avots/website/2017/04/22/origin-of-the-project-generic-allocator.html</url>
+                <post>net/splitcells/gel/history/origin-of-the-project-generic-allocator</post>
             </link>
             during my master's internship, I created some generic helper code, configuration storage
             and an integration into log4j.
