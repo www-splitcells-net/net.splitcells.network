@@ -26,8 +26,9 @@
                 <text>an solution program</text>
                 <post>net/splitcells/gel/history/origin-of-the-project-generic-allocator</post>
             </link>
-            during my master's internship, I created some generic helper code, configuration storage
-            and an integration into log4j.
+            during my master's internship, I created some generic helper code and an integration into log4j.
+            As I was not able to find a good configuration library (even though such was present),
+            a mini configuration framework was added as well (basically NIH). 
             These utilities helped me to organize my knowledge and try out things regarding programming in
             Java, which was relatively new to me.
             I also noticed that some things in the standard and external libraries of Java did not seem to ideal.
