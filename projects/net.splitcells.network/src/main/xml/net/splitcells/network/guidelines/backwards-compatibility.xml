@@ -13,38 +13,6 @@
         </d:toDo>
     </meta>
     <chapter>
-        <title>Backwards Compatibility Guarantees</title>
-        <paragraph>There is currently no guarantee of backwards compatibility.
-            Absolute backward compatibility creates a maintenance burden,
-            that currently has no benefits.
-            Maven Central releases are not done because of this.
-            Furthermore, the build currently contains large binary files,
-            which probably are not suited for Maven Central.
-            So, Maven Central releases would therefore require some adaptations and thereby investment
-            with little benefits for now.
-        </paragraph>
-        <paragraph>We do not break backward compatibility just for fun.
-            Many API changes are located and categorized in the changelogs of the corresponding project.
-            Breaking changes are tried to be omitted, but there is no guarantee for that.
-        </paragraph>
-        <paragraph>You can try to decrease the likelihood of breaking a certain feature,
-            by contributing an appropriate test case/suite for this feature.
-            Regardless of that, keep in mind, that there is no guarantee of backwards
-            compatibility.
-        </paragraph>
-        <paragraph>If full backwards compatibility should ever become a requirement,
-            a central stable API project should be created,
-            that defines the backward compatible API for all other projects.
-            This API should consist of one fluent build interface,
-            that constructs and runs a program.
-            This way, internally great changes and refactorings are still possibles without breaking compatibility.
-            The integration between the stable API and the other projects should be done in a dedicated project,
-            so it's easy to statically check for a given project,
-            if it really depends only on the API and not on a specific implementation.
-        </paragraph>
-        <paragraph>Forwards compatibility is not a goal.</paragraph>
-    </chapter>
-    <chapter>
         <title>Backwards Compatible Development</title>
         <chapter>
             <title>Technicals</title>
@@ -84,5 +52,36 @@
                 This makes it possible to turn technical debt into a technical investment.
             </paragraph>
         </chapter>
+    </chapter>
+    <chapter>
+        <title>No Backwards Compatibility Guarantees</title>
+        <paragraph>There is currently no guarantee of backwards compatibility.
+            Absolute backward compatibility creates a maintenance burden,
+            that currently has no benefits.
+            Maven Central releases are not done because of this.
+            Furthermore, the build currently contains large binary files,
+            which probably are not suited for Maven Central.
+            So, Maven Central releases would therefore require some adaptations and thereby investment
+            with little benefits for now.
+        </paragraph>
+        <paragraph>We do not break backward compatibility just for fun.
+            Many API changes are located and categorized in the changelogs of the corresponding project.
+        </paragraph>
+        <paragraph>You can try to decrease the likelihood of breaking a certain feature,
+            by contributing an appropriate test case/suite for this feature.
+            Regardless of that, keep in mind, that there is no guarantee of backwards
+            compatibility.
+        </paragraph>
+        <paragraph>If backwards compatibility should ever become a requirement,
+            a central stable API project should be created,
+            that defines the backward compatible API for all other projects.
+            This API should consist of one fluent build interface,
+            that constructs and runs a program.
+            This way, internally great changes and refactorings are still possibles without breaking compatibility.
+            The integration between the stable API and the other projects should be done in a dedicated project,
+            so it's easy to statically check for a given project,
+            if it really depends only on the API and not on a specific implementation.
+        </paragraph>
+        <paragraph>Forwards compatibility is not a goal.</paragraph>
     </chapter>
 </article>
