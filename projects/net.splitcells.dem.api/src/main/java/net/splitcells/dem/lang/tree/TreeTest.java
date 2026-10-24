@@ -16,6 +16,7 @@ import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.CommonMarkConfig.commonMarkConfig;
 import static net.splitcells.dem.lang.tree.Tree.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
+import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
@@ -128,6 +129,9 @@ public class TreeTest {
         article.withChild(content);
         Assertions.requireEquals(article.toXmlString(true)
                 , "<article xmlns=\"http://splitcells.net/sew.xsd\"><content><deck/></content></article>");
+        Assertions.requireEquals(tree("").toXmlString(false), "<empty/>");
+        Assertions.requireEquals(tree("", SEW).toXmlString(), "<empty/>");
+        Assertions.requireEquals(tree("invalid xml name?", SEW).toXmlString(xmlConfig().withPrintXmlDeclaration(false)), "invalid xml name?");
         Assertions.requireEquals(tree("").toXmlString(false), "<empty/>");
         Assertions.requireEquals(tree("body", HTML).toXmlString(false), "<body/>");
         Assertions.requireEquals(tree("html", HTML).withChild(tree("body", HTML)).toXmlString(false), "<html><body/></html>");
