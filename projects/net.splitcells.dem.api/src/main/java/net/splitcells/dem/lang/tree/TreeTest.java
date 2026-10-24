@@ -344,6 +344,7 @@ public class TreeTest {
     @UnitTest public void testRequireEqualsTo() {
         tree("a").withChild(tree("b")).requireEqualsTo(tree("a").withChild(tree("b")));
         requireThrow(() -> tree("a").requireEqualsTo(tree("b")));
+        requireThrow(() -> tree("a").requireEqualsTo(tree("a").withChild(tree("b"))));
         requireThrow(() -> tree("a").requireEqualsTo(tree("a", STRING)));
         requireThrow(() -> tree("a").requireEqualsTo(tree("b").withChild(tree("c"))));
     }
