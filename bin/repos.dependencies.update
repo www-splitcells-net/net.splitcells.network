@@ -12,8 +12,8 @@ cd ../net.splitcells.network.bom
 # This is the case, because the versions plugin does not update plugins directly and the only way to do this,
 # is to add every plugin as a dependency as well and link the dependency and plugin version via a property.
 # Such a way would create additional XML code without a benefit and would decrease the readability of the BOM.
-# TODO `next()` does not seem to work correctly. It does not increment by one.
-mvn toolbox:versions -Dapply=true -DartifactVersionSelectorSpec='next()'
+# TODO `-DartifactVersionSelectorSpec='next()'` does not seem to work correctly. It does not increment by one and cannot even find all updates: https://fosstodon.org/@splitcells/117416845997283388
+mvn toolbox:versions -Dapply=true
 
 cd ../net.splitcells.network.hub
 mvn clean install # Check if the project can be build, after the update.
