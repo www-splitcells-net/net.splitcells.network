@@ -114,17 +114,19 @@ public final class StaticFlags {
      * Sets {@link #ENFORCING_UNIT_CONSISTENCY} during the execution of run to a given value.
      * This is used, in order to test {@link #ENFORCING_UNIT_CONSISTENCY}.
      *
+     * @deprecated Consider removing this method all together.
      * @param runValue
      * @param run
      */
+    @Deprecated
     public static void runWithEnforcingUnityConsistency(boolean runValue, Runnable run) {
-        try {
+        /*try {
             val oldValue = ENFORCING_UNIT_CONSISTENCY;
             ENFORCING_UNIT_CONSISTENCY = runValue;
             run.run();
             ENFORCING_UNIT_CONSISTENCY = oldValue;
         } catch (Exception e) {
             throw execException(e);
-        }
+        }*/
     }
 }

@@ -19,7 +19,6 @@ import static net.splitcells.dem.data.atom.Bools.require;
 import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.Sets.setOfUniques;
 import static net.splitcells.dem.data.set.list.Lists.toList;
-import static net.splitcells.dem.environment.config.StaticFlags.runWithEnforcingUnityConsistency;
 import static net.splitcells.dem.resource.FileSystemViaClassResourcesFactoryImpl._fileSystemViaClassResourcesFactoryImpl;
 import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.TEST_PATH;
 import static net.splitcells.dem.resource.FileSystemViaClassResourcesImpl.fileSystemViaClassResourcesImpl;
@@ -121,9 +120,7 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
     }
 
     public void testReadStringIfPresentWithoutUnitEnforcement(FileSystemViaClassResourcesFactoryApi factory) {
-        runWithEnforcingUnityConsistency(false, () -> {
-            testReadStringIfPresent(factory);
-        });
+        testReadStringIfPresent(factory);
     }
 
     public void testReadStringForSubFileSystem(FileSystemViaClassResourcesFactoryApi factory) {
