@@ -23,6 +23,7 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--remote-host', dest='remoteHost')
 	parser.add_argument('--remote-repo', dest='remoteRepo')
+	parser.add_argument('--remote-name', dest='remoteName', default='origin')
 	parsedArgs = parser.parse_args()
 	# TODO Do not create shell script, but call directly.
 	# TODO Log errors to error stream.
@@ -34,7 +35,7 @@ if __name__ == '__main__':
 	&& repos.remote.set {1} \\
 	&& repos.is.clean \\
 	&& repos.pull.with.merge \\
-	|| echo.error Could not synchronize with {0}.""".format(parsedArgs.remoteHost, parsedArgs.remoteRepo)
+	|| echo.error Could not synchronize with {0}.""".format(parsedArgs.remoteHost, parsedArgs.remoteRepo, parsedArgs.remoteName)
 	logging.debug('Executing: ' + synchronizationScript)
 	returnCode = subprocess.call(synchronizationScript, shell='True')
 	if returnCode != 0:
