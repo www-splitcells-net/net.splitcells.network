@@ -29,6 +29,8 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
+                            <!-- prependGroupId prevents duplicate names. See net.splitcells.martins.avots/distro vs. net.splitcells.network/distro. -->
+                            <prependGroupId>true</prependGroupId>
                             <outputDirectory>${project.build.directory}/deployable-jars</outputDirectory>
                         </configuration>
                     </execution>
