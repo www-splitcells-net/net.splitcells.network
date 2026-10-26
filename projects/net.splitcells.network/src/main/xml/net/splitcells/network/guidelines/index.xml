@@ -59,10 +59,9 @@
             .
         </paragraph>
         <paragraph>Every part of the project has to be discoverable from the root project.
-            This specifically means,
-            that the path of a file or content should identify and describe or at least summarize the content's meaning.
-            (For an XML element, this would be the file path + the XPath pointing to the XML element.)
-            This is called a discoverable path in this project and a tree build of such paths is called a discoverable tree.
+            This specifically means that the path of a file or content should identify and describe or at least summarize the content's meaning
+            (for an XML element, this would be the file path + the XPath pointing to the XML element).
+            This is called a discoverable path in this project, and a tree build of such paths is called a discoverable tree.
         </paragraph>
         <paragraph>This also means, that in the ideal case, one should be able to guess,
             where to look for a particular thing without knowing where the files are located.
