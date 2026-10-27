@@ -15,5 +15,5 @@ cd ..
   test -d net.splitcells.network.hub || git clone https://codeberg.org/splitcells-net/net.splitcells.network.hub.git
   sh -c "cd net.splitcells.network.hub && git pull Codeberg \$(git rev-parse --abbrev-ref HEAD) --ff-only"
   # Pulling and cloning are not done in parallel, as Codeberg otherwise blocks new connections more likely.
-  net.splitcells.network.hub/bin/net.splitcells.shell.repos.peers | xargs -i sh -c "test -d {} || git clone ssh://git@codeberg.org/splitcells-net/{}.git"
+  net.splitcells.network.hub/bin/net.splitcells.shell.repos.peers | xargs -i sh -c "test -d {} || git clone git@codeberg.org/splitcells-net/{}.git"
   net.splitcells.network.hub/bin/net.splitcells.shell.repos.peers | xargs -i sh -c "cd {} && git pull Codeberg \$(git rev-parse --abbrev-ref HEAD) --ff-only || echo Could not pull repo {}"
