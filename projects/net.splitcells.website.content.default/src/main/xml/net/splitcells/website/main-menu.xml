@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
-         xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://splitcells.net/sew.xsd"
-         xmlns:d="http://splitcells.net/den.xsd" xmlns:p="http://splitcells.net/private.xsd"
-         xmlns:x="http://www.w3.org/1999/xhtml" xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd">
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://splitcells.net/sew.xsd"
+         xmlns:x="http://www.w3.org/1999/xhtml"
+         xsi:schemaLocation="http://splitcells.net/sew.xsd sew.xsd"
+         xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <!--
         SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
         SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
@@ -12,28 +13,27 @@
         <license>standard</license>
     </meta>
     <content>
-        <option>
-            <name>Global Changelog</name>
-            <page>/net/splitcells/CHANGELOG.global</page>
-        </option>
-        <option>
-            <name>Network Status</name>
-            <page>/net/splitcells/network/status</page>
-        </option>
-        <option>
-            <name>Website's Layout</name>
-            <page>/net/splitcells/website/layout</page>
-        </option>
-        <option>
-            <name>Website's Tree Layout</name>
-            <page>/net/splitcells/website/layout/tree</page>
-        </option>
-        <option>
-            <name>Refresh Layout</name>
-            <page>/net/splitcells/website/layout/build</page>
-        </option>
         <import>
             <from-variable>net-splitcells-website-server-config-menu-detailed</from-variable>
         </import>
+        <chapter>
+            <title>Overviews</title>
+            <option>
+                <name>Global Changelog</name>
+                <page>/net/splitcells/CHANGELOG.global</page>
+            </option>
+            <option>
+                <name>Website's Layout</name>
+                <page>/net/splitcells/website/layout</page>
+            </option>
+            <option>
+                <name>Website's Tree Layout</name>
+                <page>/net/splitcells/website/layout/tree</page>
+            </option>
+            <option>
+                <name>Refresh Layout</name>
+                <page>/net/splitcells/website/layout/build</page>
+            </option>
+        </chapter>
     </content>
 </article>
