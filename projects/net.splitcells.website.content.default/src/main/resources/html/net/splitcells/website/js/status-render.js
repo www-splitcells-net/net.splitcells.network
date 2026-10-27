@@ -6,7 +6,7 @@ httpRequest.open("GET", "/net/splitcells/network/status.csv", true);
 httpRequest.onload = (e) => {
     var status = httpRequest.responseText;
     function setContent(node) {
-        node.innerHTML = status
+        node.innerHTML = 'Network Status: ' + status;
     };
     document
         .querySelectorAll("a[class$='net-splitcells-network-status']")
