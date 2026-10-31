@@ -27,8 +27,7 @@ public class LayoutLicenseExtension implements ProjectsRendererExtension {
 
     }
 
-    @Override
-    public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
+    @Override public Optional<BinaryMessage> renderFile(String path, ProjectsRendererI projectsRendererI, Config config) {
         if (PATH.equals(path) && config.layout().isPresent()) {
             return projectsRendererI.renderContent
                     ("<ol xmlns=\"http://www.w3.org/1999/xhtml\">"
@@ -55,13 +54,11 @@ public class LayoutLicenseExtension implements ProjectsRendererExtension {
         return Optional.empty();
     }
 
-    @Override
-    public boolean requiresAuthentication(RenderRequest request) {
+    @Override public boolean requiresAuthentication(RenderRequest request) {
         return false;
     }
 
-    @Override
-    public Set<Path> projectPaths(ProjectsRendererI projectsRendererI) {
+    @Override public Set<Path> projectPaths(ProjectsRendererI projectsRendererI) {
         if (projectsRendererI.config().layout().isPresent()) {
             return setOfUniques(Path.of(PATH.substring(1)));
         }

@@ -37,8 +37,7 @@ public class UserCommandProjectRendererExtension implements ProjectRendererExten
      * @deprecated This extension is not secure. This needs to be fixed, before it can be used.
      * @return
      */
-    @Deprecated
-    public static UserCommandProjectRendererExtension userCommandRenderer() {
+    @Deprecated public static UserCommandProjectRendererExtension userCommandRenderer() {
         throw ExecutionException.execException("This extension is not secure. This needs to be fixed, before it can be used.");
     }
 
@@ -55,8 +54,7 @@ public class UserCommandProjectRendererExtension implements ProjectRendererExten
      * @param projectRenderer
      * @return
      */
-    @Override
-    public Optional<BinaryMessage> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
+    @Override public Optional<BinaryMessage> renderFile(String path, ProjectRenderer projectRenderer, Config config) {
         if (RENDERING_PATH.equals(path) && BIN_FOLDER.isDirectory(BIN_FOLDER_PATH)) {
             final var layout = TreeI.tree(NameSpaces.VAL, NameSpaces.DEN);
             try {
@@ -78,21 +76,18 @@ public class UserCommandProjectRendererExtension implements ProjectRendererExten
         return Optional.empty();
     }
 
-    @Override
-    public Tree extendProjectLayout(Tree layout, ProjectRenderer projectRenderer) {
+    @Override public Tree extendProjectLayout(Tree layout, ProjectRenderer projectRenderer) {
         if (BIN_FOLDER.isDirectory(BIN_FOLDER_PATH)) {
             LayoutUtils.extendPerspectiveWithPath(layout, Path.of(RENDERING_PATH));
         }
         return layout;
     }
 
-    @Override
-    public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
+    @Override public Set<Path> projectPaths(ProjectRenderer projectRenderer) {
         return setOfUniques(Path.of(RENDERING_PATH));
     }
 
-    @Override
-    public Set<Path> relevantProjectPaths(ProjectRenderer projectRenderer) {
+    @Override public Set<Path> relevantProjectPaths(ProjectRenderer projectRenderer) {
         return projectPaths(projectRenderer);
     }
 }
