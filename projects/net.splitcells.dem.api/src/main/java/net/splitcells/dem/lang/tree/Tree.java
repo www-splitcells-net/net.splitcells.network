@@ -734,7 +734,7 @@ public interface Tree extends TreeView, Convertible {
     }
 
     private List<Tree> nonEmptyElementsChildrens() {
-        return children().stream().filter(child -> !isEmptyBranch()).toList();
+        return children().stream().filter(child -> !child.isEmptyBranch()).toList();
     }
 
     private boolean isEmptyBranch() {
