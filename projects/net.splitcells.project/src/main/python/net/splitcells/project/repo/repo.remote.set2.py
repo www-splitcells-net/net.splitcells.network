@@ -23,6 +23,9 @@ if __name__ == '__main__':
 	parser.add_argument('--remote-name', dest='remoteName')
 	parsedArgs = parser.parse_args()
 	script = """
+	    set -e
+	    set -x
+	    repo.is.git
 	    git remote get-url {remoteName} && git remote set-url --push {remoteName} {remoteRepo} || git remote add {remoteName} {remoteRepo}
 	""".format(remoteRepo = parsedArgs.remoteRepo, remoteName = parsedArgs.remoteName)
 	logging.debug("Executing: " + script)
