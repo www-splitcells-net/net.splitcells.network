@@ -340,7 +340,7 @@ public interface Tree extends TreeView, Convertible {
         if (children().size() != other.children().size()) {
             throw ExecutionException.execException(tree("The number of children should be equals, but is not.")
                     .withProperty("this children size", children().size() + "")
-                    .withProperty("other children size", children().size() + "")
+                    .withProperty("other children size", other.children().size() + "")
                     .withProperty("this", toXmlString())
                     .withProperty("other", other.toXmlString()));
         }
