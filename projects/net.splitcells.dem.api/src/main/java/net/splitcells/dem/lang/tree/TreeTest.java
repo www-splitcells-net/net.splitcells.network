@@ -14,9 +14,12 @@ import static net.splitcells.dem.data.atom.Bools.requireNot;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.lang.namespace.NameSpaces.*;
 import static net.splitcells.dem.lang.tree.CommonMarkConfig.commonMarkConfig;
+import static net.splitcells.dem.lang.tree.JsonConfig.jsonConfig;
+import static net.splitcells.dem.lang.tree.PathQueryConfig.pathQueryConfig;
 import static net.splitcells.dem.lang.tree.Tree.*;
 import static net.splitcells.dem.lang.tree.TreeI.tree;
 import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
+import static net.splitcells.dem.object.Merger.merger;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
 import static net.splitcells.dem.testing.Assertions.requireEquals;
@@ -413,5 +416,161 @@ public class TreeTest {
                 .toCommonMarkString());
         requireEquals("* " + multiple("3", 300) + "\n", tree(multiple("3", 300))
                 .toCommonMarkString(commonMarkConfig().setUseBlockQuotesForLongNames(false)));
+        requireEquals("```\na\nb\n```\n", tree("a\nb").toCommonMarkString());
+        requireEquals("    * a\n    * b\n", tree("").withChildren(tree("a"), tree("b")).toCommonMarkString());
+    }
+
+    @UnitTest public void testPrintCommonMarkStringWithPrefixes() {
+        final var resultData = binaryOutputStream();
+        tree("a").withChildren(tree("b"), tree("c")).printCommonMarkString(stringSender(resultData), "  ", "- ");
+        requireEquals(resultData.toString(), "- a:\n      * b\n      * c\n");
+    }
+
+    @UnitTest public void testPropertyInstancesWithoutExactlyOneChild() {
+        val testData = tree("").withChild(tree("a", STRING));
+        testData.propertyInstances("a").requireEmpty();
+        testData.propertyInstances("a", STRING).requireEmpty();
+    }
+
+    @UnitTest public void testChildNamedWithDifferentNameSpace() {
+        requireEquals(tree("").withChild(tree("a", STRING)).childNamed("a", NATURAL), Optional.empty());
+    }
+
+    @UnitTest public void testWithMergedWithDifferentNameSpace() {
+        final var testResult = tree("a").withChild(tree("b", STRING)).withMerged(tree("b", NATURAL));
+        testResult.children().requireSizeOf(2);
+        testResult.child(0).requireEqualsTo(tree("b", STRING));
+        testResult.child(1).requireEqualsTo(tree("b", NATURAL));
+    }
+
+    @UnitTest public void testToHtmlStringWithNestedStringAndDen() {
+        requireEquals(tree("a", STRING).withChild(tree("b", STRING)).toHtmlString(), "ab");
+        requireEquals(tree("a", DEN).toHtmlString(), "<a/>");
+        requireEquals(tree("a", DEN).withChild(tree("b", DEN)).toHtmlString(), "<a><b/></a>");
+    }
+
+    @UnitTest public void testToXmlStringWithMultipleChildren() {
+        requireEquals(tree("a&b").withChildren(tree("c"), tree("d")).toXmlString()
+                , "<val name=\"a&amp;b\"><c/><d/></val>");
+        requireEquals(tree("a", HTML).withChildren(tree("b", HTML), tree("c", HTML)).toXmlString()
+                , "<a><b/><c/></a>");
+        requireEquals(tree("a", STRING).withChildren(tree("b", STRING), tree("c", STRING)).toXmlString()
+                , "abc");
+    }
+
+    @UnitTest public void testToXmlStringWithConfig() {
+        final var config = xmlConfig().withPrintNameSpaceAttributeAtTop(false).withPrintXmlDeclaration(false);
+        requireEquals(tree("", SEW).toXmlString(config), "<empty/>");
+        requireEquals(tree("a", SEW).withChild(tree("b", XML_SYNTAX)).toXmlString(config), "<s:a  ></s:a>");
+    }
+
+    @UnitTest public void testToXmlStringWithAllNameSpaceDeclarationsAtTopWithoutMultipleChildren() {
+        requireEquals(tree("", SEW).toXmlStringWithAllNameSpaceDeclarationsAtTop(), "<empty/>");
+        requireEquals(tree("a", SEW).toXmlStringWithAllNameSpaceDeclarationsAtTop()
+                , "<s:a xmlns:s=\"http://splitcells.net/sew.xsd\" />");
+        requireEquals(tree("a", SEW).withChildren(tree("b", SEW), tree("c", SEW))
+                        .toXmlStringWithAllNameSpaceDeclarationsAtTop()
+                , "<s:a xmlns:s=\"http://splitcells.net/sew.xsd\" ><s:b/><s:c/></s:a>");
+    }
+
+    @UnitTest public void testToXmlStringWithPrefixesWithMultipleChildren() {
+        requireEquals(tree("a&b").withChildren(tree("c", STRING), tree("d", STRING)).toXmlStringWithPrefixes()
+                , "<d:val name=\"a&amp;b\">cd</d:val>");
+        requireEquals(tree("a", HTML).withChildren(tree("b", STRING), tree("c", STRING)).toXmlStringWithPrefixes()
+                , "<x:a>bc</x:a>");
+        requireEquals(tree("a", STRING).withChildren(tree("b", STRING), tree("c", STRING)).toXmlStringWithPrefixes()
+                , "abc");
+        requireEquals(tree("a", NATURAL).withChildren(tree("b", STRING), tree("c", STRING)).toXmlStringWithPrefixes()
+                , "<n:a>bc</n:a>");
+        requireEquals(tree("a", DEN).withChildren(tree("b", STRING), tree("c", STRING)).toXmlStringWithPrefixes()
+                , "<d:a>bc</d:a>");
+    }
+
+    @UnitTest public void testExtendWithExistingPath() {
+        final var testData = tree("a").extendWith(list("b")).extendWith(list("c")).extendWith(list("c", "d"));
+        testData.children().requireSizeOf(2);
+        requireEquals(testData.childrenPath(1).name(), "c");
+        requireEquals(testData.childrenPath(1, 0).name(), "d");
+    }
+
+    @UnitTest public void testAsCompactXhtmlListWithOnlyEmptyNodes() {
+        requireEquals(tree("").withChildren(tree(""), tree("")).asCompactXhtmlList(), "<ol></ol>");
+    }
+
+    @UnitTest public void testHasAnyPrimitiveValues() {
+        require(tree("a").withChild(tree("b")).hasAnyPrimitiveValues());
+        requireNot(tree("a").withPath(tree("b"), tree("c")).hasAnyPrimitiveValues());
+    }
+
+    @UnitTest public void testToJsonStringWithBooleans() {
+        requireEquals(tree(JSON_ARRAY, JSON).withChildren(tree(JSON_TRUE, JSON), tree(JSON_FALSE, JSON)).toJsonString()
+                , "[true,false]");
+    }
+
+    @UnitTest public void testToJsonStringWithConfigOfPrimitive() {
+        requireEquals(tree("a").toJsonString(jsonConfig().withIsTopElement(false)), "\"a\"");
+        requireEquals(tree("a").toJsonString(jsonConfig().withIsArrayElement(true)), "\"a\"");
+    }
+
+    @UnitTest public void testToJsonStringWithDictionariesInArray() {
+        requireEquals(tree(JSON_ARRAY, JSON).withChild(tree("a").withChild(tree("b"))).toJsonString()
+                , "[{\"a\":\"b\"}]");
+        requireEquals(tree(JSON_ARRAY, JSON).withChild(tree("a").withPath(tree("b"), tree("c"))).toJsonString()
+                , "[{\"a\":{\"b\":\"c\"}}]");
+    }
+
+    @UnitTest public void testToJsonStringWithJsonNameSpaceOutsideOfArray() {
+        requireEquals(tree("a").withChild(tree("b", JSON).withChild(tree("c"))).toJsonString()
+                , "{\"a\":{\"b\":\"c\"}}");
+    }
+
+    @UnitTest public void testSubtreeWithMissingChild() {
+        requireThrow(() -> Tree.subtree(tree("a"), list("b")));
+    }
+
+    @UnitTest public void testSubtreeOfInstance() {
+        val b = tree("b");
+        final var testData = tree("a").withPath(b, tree("c"));
+        testData.subtree(list()).requireEqualsTo(testData);
+        testData.subtree(list("b")).requireEqualsTo(b);
+        requireThrow(() -> testData.subtree(list("d")));
+    }
+
+    @UnitTest public void testSubtreeByNameWithMissingChild() {
+        requireThrow(() -> tree("a").subtreeByName("b"));
+    }
+
+    @UnitTest public void testToTree() {
+        val testData = tree("a");
+        require(testData.toTree() == testData);
+    }
+
+    @UnitTest public void testPathOfDenValueTreeWithoutNameProperty() {
+        requireEquals(tree("a").withChild(tree(VAL, DEN)).pathOfDenValueTree("b"), Optional.empty());
+    }
+
+    @UnitTest public void testPathOfValueTreeWithConfig() {
+        val b = tree("b");
+        final var testData = tree("a").withChild(b);
+        testData.pathOfValueTree(pathQueryConfig(), "a", "b").orElseThrow().requireEquals(list(b));
+        requireEquals(testData.pathOfValueTree(pathQueryConfig(), "b", "b"), Optional.empty());
+    }
+
+    @UnitTest public void testMerge() {
+        val recorded = tree("").withProperty("a", "1").merge(merger()).withIsRecording(false);
+        final var withExistingProperty = tree("").withProperty("a", "0");
+        withExistingProperty.merge(recorded);
+        withExistingProperty.children().requireSizeOf(1);
+        requireEquals(withExistingProperty.namedChild("a").content(), "1");
+        final var withoutProperty = tree("");
+        withoutProperty.merge(recorded);
+        withoutProperty.children().requireSizeOf(1);
+        requireEquals(withoutProperty.namedChild("a").content(), "1");
+    }
+
+    @UnitTest public void testWithThrowable() {
+        final var testData = tree("a").with(new RuntimeException("b"));
+        requireEquals(testData.namedChild("throwable").namedChild("message").content(), "b");
+        testData.namedChild("throwable").namedChild("stack-trace").children().requireSizeOf(1);
     }
 }
