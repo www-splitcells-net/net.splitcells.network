@@ -490,7 +490,7 @@ public interface Tree extends TreeView, Convertible {
      * The String ends with a whitespace.
      */
     default String toXmlElementStartName(XmlConfig xmlConfig) {
-        var name = toXmlElementName(xmlConfig) + " ";
+        var name = toXmlElementName(xmlConfig);
         if (xmlConfig.printNameSpaceAttributeAtTop()) {
             final Set<NameSpace> nameSpaces = setOfUniques();
             visit(p -> nameSpaces.add(p.nameSpace()));
@@ -508,7 +508,9 @@ public interface Tree extends TreeView, Convertible {
                                 + "\"";
                     }
                     return "";
-                }).reduce("", (a, b) -> a + " " + b);
+                })
+                .filter(s -> !s.isBlank())
+                .reduce("", (a, b) -> a + " " + b);
         return name;
     }
 

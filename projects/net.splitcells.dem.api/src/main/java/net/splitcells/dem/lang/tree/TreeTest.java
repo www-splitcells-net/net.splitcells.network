@@ -461,7 +461,7 @@ public class TreeTest {
     @UnitTest public void testToXmlStringWithConfig() {
         final var config = xmlConfig().withPrintNameSpaceAttributeAtTop(false).withPrintXmlDeclaration(false);
         requireEquals(tree("", SEW).toXmlString(config), "<empty/>");
-        requireEquals(tree("a", SEW).withChild(tree("b", XML_SYNTAX)).toXmlString(config), "<s:a  ></s:a>");
+        requireEquals(tree("a", SEW).withChild(tree("b", XML_SYNTAX)).toXmlString(config), "<s:a></s:a>");
     }
 
     @UnitTest public void testToXmlStringWithAllNameSpaceDeclarationsAtTopWithoutMultipleChildren() {
