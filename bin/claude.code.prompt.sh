@@ -36,7 +36,8 @@ then
 fi
 
 claude-code --print "$1" \
-    --resume "$2"
+    --session-id "$2" \
+    --resume "$2" \
     --permission-mode acceptEdits \
     --output-format stream-json \
     --verbose \
