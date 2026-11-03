@@ -35,8 +35,8 @@ then
     '
 fi
 
+claude-code -p --session-id "$2" "Good morning!" || echo Creating session, if not already present.
 claude-code --print "$1" \
-    --session-id "$2" \
     --resume "$2" \
     --permission-mode acceptEdits \
     --output-format stream-json \
