@@ -11,6 +11,12 @@ SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
 SPDX-License-Identifier = "EPL-2.0 OR GPL-2.0-or-later"
 
 [[annotations]]
+path = "skills/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Contributors To The `net.splitcells.*` Projects"
+SPDX-License-Identifier = "EPL-2.0 OR GPL-2.0-or-later"
+
+[[annotations]]
 path = "projects/net.splitcells.network/src/main/txt/net/splitcells/network/legal/licenses/**"
 precedence = "aggregate"
 SPDX-FileCopyrightText = "See the files' content."
