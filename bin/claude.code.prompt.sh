@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
 # SPDX-FileCopyrightText: Contributors To The `net.splitcells.*` Projects
 
+# Persisting sessions automatically is hard and is therefore not done for now.
+# Furthermore, most prompts are executed weekly and thereby do not benefit that much from session reuse. 
+
 set -e
 set -x
 
@@ -35,9 +38,7 @@ then
     '
 fi
 
-claude-code -p --session-id "$2" "Good morning!" || echo Creating session, if not already present.
 claude-code --print "$1" \
-    --resume "$2" \
     --permission-mode acceptEdits \
     --output-format stream-json \
     --verbose \
