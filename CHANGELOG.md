@@ -27,8 +27,8 @@
   Different implementations are required in order to support worker tasks for different environments.
   For instance cloning and updating all repos in different contexts.
   A build server needs to be able to update its repos via native programs for bootstrapping the build,
-  but requires integration code for the used operation system.
-  A Java based server instance running with a copy of the repos can updates its repos via Java code,
+  but requires integration code for the used operating system.
+  A Java based server instance running with a copy of the repos can update its repos via Java code,
   without requiring any additional native programs.
   The Java based server is more portable as the build server with the bootstrapping build.
 * **2023-09-15 \#281** [Create dedicated project for a project files standard](https://github.com/www-splitcells-net/net.splitcells.network/issues/281):
