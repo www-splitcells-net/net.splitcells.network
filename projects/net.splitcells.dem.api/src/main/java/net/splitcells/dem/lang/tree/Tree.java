@@ -871,6 +871,7 @@ public interface Tree extends TreeView, Convertible {
             return "[\"" + encodeJsonString(name()) + "\"]";
         }
         boolean isNotFirstChild = false;
+        // TODO hasAnyPrimitiveValues and containsOneJsonMember() are kind of in conflict with each other. 
         val hasAnyPrimitiveValues = children().stream()
                 .anyMatch(c -> c.children().isEmpty() || (c.nameSpace().equals(JSON) && c.name().equals(JSON_ARRAY)));
         val isJsonArray = nameSpace().equals(JSON) && name().equals(JSON_ARRAY);
@@ -899,11 +900,7 @@ public interface Tree extends TreeView, Convertible {
             } else {
                 jsonString.append("\"");
             }
-            if (containsOneJsonMember()) {
-                jsonString.append(encodeJsonString(name()) + "\":");
-            } else {
-                jsonString.append(encodeJsonString(name()) + "\":{");
-            }
+            jsonString.append(encodeJsonString(name()) + "\":{");
         }
         for (val child : children()) {
             if (isNotFirstChild) {
