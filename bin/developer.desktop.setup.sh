@@ -17,7 +17,8 @@
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 sudo apt install make
 cargo install gitui --locked
-command -v sudo && command -v snap && sudo snap install claude-code 
+command -v sudo && command -v snap && sudo snap install claude-code
+sudo apt install tea # This is a Codeberg client, that is used for creating pull requests.
 
 # Java and Maven
 sudo apt install -y openjdk-21-jdk
