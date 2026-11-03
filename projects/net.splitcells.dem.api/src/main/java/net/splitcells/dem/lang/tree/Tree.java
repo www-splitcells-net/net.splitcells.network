@@ -870,71 +870,67 @@ public interface Tree extends TreeView, Convertible {
             }
             return "[\"" + encodeJsonString(name()) + "\"]";
         }
-        if (children().isEmpty()) {
-            jsonString.append("{\"" + encodeJsonString(name()) + "\":\"\"}");
+        boolean isNotFirstChild = false;
+        val hasAnyPrimitiveValues = children().stream()
+                .anyMatch(c -> c.children().isEmpty() || (c.nameSpace().equals(JSON) && c.name().equals(JSON_ARRAY)));
+        val isJsonArray = nameSpace().equals(JSON) && name().equals(JSON_ARRAY);
+        val isJsonDictionary = nameSpace().equals(JSON) && name().equals(JSON_OBJECT);
+        if (isJsonDictionary) {
+            if (hasAnyPrimitiveValues) {
+                throw ExecutionException.execException("JSON objects are not allowed to contain primitive values like arrays have. JSON objects are only allowed to have name/value pairs.");
+            }
+            jsonString.append("{");
+        } else if (isJsonArray) {
+            jsonString.append("[");
+        } else if (hasAnyPrimitiveValues) {
+            if (config.isTopElement() || config.isArrayElement()) {
+                jsonString.append("{\"");
+            } else {
+                jsonString.append("\"");
+            }
+            if (containsOneJsonMember()) {
+                jsonString.append(encodeJsonString(name()) + "\":");
+            } else {
+                jsonString.append(encodeJsonString(name()) + "\":[");
+            }
         } else {
-            boolean isNotFirstChild = false;
-            val hasAnyPrimitiveValues = children().stream()
-                    .anyMatch(c -> c.children().isEmpty() || (c.nameSpace().equals(JSON) && c.name().equals(JSON_ARRAY)));
-            val isJsonArray = nameSpace().equals(JSON) && name().equals(JSON_ARRAY);
-            val isJsonDictionary = nameSpace().equals(JSON) && name().equals(JSON_OBJECT);
-            if (isJsonDictionary) {
-                if (hasAnyPrimitiveValues) {
-                    throw ExecutionException.execException("JSON objects are not allowed to contain primitive values like arrays have. JSON objects are only allowed to have name/value pairs.");
-                }
-                jsonString.append("{");
-            } else if (isJsonArray) {
-                jsonString.append("[");
-            } else if (hasAnyPrimitiveValues) {
-                if (config.isTopElement() || config.isArrayElement()) {
-                    jsonString.append("{\"");
-                } else {
-                    jsonString.append("\"");
-                }
-                if (containsOneJsonMember()) {
-                    jsonString.append(encodeJsonString(name()) + "\":");
-                } else {
-                    jsonString.append(encodeJsonString(name()) + "\":[");
-                }
+            if (config.isTopElement() || config.isArrayElement()) {
+                jsonString.append("{\"");
             } else {
-                if (config.isTopElement() || config.isArrayElement()) {
-                    jsonString.append("{\"");
-                } else {
-                    jsonString.append("\"");
-                }
-                if (containsOneJsonMember()) {
-                    jsonString.append(encodeJsonString(name()) + "\":");
-                } else {
-                    jsonString.append(encodeJsonString(name()) + "\":{");
-                }
+                jsonString.append("\"");
             }
-            for (val child : children()) {
-                if (isNotFirstChild) {
-                    jsonString.append(",");
-                }
-                isNotFirstChild = true;
-                jsonString.append(child.toJsonValue(jsonConfig()
-                        .withIsTopElement(false)
-                        .withIsArrayElement(isJsonArray)));
+            if (containsOneJsonMember()) {
+                jsonString.append(encodeJsonString(name()) + "\":");
+            } else {
+                jsonString.append(encodeJsonString(name()) + "\":{");
             }
-            if (isJsonDictionary) {
-                jsonString.append("}");
-            } else if (isJsonArray) {
+        }
+        for (val child : children()) {
+            if (isNotFirstChild) {
+                jsonString.append(",");
+            }
+            isNotFirstChild = true;
+            jsonString.append(child.toJsonValue(jsonConfig()
+                    .withIsTopElement(false)
+                    .withIsArrayElement(isJsonArray)));
+        }
+        if (isJsonDictionary) {
+            jsonString.append("}");
+        } else if (isJsonArray) {
+            jsonString.append("]");
+        } else if (hasAnyPrimitiveValues) {
+            if (!containsOneJsonMember()) {
                 jsonString.append("]");
-            } else if (hasAnyPrimitiveValues) {
-                if (!containsOneJsonMember()) {
-                    jsonString.append("]");
-                }
-                if (config.isTopElement() || config.isArrayElement()) {
-                    jsonString.append("}");
-                }
-            } else {
-                if (!containsOneJsonMember()) {
-                    jsonString.append("}");
-                }
-                if (config.isTopElement() || config.isArrayElement()) {
-                    jsonString.append("}");
-                }
+            }
+            if (config.isTopElement() || config.isArrayElement()) {
+                jsonString.append("}");
+            }
+        } else {
+            if (!containsOneJsonMember()) {
+                jsonString.append("}");
+            }
+            if (config.isTopElement() || config.isArrayElement()) {
+                jsonString.append("}");
             }
         }
         return jsonString.toString();
