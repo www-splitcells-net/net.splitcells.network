@@ -11,7 +11,7 @@ Every project has a `CHANGELOG.md` at its top folder.
 It should note only high level info for developers and users.
 Especially, breaking changes should be noted as such.
 A change should be located in the changelog of the project, where the changed happened.
-# Update changelog
+# Maintain changelog
 Check the commits of the last 7 days.
 Add missing info in the changelogs and check if the changelog contains the info of the last 7 days
 Do not commit any changes.
