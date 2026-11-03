@@ -8,3 +8,4 @@ Only add things to this document,
 that significantly shortens the time needed to learn how to develop this project.
 AI agents should update this file automatically.
 # Developer Guide
+Do not commit any changes.
