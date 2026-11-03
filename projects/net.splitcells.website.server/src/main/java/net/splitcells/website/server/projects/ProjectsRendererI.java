@@ -404,18 +404,22 @@ public class ProjectsRendererI implements ProjectsRenderer {
             return Optional.empty();
         }
         if (metaData.size() > 1) {
-            val matchDescription = renderers.stream()
+            // The variable fittingRenderers is used for debugging purposes, as the matchDescription is not good enough.
+            val fittingRenderers = renderers.stream()
+                    .filter(r -> r.metaData(path, this).isPresent())
+                    .toList();
+            val matchDescription = fittingRenderers.stream()
                     .map(r -> r.metaData(path, this)
                             .map(m -> r + " provides meta data: `" + m.path() + "`.")
                             .orElse(""))
                     .reduce((a, b) -> a + ", " + b)
                     .orElse("");
-            throw execException("Expecting at most 1 meta data entries but found "
+            logs().warn(execException("Expecting at most 1 meta data entries but found "
                     + metaData.size()
                     + " instead: "
                     + metaData
                     + " with the following details: "
-                    + matchDescription);
+                    + matchDescription));
         }
         return metaData.get(0);
     }
