@@ -6,7 +6,6 @@
 # Furthermore, most prompts are executed weekly and thereby do not benefit that much from session reuse. 
 
 set -e
-set -x
 
 jqQuery='
   select(.type == "assistant") |
