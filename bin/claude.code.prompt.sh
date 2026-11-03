@@ -55,7 +55,10 @@ claude-code --print "$1" \
       "Bash(git remote *)" \
     | jq --unbuffered -r "$jqQuery"
 
-echo Waiting until all changes by Claude Code are commited or disregarded.
+echo '
+
+
+Waiting until all changes by Claude Code are commited or disregarded.'
 
 while true; do
   git diff --quiet && git diff --cached --quiet && exit
