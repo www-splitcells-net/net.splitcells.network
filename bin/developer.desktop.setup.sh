@@ -12,12 +12,15 @@
 # On Ubuntu apt might install Java JRE via Maven, which creates the following misleading error: Fatal error compiling: error: release version 21 not supported
 # Also do not forget to restart all shells, if problems persist.
 # TODO Consider development via container as main one.
-sudo apt install -y openjdk-21-jdk
 
+# Generic Tooling
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 sudo apt install make
 cargo install gitui --locked
+command -v sudo && command -v snap && sudo snap install claude-code 
 
+# Java and Maven
+sudo apt install -y openjdk-21-jdk
 curl -s "https://get.sdkman.io" | bash
 source "/home/mavo-stream/.sdkman/bin/sdkman-init.sh"
 sdk install maven
@@ -25,7 +28,7 @@ sdk install mvnd
 mvnd --stop
   # Reset Maven Daemon just in case, there is an instance running with an incorrect config.
   # This can be the case, if mvnd was already present.
-command -v sudo && command -v snap && sudo snap install claude-code
+
 # TODO This did not work and configuring the Gnome Terminal GUI directly instead worked.
 # chsh -s "$(command -v fish)" # That fish as the default terminal for better autocompletion.
 # TODO fish_add_path -a /home/mavo-stream/.sdkman/candidates/maven/current/bin
