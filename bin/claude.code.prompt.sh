@@ -35,7 +35,8 @@ then
     '
 fi
 
-claude-code -p "$1" \
+claude-code --print "$1" \
+    --resume "$2"
     --permission-mode acceptEdits \
     --output-format stream-json \
     --verbose \

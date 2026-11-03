@@ -7,4 +7,4 @@ set -x
  
 git add . && git diff --quiet && git diff --cached --quiet || sh -c "echo There are changes left to commit. ; exit 1"
  
-bin/claude.code.prompt.sh "Maintain the changelogs."
+bin/claude.code.prompt.sh "Maintain the changelogs." "changelogger"
