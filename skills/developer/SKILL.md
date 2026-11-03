@@ -1,6 +1,6 @@
 ---
 name: Developer
-description: "Always use this skill."
+description: "Use this, when editing source code."
 ---
 # Developer Guide
 This documents describes knowledge needed for AI agent and human developers of this project.
