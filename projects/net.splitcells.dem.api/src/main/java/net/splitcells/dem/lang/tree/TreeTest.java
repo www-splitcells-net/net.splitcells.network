@@ -497,6 +497,18 @@ public class TreeTest {
         requireEquals(tree("").withChildren(tree(""), tree("")).asCompactXhtmlList(), "<ol></ol>");
     }
 
+    @UnitTest public void testAsCompactXhtmlListWithMixedEmptyAndNonEmptyNodes() {
+        requireEquals(tree("root").withChild(tree("").withChildren(tree("a"), tree(""))).asCompactXhtmlList()
+                , "<ol><li>root<ol><li>a</li></ol></li></ol>");
+        requireEquals(tree("root").withChild(tree("").withChildren(tree(""), tree("a"))).asCompactXhtmlList()
+                , "<ol><li>root<ol><li>a</li></ol></li></ol>");
+    }
+
+    @UnitTest public void testAsCompactXhtmlListOfEmptyNonRoot() {
+        requireEquals(tree("").asCompactXhtmlList(false), "");
+        requireEquals(tree("").withChild(tree("")).asCompactXhtmlList(false), "");
+    }
+
     @UnitTest public void testHasAnyPrimitiveValues() {
         require(tree("a").withChild(tree("b")).hasAnyPrimitiveValues());
         requireNot(tree("a").withPath(tree("b"), tree("c")).hasAnyPrimitiveValues());
