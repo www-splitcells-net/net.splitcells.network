@@ -763,24 +763,16 @@ public interface Tree extends TreeView, Convertible {
                 return "";
             }
             return nonEmptyElementsChildrens.stream().map(c -> c.asCompactXhtmlList(false))
-                    .reduce((a, b) -> a + b)
-                    .orElse("");
+                    .reduce("", (a, b) -> a + b);
         }
-        if (nonEmptyElementsChildrens.isEmpty() && name().isEmpty()) {
-            htmlList = "";
-        } else if (nonEmptyElementsChildrens.isEmpty()) {
+        if (nonEmptyElementsChildrens.isEmpty()) {
             htmlList = "<li>" + xmlName() + "</li>";
         } else {
             val tree = tree("");
             tree.children().addAll(nonEmptyElementsChildrens);
-            final String childrenHtmlList = tree.asCompactXhtmlList();
-            if (name().isEmpty()) {
-                htmlList = "";
-            } else {
-                htmlList = "<li>" + xmlName()
-                        + childrenHtmlList
-                        + "</li>";
-            }
+            htmlList = "<li>" + xmlName()
+                    + tree.asCompactXhtmlList()
+                    + "</li>";
         }
         if (isRoot) {
             return "<ol>" + htmlList + "</ol>";
