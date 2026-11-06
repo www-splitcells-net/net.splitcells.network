@@ -42,6 +42,10 @@ public class TreeTest {
         requireEquals(testData.pathOfValueTree("test data", "b", "b", "c"), Optional.empty());
     }
 
+    @UnitTest public void testValue() {
+        requireEquals(tree("").withChildren(tree("1"), tree("2")).value(), Optional.empty());
+    }
+
     @UnitTest public void testExtendWith() {
         final var testData = tree("test data");
         testData.extendWith(list()).requireEqualsTo(testData);
