@@ -64,10 +64,6 @@ command.repository.register $(pwd)
 user.bin.configure.sh
 ```
 
-# Command Documentation
-
-The manuals for each command can be viewed via `man <command>`.
-
 # Configuration
 
 One can enable extended logging by setting the environment variable 'log_level' to 'debug': 'export log_level=debug'

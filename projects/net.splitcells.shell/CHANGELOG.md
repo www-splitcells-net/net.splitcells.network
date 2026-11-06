@@ -22,6 +22,7 @@ Changes are now written to the root changelog instead.
 
 ## Unreleased
 ### Major Changes
+* **2026-11-09 \#73** Remove support for user man pages at `~/bin/man/man1`. Originally it was planned, that each project may put these under `doc/man1` for shell commands. This was never actually done.
 * **2023-11-19 \#213** `repo.process` now loads the list of sub repositories via `./.net.splitcells.os.state.interface.repo/sub-repo-names`
     and not `./.net.splitcells.os.state.interface.repo/subs.json` in order to simplify the format.
     `./.net.splitcells.os.state.interface.repo/sub-repo-names` is now a command that is executed and returns a list of sub repo names,

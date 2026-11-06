@@ -58,11 +58,6 @@ do
 			cd ..
 		fi
 		chmod +x "$(command.managed.bin)/"*
-		if [ -d ../doc/man1 ]; then
-			cd ../doc/man1
-			mkdir -p ~/bin/man/man1
-			find . -type f | sort -n | xargs -I % cp % ~/bin/man/man1
-		fi
 	fi
 done < "$repoList"
 if test -d "$configFolder/src"; then
