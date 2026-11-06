@@ -66,7 +66,7 @@ user.bin.configure.sh
 
 # Command Documentation
 
-The manuals for each commands can be viewed via "man <command>".
+The manuals for each command can be viewed via `man <command>`.
 
 # Configuration
 
