@@ -38,11 +38,11 @@ make install
 Congratulations!
 Now you can do nothing!
 On a more serious ;)
-This framework primarily provides a set of commands in order to do things independent from technical details.
+This framework primarily provides a set of commands in order to do things independent of technical details.
 This set of commands define an interface, but does not contain the concrete implementation for these commands.
 
 For this additional repositories/projects has to be installed.
-These provide the implementations for the different operation systems.
+These provide the implementations for the different operating systems.
 
 This can be done in the following ways in the terminal:
 ```sh
