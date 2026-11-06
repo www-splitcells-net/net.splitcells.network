@@ -22,8 +22,7 @@ import static net.splitcells.dem.lang.tree.XmlConfig.xmlConfig;
 import static net.splitcells.dem.object.Merger.merger;
 import static net.splitcells.dem.resource.Trail.trail;
 import static net.splitcells.dem.resource.communication.Sender.stringSender;
-import static net.splitcells.dem.testing.Assertions.requireEquals;
-import static net.splitcells.dem.testing.Assertions.requireThrow;
+import static net.splitcells.dem.testing.Assertions.*;
 import static net.splitcells.dem.utils.BinaryUtils.binaryOutputStream;
 import static net.splitcells.dem.utils.StringUtils.multiple;
 
@@ -40,6 +39,12 @@ public class TreeTest {
         final var testData = TreeI.tree("test data").withPath(a, b, c);
         testData.pathOfValueTree("test data", "a", "b", "c").orElseThrow().requireEquals(list(a, b, c));
         requireEquals(testData.pathOfValueTree("test data", "b", "b", "c"), Optional.empty());
+    }
+
+    @UnitTest public void testHasCode() {
+        requireEquals(tree("a").hashCode(), tree("a").hashCode());
+        requireUnequals(tree("a").hashCode(), tree("b").hashCode());
+        requireUnequals(tree("a", SEW).hashCode(), tree("a").hashCode());
     }
 
     @UnitTest public void testValue() {
