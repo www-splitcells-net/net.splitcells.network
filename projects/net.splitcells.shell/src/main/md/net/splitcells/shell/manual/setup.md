@@ -19,6 +19,7 @@ git clone https://gitlab.com/splitcells/net.splitcells.network.git
 cd net.splitcells.network/projects/net.splitcells.shell
 chmod +x ./bin/install
 ./bin/install
+. ~/.bashrc
 ```
 
 ## Make based Installation
@@ -29,6 +30,7 @@ chmod +x ./configure
 ./configure
 make
 make install
+. ~/.bashrc
 ```
 
 # Extend Functionality
