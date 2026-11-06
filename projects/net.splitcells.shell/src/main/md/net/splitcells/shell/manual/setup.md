@@ -17,7 +17,6 @@ Currently a bash compatible terminal and Python >= 3.7 is required.
 ```sh
 git clone https://gitlab.com/splitcells/net.splitcells.network.git
 cd net.splitcells.network/projects/net.splitcells.shell
-chmod +x ./bin/install
 ./bin/install
 . ~/.bashrc
 ```
@@ -26,7 +25,6 @@ chmod +x ./bin/install
 ```sh
 git clone https://gitlab.com/splitcells/net.splitcells.network.git
 cd net.splitcells.network/projects/net.splitcells.shell
-chmod +x ./configure
 ./configure
 make
 make install
