@@ -37,6 +37,7 @@ set -e
 chmod 700 ~/.ssh-website-upload/id_rsa # Otherwise, scp may not work.
 mkdir -p target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate # Using subdirectories, ensures, that scp does not get a problem with missing directories.
 cp -r target/site/jacoco-aggregate/* target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate
+find . -type f -name "jacoco.exec" -exec cp --parents {} target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate/jacoco.exec/
 realpath target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate
 # The targeted scp upload folder is dependent on the relative source path. Therefore, cd and the current folder are used, in order to avoid this strange mapping.
 cd target/website-upload/
