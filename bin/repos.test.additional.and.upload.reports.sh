@@ -4,6 +4,9 @@
 
 set -e
 set -x
+networkRepo=$(pwd)
+networkLogRepo=$(pwd)../net.splitcells.network.log
+networkLogRepo=$(realpath $networkLogRepo)
 # Integration tests need to be enabled here as well, as verify does not only start the source code check, but also reruns the test and therefore the coverage.
 # The JaCoCo report is created only for the main report, as otherwise the Distro repo causes errors.
 # `-Dsonar.inclusions=src/main/**,bin/*` does not seem to work.`
@@ -44,3 +47,9 @@ realpath target/website-upload/public_html/net/splitcells/martins/avots/website/
 cd target/website-upload/
 scp -v -i ~/.ssh-website-upload/id_rsa -o PubkeyAuthentication=yes -o StrictHostKeyChecking=no -r ./ splitcm@www322.your-server.de:
 rm ~/.ssh-website-upload/id_rsa
+# Upload JaCoCos code coverage to network.log repo.
+cd $networkRepo
+mkdir -p $networkLogRepo/src/main/resources/net/splitcells/network/worker/daily-ci/jacoco.exec
+find . -type f -name "*.jacoco.exec" -exec cp -f {} $networkLogRepo/src/main/resources/net/splitcells/network/worker/daily-ci/jacoco.exec/ \;
+cd $networkLogRepo
+git diff --exit-code || git commit -sam "Update code coverage report of daily CI #32"
