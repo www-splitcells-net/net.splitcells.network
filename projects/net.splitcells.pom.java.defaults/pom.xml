@@ -1189,6 +1189,9 @@
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
+                        <configuration>
+                            <destFile>${project.build.directory}/${project.groupId}.${project.artifactId}.jacoco.exec</destFile>
+                        </configuration>
                         <executions>
                             <execution>
                                 <id>test-codecov-default-prepare-agent</id>
