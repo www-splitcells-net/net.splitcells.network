@@ -5,7 +5,7 @@
 set -e
 set -x
 networkRepo=$(pwd)
-networkLogRepo=$(pwd)../net.splitcells.network.log
+networkLogRepo=$(pwd)/../net.splitcells.network.log
 networkLogRepo=$(realpath $networkLogRepo)
 # Integration tests need to be enabled here as well, as verify does not only start the source code check, but also reruns the test and therefore the coverage.
 # The JaCoCo report is created only for the main report, as otherwise the Distro repo causes errors.
