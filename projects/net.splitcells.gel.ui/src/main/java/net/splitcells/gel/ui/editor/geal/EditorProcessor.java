@@ -89,14 +89,16 @@ public class EditorProcessor implements Processor<Tree, Tree> {
         if (isSync) {
             editor.optimize();
         } else {
+            dataTypes.withProperty(ASYNC_ID, TEXT.codeName());
+            renderingTypes.withProperty(ASYNC_ID, PLAIN_TEXT);
             if (isFirstRequest) {
                 editor.setOptimizing(true);
                 dataValues.withProperty(ASYNC_ID, tree(lifeCycleToken(userSession)));
-            } else {
+            } else if (editor.isOptimizing()) {
                 dataValues.withProperty(ASYNC_ID, asyncId.get(0).valueName());
+            } else {
+                dataValues.withProperty(ASYNC_ID, "");
             }
-            dataTypes.withProperty(ASYNC_ID, TEXT.codeName());
-            renderingTypes.withProperty(ASYNC_ID, PLAIN_TEXT);
             dataValues.withProperty(IS_OPTIMIZING, tree("" + editor.isOptimizing()));
             dataTypes.withProperty(IS_OPTIMIZING, TEXT.codeName());
             renderingTypes.withProperty(IS_OPTIMIZING, PLAIN_TEXT);
@@ -215,7 +217,6 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                     () -> editorAccess.process(asyncEditor -> asyncEditor.processTablesSynchronously(editor -> process(request, editor))
                             , userSession
                             , asyncIdUpdate.orElseThrow().valueName()));
-            result.optionalValue().ifPresent(ov -> ov.data().withProperty(ASYNC_ID, asyncIdUpdate.orElseThrow().valueName()));
         } else {
             result = runWithCheckedNeeds(
                     () -> editorAccess.createAndAccess(session -> editor("editor-data-query", ROOT_PATH)
