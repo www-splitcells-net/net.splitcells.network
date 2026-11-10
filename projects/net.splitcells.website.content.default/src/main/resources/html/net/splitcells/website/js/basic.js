@@ -418,7 +418,7 @@ function net_splitcells_webserver_form_submit(config) {
     const request  = new XMLHttpRequest();
     const data = new FormData(form);
     if ('requesting-async' in config) {
-        data.append('requesting-async', config['requesting-async']);
+        data.set('requesting-async', config['requesting-async']);
     }
     const dynamicMenus = document.querySelectorAll('.net-splitcells-website-menu-dynamic');
     const tabHolder = form.querySelector('.net-splitcells-website-form-editor-tab-holder');
