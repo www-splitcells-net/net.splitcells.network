@@ -212,11 +212,11 @@ public class EditorProcessor implements Processor<Tree, Tree> {
                 .stream()
                 .findFirst();
         Result<Response<Tree>, String> result;
-        if (asyncIdUpdate.isPresent()) {
+        if (asyncIdUpdate.isPresent() && !asyncIdUpdate.get().valueName().isBlank()) {
             result = runWithCheckedNeeds(
                     () -> editorAccess.process(asyncEditor -> asyncEditor.processTablesSynchronously(editor -> process(request, editor))
                             , userSession
-                            , asyncIdUpdate.orElseThrow().valueName()));
+                            , asyncIdUpdate.get().valueName()));
         } else {
             result = runWithCheckedNeeds(
                     () -> editorAccess.createAndAccess(session -> editor("editor-data-query", ROOT_PATH)
