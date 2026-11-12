@@ -146,6 +146,20 @@ public class HtmlClientImpl implements HtmlClient {
                                     }
                                 }
 
+                                @Override public Element setTextContent(String content) {
+                                    synchronized (playwrightSynchronizer) {
+                                        try {
+                                            locator.evaluate("(node, text) => node.textContent = text", content);
+                                            return this;
+                                        } catch (TimeoutError e) {
+                                            throw execException("This element does not actually exist in the browser. This is probably not a real network timeout.", e);
+                                        } catch (RuntimeException e) {
+                                            close();
+                                            throw e;
+                                        }
+                                    }
+                                }
+
                                 @Override
                                 public String value() {
                                     synchronized (playwrightSynchronizer) {
@@ -216,6 +230,20 @@ public class HtmlClientImpl implements HtmlClient {
                                             throw e;
                                         }
 
+                                    }
+                                }
+
+                                @Override public Element setTextContent(String content) {
+                                    synchronized (playwrightSynchronizer) {
+                                        try {
+                                            locator.evaluate("(node, text) => node.textContent = text", content);
+                                            return this;
+                                        } catch (TimeoutError e) {
+                                            throw execException("This element does not actually exist in the browser. This is probably not a real network timeout.", e);
+                                        } catch (RuntimeException e) {
+                                            close();
+                                            throw e;
+                                        }
                                     }
                                 }
 

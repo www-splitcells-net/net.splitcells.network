@@ -3,6 +3,8 @@
  */
 package net.splitcells.website.server.client;
 
+import net.splitcells.dem.lang.annotations.ReturnsThis;
+
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -35,6 +37,8 @@ public interface Element {
      * @see #evalIfExists(Function)
      */
     String textContent();
+
+    @ReturnsThis Element setTextContent(String content);
 
     /**
      * This method only works, if the element actually exists.
