@@ -67,9 +67,9 @@ public class EditorProcessor implements Processor<Tree, Tree> {
 
     private Response<Tree> process(Request<Tree> request, Editor editor) {
         val asyncs = request.data().namedChildren(REQUESTING_ASYNC);
-        val isSync = asyncs.isEmpty() || !"true".equals(asyncs.get(0).valueName());
+        val isSync = asyncs.isEmpty() || !"true".equals(asyncs.get(0).valueName()) || asyncs.get(0).valueName().isBlank();
         val asyncId = request.data().namedChildren(ASYNC_ID);
-        val isFirstRequest = asyncId.isEmpty();
+        val isFirstRequest = asyncId.isEmpty() || asyncId.get(0).valueName().isBlank();
         val userSession = request.userSession();
         val problemDefinition = request.data().namedChild(PROBLEM_DEFINITION, needInput(PROBLEM_DEFINITION));
         val inputValues = request.data().children();
