@@ -45,8 +45,28 @@ public class EditorProcessorTest {
         }
     };
 
-    @IntegrationTest @DisabledTest public void testOptimization() {
+    @DisabledTest @IntegrationTest public void testOptimization() {
         process(EditorProcessorTest.TEST_OPTIMIZATION_GUI, GelUiCell.class).requireErrorFree();
+    }
+
+
+    @DisabledTest @IntegrationTest public void testChangingImport() {
+        process(() -> {
+            try (final var browser = htmlClient()) {
+                try (final var tab = browser.openTab("/net/splitcells/gel/ui/editor/geal/index.html")) {
+                    tab.elementByClass("net-splitcells-website-pop-up-confirmation-button").click();
+                    tab.elementById("net-splitcells-gel-ui-editor-geal-form-submit").click();
+                    tab.elementById("net-splitcells-gel-ui-editor-geal-form-Definition").setTextContent("TODO");
+                    waitUntilRequirementIsTrue(1000L * 60, () -> tab
+                            .elementById("net-splitcells-gel-ui-editor-geal-form-solution")
+                            .evalIfExists(e -> !e.value().trim().isEmpty())
+                            .orElse(false));
+                    requireNonEmptyString(tab
+                            .elementById("net-splitcells-gel-ui-editor-geal-form-solution.formatted")
+                            .textContent());
+                }
+            }
+        }, GelUiCell.class).requireErrorFree();
     }
 
     @CapabilityTest public void testEditorProcessor() {
