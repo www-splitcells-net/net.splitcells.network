@@ -45,9 +45,7 @@ public class EditorProcessorTest {
         }
     };
 
-    @IntegrationTest
-    @DisabledTest
-    public void testOptimization() {
+    @IntegrationTest @DisabledTest public void testOptimization() {
         process(EditorProcessorTest.TEST_OPTIMIZATION_GUI, GelUiCell.class).requireErrorFree();
     }
 
@@ -67,8 +65,7 @@ public class EditorProcessorTest {
                 .requireEmpty();
     }
 
-    @UnitTest
-    public void testErrorStartWithoutNewLines() {
+    @UnitTest public void testErrorStartWithoutNewLines() {
         final var testSubject = editorProcessor();
         final var requestTree = tree("").withProperty(PROBLEM_DEFINITION, "unknownFunction();");
         final var request = Request.<Tree>request(trail(), requestTree);
@@ -81,8 +78,7 @@ public class EditorProcessorTest {
                 , "\n");
     }
 
-    @UnitTest
-    public void testMissingProblemDefinition() {
+    @UnitTest public void testMissingProblemDefinition() {
         final var testSubject = editorProcessor();
         final var requestTree = tree("");
         testSubject.process(Request.<Tree>request(trail(), requestTree))
