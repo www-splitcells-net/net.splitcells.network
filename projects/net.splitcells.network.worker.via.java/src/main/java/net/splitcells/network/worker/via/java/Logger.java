@@ -11,6 +11,7 @@ import net.splitcells.dem.environment.config.ProgramName;
 import net.splitcells.dem.lang.annotations.JavaLegacy;
 import net.splitcells.dem.resource.FileSystem;
 import net.splitcells.dem.resource.Files;
+import net.splitcells.dem.resource.host.HostName;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
@@ -23,6 +24,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import static net.splitcells.dem.Dem.config;
+import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.data.set.map.Maps.map;
 import static net.splitcells.dem.resource.ContentType.CSV;
@@ -160,7 +162,7 @@ public class Logger implements TestExecutionListener {
             val commitMessage = "Log tester results #30\n\nCommitted by \""
                     + System.getProperty("user.name")
                     + "\" via the Network Worker on \""
-                    + InetAddress.getLocalHost().getHostName()
+                    + configValue(HostName.class)
                     + "\".";
             logProject.javaLegacyPath().ifPresentOrElse(path -> repository(path).commitAll(commitMessage)
                     , () -> logs().append("Persistence for network log not supported.", WARNING));
