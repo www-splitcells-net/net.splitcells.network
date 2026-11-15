@@ -5,4 +5,8 @@ set -e
 set -x
 
 cd projects/net.splitcells.network.system
-mvn exec:java -Dexec.mainClass=net.splitcells.network.worker.via.java.Tester "-Dexec.args=$(hostname)"
+
+if [ -z "NET_SPLITCELLS_HOSTNAME" ]; then
+  export NET_SPLITCELLS_HOSTNAME=$(hostname)
+fi
+mvn exec:java -Dexec.mainClass=net.splitcells.network.worker.via.java.Tester "-Dexec.args=$NET_SPLITCELLS_HOSTNAME"
