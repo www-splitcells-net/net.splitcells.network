@@ -68,6 +68,7 @@ public class Tester {
                 , env -> {
                     env.config()
                             .withConfigValue(ProgramName.class, hostname)
+                            .withConfigValue(HostName.class, hostname)
                             .withConfigValue(ProjectsFolder.class, userHome(projectsFolder))
                             .withConfigValue(NetworkWorkerLogFileSystem.class
                                     , pathFileSystem(config()
