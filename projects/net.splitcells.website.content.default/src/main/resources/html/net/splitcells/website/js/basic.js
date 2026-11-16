@@ -494,5 +494,7 @@ function uploadFileAsString(reactor) {
     }
     uploader.click();
 }
-// Initialize highlightjs.
-hljs.highlightAll();
+// Initialize highlight.js, if highlight.js is available. TODO Load highlight.js via script in website.content.binaries, as it is not a dependency of website.content.default. 
+if (typeof hljs !== 'undefined') {
+    hljs.highlightAll();
+}
