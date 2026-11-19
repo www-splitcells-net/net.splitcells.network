@@ -132,6 +132,9 @@ public interface Randomness {
                     .withFailMessage("Invalid chance given.")
                     .isBetween(0f, 1f);
         }
+        if (chance <= 0) {
+            return false;
+        }
         final int scaleFactor = 10_000;
         final var scaledChance = chance * scaleFactor;
         return scaledChance >= integer(0, scaleFactor);
