@@ -132,7 +132,7 @@ TEMPORARY_FILE_PREFIX = "temporary-"
 """The Playwright cache is persisted, as downloading does sometimes not work.
 """
 DOCKERFILE_SERVICE_TEMPLATE = """
-FROM docker.io/eclipse-temurin:25-jdk
+FROM docker.io/eclipse-temurin:25-jdk-noble
 RUN apt-get clean
 RUN apt-get update # This fixes install errors. It is unknown why this is the case.
 RUN apt-get install --yes maven git python3 pip pipx
@@ -1052,7 +1052,7 @@ git pull martins-avots@live.splitcells.net master
                                                          , "--verbose=true"
                                                          , "--dry-run=true"])
         self.assertEqual(test_subject.docker_file, """
-FROM docker.io/eclipse-temurin:25-jdk
+FROM docker.io/eclipse-temurin:25-jdk-noble
 RUN apt-get clean
 RUN apt-get update # This fixes install errors. It is unknown why this is the case.
 RUN apt-get install --yes maven git python3 pip pipx
@@ -1146,7 +1146,7 @@ systemctl --user restart net.splitcells.martins.avots.distro.livedistro.daemon
                                                          , "--verbose=true"
                                                          , "--dry-run=true"])
         self.assertEqual(test_subject.docker_file, """
-FROM docker.io/eclipse-temurin:25-jdk
+FROM docker.io/eclipse-temurin:25-jdk-noble
 RUN apt-get clean
 RUN apt-get update # This fixes install errors. It is unknown why this is the case.
 RUN apt-get install --yes maven git python3 pip pipx
@@ -1199,7 +1199,7 @@ podman push codeberg.org/splitcells-net/net.splitcells.martins.avots.distro.live
                                                              , "--verbose=true"
                                                              , "--dry-run=true"])
             self.assertEqual(test_subject.docker_file, """
-FROM docker.io/eclipse-temurin:25-jdk
+FROM docker.io/eclipse-temurin:25-jdk-noble
 RUN apt-get clean
 RUN apt-get update # This fixes install errors. It is unknown why this is the case.
 RUN apt-get install --yes maven git python3 pip pipx
@@ -1265,7 +1265,7 @@ podman run --name "net.splitcells.network.worker" \\
                                                          , "--verbose=true"
                                                          , "--dry-run=true"])
         self.assertEqual(test_subject.docker_file, """
-FROM docker.io/eclipse-temurin:25-jdk
+FROM docker.io/eclipse-temurin:25-jdk-noble
 RUN apt-get clean
 RUN apt-get update # This fixes install errors. It is unknown why this is the case.
 RUN apt-get install --yes maven git python3 pip pipx
