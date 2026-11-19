@@ -139,8 +139,6 @@ public class SystemCell implements Cell {
                 .withAdditionalProcessor(EditorProcessor.PATH, editorProcessor())
                 .withAdditionalProjectsRendererExtension(performanceReport())
                 .withAdditionalProjectsRendererExtension(functionCallDoc())
-                .withAdditionalProjectsRendererExtension(colloquiumExample())
-                .withAdditionalProjectsRendererExtension(sportCourseExample())
                 .withLicensePage(trailLink("Licensing Info of The Core Project net.splitcells.network", "/net/splitcells/network/LICENSE.html"))
                 .withLicensePage(trailLink("Copyright Notice", "/net/splitcells/network/NOTICE.html"))
                 .withLicensePage(trailLink("License Inventory of All Documents", "net/splitcells/website/layout-license.html"))

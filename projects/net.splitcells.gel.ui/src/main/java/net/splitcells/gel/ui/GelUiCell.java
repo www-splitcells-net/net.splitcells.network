@@ -11,6 +11,8 @@ import net.splitcells.website.server.WebsiteServerCell;
 
 import static net.splitcells.dem.Dem.configValue;
 import static net.splitcells.gel.ui.editor.geal.EditorProcessor.editorProcessor;
+import static net.splitcells.gel.ui.editor.geal.example.ColloquiumExample.colloquiumExample;
+import static net.splitcells.gel.ui.editor.geal.example.SportCourseExample.sportCourseExample;
 import static net.splitcells.website.server.ProjectConfig.projectConfig;
 
 public class GelUiCell implements Cell {
@@ -29,7 +31,10 @@ public class GelUiCell implements Cell {
         env.config().configValue(ServerConfig.class)
                 .withAdditionalProject(projectConfig("/net/splitcells/gel/ui/"
                         , configValue(GelUiFileSystem.class)))
+                .withAdditionalProjectsRendererExtension(colloquiumExample())
+                .withAdditionalProjectsRendererExtension(sportCourseExample())
                 .withAdditionalJsBackgroundFiles("net/splitcells/website/js/codemirror-editor-bundle.js");
+        
         env.withCell(WebsiteServerCell.class);
     }
 }
