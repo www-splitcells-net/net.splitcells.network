@@ -195,7 +195,8 @@ podman build -f "target/Dockerfile-${executionName}" \\
     --tag "localhost/${executionName}"  \\
     --arch string \\
     ${additionalArguments}\\
-    --log-level=warn
+    --log-level=warn \\
+    --pull
 """
 
 PREPARE_EXECUTION_WITHOUT_BUILD_TEMPLATE = """
@@ -648,7 +649,8 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
     --tag "localhost/net.splitcells.martins.avots.distro"  \\
     \\
     \\
-    --log-level=warn
+    --log-level=warn \\
+    --pull
 """)
     def test_only_execute_image(self):
         test_subject = parse_worker_execution_arguments(['--program-name=net.splitcells.martins.avots.distro', '--executable-path=bin/worker.bootstrap', '--dry-run=true', '--only-execute-image=true'])
@@ -710,7 +712,8 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro" \\
     --tag "localhost/net.splitcells.martins.avots.distro"  \\
     \\
     \\
-    --log-level=warn
+    --log-level=warn \\
+    --pull
 
 podman run --name "net.splitcells.martins.avots.distro" \\
   --pids-limit=-1 \\
@@ -938,7 +941,8 @@ podman build -f "target/Dockerfile-net.splitcells.network.worker.boostrap.daemon
     --tag "localhost/net.splitcells.network.worker.boostrap.daemon"  \\
     \\
     \\
-    --log-level=warn
+    --log-level=warn \\
+    --pull
 
 # Set up Systemd service
 mkdir -p ~/.config/systemd/user
@@ -1095,7 +1099,8 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro.livedistr
     --tag "localhost/net.splitcells.martins.avots.distro.livedistro"  \\
     --arch arm64 \\
     \\
-    --log-level=warn
+    --log-level=warn \\
+    --pull
 
 # Set up Systemd service
 mkdir -p ~/.config/systemd/user
@@ -1189,7 +1194,8 @@ podman build -f "target/Dockerfile-net.splitcells.martins.avots.distro.livedistr
     --tag "localhost/net.splitcells.martins.avots.distro.livedistro"  \\
     \\
     \\
-    --log-level=warn
+    --log-level=warn \\
+    --pull
 
 podman tag net.splitcells.martins.avots.distro.livedistro:latest codeberg.org/splitcells-net/net.splitcells.martins.avots.distro.livedistro:latest
 podman push codeberg.org/splitcells-net/net.splitcells.martins.avots.distro.livedistro:latest
@@ -1238,7 +1244,8 @@ podman build -f "target/Dockerfile-net.splitcells.network.worker" \\
     --tag "localhost/net.splitcells.network.worker"  \\
     \\
     \\
-    --log-level=warn
+    --log-level=warn \\
+    --pull
 
 podman run --name "net.splitcells.network.worker" \\
   --pids-limit=-1 \\
@@ -1304,7 +1311,8 @@ podman build -f "target/Dockerfile-net.splitcells.network.worker" \\
     --tag "localhost/net.splitcells.network.worker"  \\
     \\
     \\
-    --log-level=warn
+    --log-level=warn \\
+    --pull
 
 podman run --name "net.splitcells.network.worker" \\
   --pids-limit=-1 \\
