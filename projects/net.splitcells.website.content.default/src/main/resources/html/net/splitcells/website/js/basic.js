@@ -191,7 +191,12 @@ function net_splitcells_webserver_form_load(config) {
     var httpRequest = new XMLHttpRequest();
     httpRequest.open("GET", config['load-path'], true);
     function listener() {
-        net_splitcells_webserver_form_update(config, JSON.parse(this.responseText));
+        try {
+            net_splitcells_webserver_form_update(config, JSON.parse(this.responseText));
+        } catch (err) {
+            console.log("Could not process response `" + this.responseText + "`" + " from `" + config['load-path'] + "`.");
+            throw err;
+        }
         net_splitcells_webserver_form_tab_select(config['form-id'], 'Definition');
     }
     httpRequest.addEventListener("load", listener);
