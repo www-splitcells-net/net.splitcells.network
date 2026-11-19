@@ -428,7 +428,7 @@ function net_splitcells_webserver_form_submit(config) {
     const dynamicMenus = document.querySelectorAll('.net-splitcells-website-menu-dynamic');
     const tabHolder = form.querySelector('.net-splitcells-website-form-editor-tab-holder');
     request.onload = function() {
-        console.log('Response to "' + formId + '":' + this.responseText);
+        console.log('Response to "' + formId + '" is "' + this.responseText + "'.");
         let responseObject = JSON.parse(this.responseText);
         if ('net-splitcells-website-server-form-update' in responseObject) {
             net_splitcells_webserver_form_update(config, responseObject);
