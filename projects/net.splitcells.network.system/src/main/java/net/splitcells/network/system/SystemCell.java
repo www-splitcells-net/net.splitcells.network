@@ -69,23 +69,8 @@ public class SystemCell implements Cell {
 
     @Override
     public void accept(Environment env) {
-        env.config()
-                .withConfigValue(ServerConfig.class, config(env.config().configValue(ServerConfig.class)))
-                .withConfigValue(HtmlLiveTest.class, TEST_OPTIMIZATION_GUI)
-        ;
-        env.withCell(WebsiteServerCell.class).withCell(GelUiCell.class);
-    }
-
-    /**
-     * <p>TODO This seems to be partially a duplicate of {@link WebsiteServerCell#accept(Environment)}.</p>
-     *
-     * @param arg
-     * @return
-     * @deprecated TODO Move this method into {@link SystemCell}.
-     */
-    @Deprecated
-    private static Config config(Config arg) {
-        return arg
+        env.config().withConfigValue(HtmlLiveTest.class, TEST_OPTIMIZATION_GUI);
+        env.config().configValue(ServerConfig.class)
                 .withAdditionalProject(projectConfig("/net/splitcells/cin/"
                         , configValue(CinFileSystem.class)))
                 .withAdditionalProject(projectConfig("/net/splitcells/dem/"
@@ -154,6 +139,7 @@ public class SystemCell implements Cell {
                 .withLicensePage(trailLink("GNU LESSER GENERAL PUBLIC LICENSE - Version 2.1, February 1999", "/net/splitcells/network/legal/licenses/LGPL-2.1-or-later.html"))
                 .withLicensePage(trailLink("MIT License", "/net/splitcells/network/legal/licenses/MIT.html"))
                 .withLicensePage(trailLink("Mozilla Public License Version 2.0", "/net/splitcells/network/legal/licenses/MPL-2.0.html"))
-                ;
+        ;
+        env.withCell(WebsiteServerCell.class).withCell(GelUiCell.class);
     }
 }
