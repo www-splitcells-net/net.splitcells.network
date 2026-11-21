@@ -50,6 +50,6 @@ rm ~/.ssh-website-upload/id_rsa
 # Upload JaCoCos code coverage to network.log repo.
 cd $networkRepo
 mkdir -p $networkLogRepo/src/main/resources/net/splitcells/network/worker/daily-ci/jacoco.exec
-find . -type f -name "*.jacoco.exec" -exec cp -f {} $networkLogRepo/src/main/resources/net/splitcells/network/worker/daily-ci/jacoco.exec/ \;
+find . -type f -name "*.jacoco.exec" -print -exec cp -f {} $networkLogRepo/src/main/resources/net/splitcells/network/worker/daily-ci/jacoco.exec/ \;
 cd $networkLogRepo
 git diff --exit-code || git commit -sam "Update code coverage report of daily CI #32"
