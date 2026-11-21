@@ -151,21 +151,21 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
 
     @Override
     public InputStream inputStream(Path path) {
-        final var resourcePath = normalize("/" + resourceBasePath + path.toString());
+        final var resourcePath = "/" + requireInside(resourceBasePath, path.toString());
         requireValidResourcePath(resourcePath);
         return clazz.getResourceAsStream(resourcePath);
     }
 
     @Override
     public String readString(Path path) {
-        final var resourcePath = normalize("/" + resourceBasePath + path.toString());
+        final var resourcePath = "/" + requireInside(resourceBasePath, path.toString());
         requireValidResourcePath(resourcePath);
         return readAsString(clazz.getResourceAsStream(resourcePath));
     }
 
     @Override
     public Optional<String> readStringIfPresent(Path path) {
-        final var resourcePath = normalize("/" + resourceBasePath + path.toString());
+        final var resourcePath = "/" + requireInside(resourceBasePath, path.toString());
         if (!isResourcePathValid(resourcePath)) {
             return Optional.empty();
         }
@@ -198,7 +198,11 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
      */
     @Override
     public boolean isFile(Path path) {
-        final var pathStr = normalize(resourceBasePath + path);
+        final var resolvedPath = resolveInside(resourceBasePath, path.toString());
+        if (resolvedPath.isEmpty()) {
+            return false;
+        }
+        final var pathStr = resolvedPath.get();
         for (final var r : resourceList) {
             if (r.length() == pathStr.length() && r.equals(pathStr)) {
                 return true;
@@ -207,6 +211,31 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
             }
         }
         return false;
+    }
+
+    /**
+     * Resolves the given path relative to the given base path and
+     * ensures, that the result is located inside the base path.
+     * Thereby, it is prevented, that resources outside the base path are accessed,
+     * which could otherwise be any resource of the class path (i.e. class files).
+     *
+     * @param basePath This is a resource folder like {@link #resourceBasePath}.
+     * @param path     This is a path relative to the given base path.
+     * @return The normalized resource path without a leading slash, if it is located inside the base path.
+     */
+    private static Optional<String> resolveInside(String basePath, String path) {
+        final var base = Path.of("/" + basePath.replace("\\", "/")).normalize();
+        final var resolved = base.resolve(path.replace("\\", "/")).normalize();
+        if (!resolved.startsWith(base)) {
+            return Optional.empty();
+        }
+        return Optional.of(resolved.toString().substring(1));
+    }
+
+    private static String requireInside(String basePath, String path) {
+        return resolveInside(basePath, path).orElseThrow(() -> execException(tree("The given path is not located inside the base path.")
+                .withProperty("path", path)
+                .withProperty("base path", basePath)));
     }
 
     private String normalize(String path) {
@@ -218,6 +247,9 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
 
     @Override
     public boolean isDirectory(Path path) {
+        if (resolveInside(resourceBasePath, path.toString()).isEmpty()) {
+            return false;
+        }
         return walkRecursively(path).collect(Lists.toList()).size() > 1;
     }
 
@@ -234,13 +266,8 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
      */
     @Override
     public Stream<Path> walkRecursively(Path path) {
-        final var pathStr = normalize(resourceBasePath + path.toString());
-        final String pathStrFolder;
-        if (pathStr.endsWith("/.")) {
-            pathStrFolder = pathStr.substring(0, pathStr.length() - 2);
-        } else {
-            pathStrFolder = pathStr + "/";
-        }
+        final var pathStr = requireInside(resourceBasePath, path.toString());
+        final var pathStrFolder = pathStr + "/";
         final List<Path> walk = list();
         for (final var resource : resourceList) {
             final var resourceStr = resource;
@@ -254,7 +281,7 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
     @Override
     public byte[] readFileAsBytes(Path path) {
         try {
-            final var resourcePath = normalize("/" + resourceBasePath + path.toString());
+            final var resourcePath = "/" + requireInside(resourceBasePath, path.toString());
             requireValidResourcePath(resourcePath);
             return clazz.getResourceAsStream(resourcePath).readAllBytes();
         } catch (Throwable e) {
@@ -264,8 +291,8 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
 
     public FileSystemView subFileSystemView(String path) {
         return new FileSystemViaClassResourcesImpl(clazz
-                , normalize(resourceBasePath + path + "/")
-                , normalize(metaBasePath + path + "/")
+                , requireInside(resourceBasePath, path) + "/"
+                , requireInside(metaBasePath, path) + "/"
                 , resourceList);
     }
 
@@ -274,8 +301,8 @@ public class FileSystemViaClassResourcesImpl implements FileSystemView {
     }
 
     @Override public License license(String path) {
-        final var metaPath = normalize("/" + metaBasePath + path);
-        final var resourcePath = normalize("/" + resourceBasePath + path);
+        final var metaPath = "/" + requireInside(metaBasePath, path);
+        final var resourcePath = "/" + requireInside(resourceBasePath, path);
         if (!isResourcePathValid(resourcePath)) {
             return License.license();
         }

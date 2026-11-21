@@ -48,6 +48,36 @@ public class FileSystemViaClassResourcesTest extends TestSuiteI {
         require(testSubject.license(TEST_PATH).getSpdxLicenseIdentifier().isEmpty());
     }
 
+    @UnitTest public void testContainment() {
+        val testSubject = fileSystemViaClassResourcesImpl(FileSystemViaClassResourcesTest.class, MAVEN_GROUP_ID, DEM_API);
+        val escapingPath = "../net/splitcells/dem/resource/FileSystemViaClassResourcesTest.class";
+        requireNot(testSubject.isFile(Path.of(escapingPath)));
+        requireNot(testSubject.isDirectory(Path.of("..")));
+        requireThrow(() -> testSubject.readString(Path.of(escapingPath)));
+        requireThrow(() -> testSubject.readStringIfPresent(Path.of(escapingPath)));
+        requireThrow(() -> testSubject.readFileAsBytes(Path.of(escapingPath)));
+        requireThrow(() -> testSubject.inputStream(Path.of(escapingPath)));
+        requireThrow(() -> testSubject.walkRecursively(Path.of("..")));
+        requireThrow(() -> testSubject.subFileSystemView(".."));
+        requireThrow(() -> testSubject.license(escapingPath));
+        // `..` is allowed, as long as the resolved path stays inside the resource base path.
+        val insidePath = "src/main/../main/resources/net/splitcells/dem/api/test-file.txt";
+        require(testSubject.isFile(Path.of(insidePath)));
+        requireEquals(testSubject.readString(Path.of(insidePath)), testSubject.readString(Path.of(TEST_FILE_PATH)));
+        requireEquals(testSubject.license(insidePath).getSpdxLicenseIdentifier().orElseThrow(), "EPL-2.0 OR GPL-2.0-or-later");
+        // A sub file system is not allowed to access its parent folders.
+        val siblingFile = "src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/another-test.txt";
+        require(testSubject.isFile(Path.of(siblingFile)));
+        val subFileSystem = testSubject.subFileSystemView("src/main/resources/net/splitcells/dem/api");
+        require(subFileSystem.isFile(Path.of("test-file.txt")));
+        // This re-enters the sub file system and is therefore allowed.
+        require(subFileSystem.isFile(Path.of("../api/test-file.txt")));
+        val escapingSubPath = Path.of("../resource/FileSystemViaClassResourcesTest/testWalkRecursively/another-test.txt");
+        requireNot(subFileSystem.isFile(escapingSubPath));
+        requireThrow(() -> subFileSystem.readString(escapingSubPath));
+        requireThrow(() -> subFileSystem.license(escapingSubPath.toString()));
+    }
+
     @UnitTest public void readStringIfPresentWithNotBackedString() {
         requireEmpty(fileSystemViaClassResourcesImpl(getClass(), MAVEN_GROUP_ID, DEM_API, setOfUniques(NOT_EXISTING_FILE))
                 .readStringIfPresent(Path.of(NOT_EXISTING_FILE)));
