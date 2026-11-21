@@ -9,3 +9,4 @@ git add . && git diff --quiet && git diff --cached --quiet || sh -c "echo There 
 bin/ai.prompt.sh "Maintain the changelogs."
 bin/ai.prompt.sh "Pick a random documentation file and check it."
 bin/ai.prompt.sh "Pick a random source code file and check it's comments."
+bin/ai.prompt.sh "Search for security vulnerabilities in source code."
