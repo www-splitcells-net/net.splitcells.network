@@ -32,10 +32,10 @@ if __name__ == '__main__':
 		+ parser.parse_args().remoteRepo + "/${childRepo}'"
 	logging.debug("Executing: " + commandToExecute)
 	subprocess.call(commandToExecute, shell='True')
-	commandToExecute = "repos.process"\
+	commandToExecute = "repos.process "\
 		+ " --command 'echo ${childRepo} is present.'"\
 		+ " --ignore-peer-repos 'false'"\
 		+ " --command-for-missing 'repo.clone "\
-		+ parser.parse_args().remoteRepo + "/${childRepo}'"
+		+ parser.parse_args().remoteRepo + "'"
 	logging.debug("Executing: " + commandToExecute)
 	subprocess.call(commandToExecute, shell='True')
