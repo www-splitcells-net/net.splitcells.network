@@ -26,7 +26,7 @@ if __name__ == '__main__':
 	    set -e
 	    set -x
 	    repo.is.git
-	    git remote get-url {remoteName} && git remote set-url --push {remoteName} {remoteRepo} || git remote add {remoteName} {remoteRepo}
+	    git remote get-url {remoteName} && git remote set-url {remoteName} {remoteRepo} && git remote set-url --push {remoteName} {remoteRepo} || git remote add {remoteName} {remoteRepo}
 	""".format(remoteRepo = parsedArgs.remoteRepo, remoteName = parsedArgs.remoteName)
 	logging.debug("Executing: " + script)
 	returnCode = subprocess.call(script, shell='True')
