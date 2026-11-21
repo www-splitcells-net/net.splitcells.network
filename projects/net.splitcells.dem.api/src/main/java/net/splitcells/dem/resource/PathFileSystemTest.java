@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 import static net.splitcells.dem.data.set.list.Lists.list;
 import static net.splitcells.dem.resource.Files.unclosedTemporaryFolder;
 import static net.splitcells.dem.resource.PathFileSystem.*;
+import static net.splitcells.dem.testing.Assertions.requireEquals;
 import static net.splitcells.dem.testing.Assertions.requireThrow;
 
 public class PathFileSystemTest {
@@ -43,12 +44,33 @@ public class PathFileSystemTest {
         requireThrow(() -> pathFileSystem(Path.of("/not-existing-local-folder-12431234235325")));
     }
 
+    @UnitTest public void testContainment() {
+        val parent = unclosedTemporaryFolder();
+        try {
+            Files.createDirectory(parent.resolve("root"));
+            Files.writeToFile(parent.resolve("secret.txt"), "secret");
+            val testSubject = pathFileSystem(parent.resolve("root"));
+            testSubject.writeToFile(Path.of("inside.txt"), "inside");
+            requireEquals(testSubject.readString(Path.of("a/../inside.txt")), "inside");
+            requireEquals(testSubject.isFile(Path.of("../secret.txt")), false);
+            requireEquals(testSubject.isDirectory(Path.of("..")), false);
+            requireThrow(() -> testSubject.readString(Path.of("../secret.txt")));
+            requireThrow(() -> testSubject.readFileAsBytes(Path.of("a/../../secret.txt")));
+            requireThrow(() -> testSubject.inputStream(Path.of("../secret.txt")));
+            requireThrow(() -> testSubject.readString(parent.resolve("secret.txt").toAbsolutePath()));
+            requireThrow(() -> testSubject.writeToFile(Path.of("../written.txt"), "x"));
+            requireThrow(() -> testSubject.subFileSystem(Path.of("..")));
+        } finally {
+            Files.deleteDirectory(parent);
+        }
+    }
+
     @UnitTest public void testUsersStateFiles() {
         val testSubject = PathFileSystem.usersStateFiles();
         val testFile = Path.of("./test-file.txt");
         val testContent = "testUsersStateFiles";
         testSubject.writeToFile(testFile, testContent);
-        Assertions.requireEquals(testSubject.readString(testFile), testContent);
+        requireEquals(testSubject.readString(testFile), testContent);
     }
 
     /**
@@ -60,8 +82,8 @@ public class PathFileSystemTest {
             // The target folder is only available with Maven.
             val testSubject = pathFileSystemForMavenProject(Path.of("../").toAbsolutePath(), "net.splitcells.dem.api");
             val testResult = testSubject.license("src/main/resources/net/splitcells/dem/resource/FileSystemViaClassResourcesTest/testWalkRecursively/another-test.txt");
-            Assertions.requireEquals(testResult.getSpdxCopyrightText().orElseThrow(), "Contributors To The `net.splitcells.*` Projects");
-            Assertions.requireEquals(testResult.getSpdxLicenseIdentifier().orElseThrow(), "EPL-2.0 OR GPL-2.0-or-later");
+            requireEquals(testResult.getSpdxCopyrightText().orElseThrow(), "Contributors To The `net.splitcells.*` Projects");
+            requireEquals(testResult.getSpdxLicenseIdentifier().orElseThrow(), "EPL-2.0 OR GPL-2.0-or-later");
         }
     }
 }

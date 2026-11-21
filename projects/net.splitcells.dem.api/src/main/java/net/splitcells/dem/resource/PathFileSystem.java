@@ -164,13 +164,41 @@ public class PathFileSystem implements FileSystem {
     private final Optional<Path> metaRootPath;
 
     private PathFileSystem(Path argRootPath, Optional<Path> argMetaRootPath) {
-        rootPath = argRootPath;
-        metaRootPath = argMetaRootPath;
+        rootPath = argRootPath.toAbsolutePath().normalize();
+        metaRootPath = argMetaRootPath.map(p -> p.toAbsolutePath().normalize());
     }
 
     private PathFileSystem(Path argRootPath) {
-        rootPath = argRootPath;
-        metaRootPath = Optional.empty();
+        this(argRootPath, Optional.empty());
+    }
+
+    /**
+     * Resolves the given path relative to {@link #rootPath} and ensures,
+     * that the result does not escape {@link #rootPath},
+     * for instance via {@code ..} segments or absolute paths.
+     *
+     * @param path This is a path relative to {@link #rootPath}.
+     * @return The normalized absolute path inside {@link #rootPath}.
+     */
+    private Path resolve(Path path) {
+        return requireContained(rootPath, rootPath.resolve(path).normalize(), path.toString());
+    }
+
+    private Path resolve(String path) {
+        return resolve(Path.of(path));
+    }
+
+    private boolean isContained(Path path) {
+        return rootPath.resolve(path).normalize().startsWith(rootPath);
+    }
+
+    private static Path requireContained(Path root, Path resolved, String requestedPath) {
+        if (!resolved.startsWith(root)) {
+            throw execException(tree("The given path is not allowed to leave the root of the file system.")
+                    .withProperty("path", requestedPath)
+                    .withProperty("rootPath", root.toString()));
+        }
+        return resolved;
     }
 
     @Override
@@ -186,7 +214,7 @@ public class PathFileSystem implements FileSystem {
     @Override
     public FileSystem createDirectoryPath(String path) {
         try {
-            createDirectories(rootPath.resolve(path));
+            createDirectories(resolve(path));
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
@@ -196,7 +224,7 @@ public class PathFileSystem implements FileSystem {
     @Override
     public FileSystem delete(String path) {
         try {
-            java.nio.file.Files.delete(rootPath.resolve(path));
+            java.nio.file.Files.delete(resolve(path));
         } catch (IOException e) {
             throw execException(e);
         }
@@ -206,7 +234,7 @@ public class PathFileSystem implements FileSystem {
     @Override
     public InputStream inputStream(Path path) {
         try {
-            return java.nio.file.Files.newInputStream(rootPath.resolve(path));
+            return java.nio.file.Files.newInputStream(resolve(path));
         } catch (IOException e) {
             throw execException(e);
         }
@@ -215,7 +243,7 @@ public class PathFileSystem implements FileSystem {
     @Override
     public String readString(Path path) {
         try {
-            return java.nio.file.Files.readString(rootPath.resolve(path));
+            return java.nio.file.Files.readString(resolve(path));
         } catch (IOException e) {
             throw ExecutionException.execException("Could not read file: " + path, e);
         }
@@ -223,7 +251,7 @@ public class PathFileSystem implements FileSystem {
 
     @Override
     public FileSystem writeToFile(Path path, byte[] content) {
-        final var targetPath = rootPath.resolve(path);
+        final var targetPath = resolve(path);
         try (final var writer = new FileOutputStream(targetPath.toFile())) {
             writer.write(content);
         } catch (Exception e) {
@@ -234,7 +262,7 @@ public class PathFileSystem implements FileSystem {
 
     @Override
     public FileSystem appendToFile(Path path, byte[] content) {
-        final var targetPath = rootPath.resolve(path);
+        final var targetPath = resolve(path);
         try (final var writer = new FileOutputStream(targetPath.toFile(), true)) {
             writer.write(content);
         } catch (Exception e) {
@@ -245,12 +273,12 @@ public class PathFileSystem implements FileSystem {
 
     @Override
     public boolean isFile(Path path) {
-        return java.nio.file.Files.isRegularFile(rootPath.resolve(path));
+        return isContained(path) && java.nio.file.Files.isRegularFile(resolve(path));
     }
 
     @Override
     public boolean isDirectory(Path path) {
-        return java.nio.file.Files.isDirectory(rootPath.resolve(path));
+        return isContained(path) && java.nio.file.Files.isDirectory(resolve(path));
     }
 
     @Override
@@ -265,7 +293,7 @@ public class PathFileSystem implements FileSystem {
     @Override
     public Stream<Path> walkRecursively(Path path) {
         try {
-            return java.nio.file.Files.walk(rootPath.resolve(path)).map(rootPath::relativize);
+            return java.nio.file.Files.walk(resolve(path)).map(rootPath::relativize);
         } catch (IOException e) {
             throw execException(e);
         }
@@ -274,7 +302,7 @@ public class PathFileSystem implements FileSystem {
     @Override
     public byte[] readFileAsBytes(Path path) {
         try {
-            return java.nio.file.Files.readAllBytes(rootPath.resolve(path));
+            return java.nio.file.Files.readAllBytes(resolve(path));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -297,7 +325,7 @@ public class PathFileSystem implements FileSystem {
      */
     @Override
     public FileSystem subFileSystem(Path path) {
-        return new PathFileSystem(rootPath.resolve(path));
+        return new PathFileSystem(resolve(path));
     }
 
     @Override
@@ -311,7 +339,7 @@ public class PathFileSystem implements FileSystem {
             throw ExecutionException.execException(tree("The given path is not allowed to be absolute.")
                     .withProperty("path", path.toString()));
         }
-        return Optional.of(rootPath.resolve(path));
+        return Optional.of(resolve(path));
     }
 
     @Override
@@ -330,7 +358,7 @@ public class PathFileSystem implements FileSystem {
         if (metaRootPath.isEmpty()) {
             return License.license();
         }
-        final var metaPath = metaRootPath.get().resolve(path);
+        final var metaPath = requireContained(metaRootPath.get(), metaRootPath.get().resolve(path).normalize(), path);
         if (!fileExists(metaPath)) {
             return License.license();
         }
