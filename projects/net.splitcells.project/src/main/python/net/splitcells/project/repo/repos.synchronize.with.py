@@ -30,12 +30,15 @@ if __name__ == '__main__':
 	# TODO Parallelizing the repos.pull leads to errors, but would create big performance boost.
 	# TODO Optionally support synchronizing without merge commits, in order to prevent unexpected changes from server.
 	#      Right now this command is only used to synchronize fully trusted sources.
-	synchronizationScript = """system.network.peer.ssh.reachable "{0}" \\
-	&& repos.repair --remote-repo="{1}" \\
-	&& repo.remote.set2 --remote-repo="{2}" --remote-name="{3}" \\
-	&& repos.is.clean \\
-	&& repos.pull.with.merge \\
-	|| echo.error Could not synchronize with {0}.""".format(parsedArgs.remoteHost, parsedArgs.remoteRepo, parsedArgs.remoteName)
+	synchronizationScript = """set +x
+	system.network.peer.ssh.reachable {remoteHost} \\
+	&& repos.repair --remote-repo={remoteRepo} \\
+	&& repos.remote.set2 --remote-repo="{remoteRepo}" --remote-name="{remoteName}" \\
+	&& repos.pull.from {remoteName} \\
+	&& repos.push.at --remote-repo-name={remoteName} --remote-repo-URL={remoteRepo}\\
+	|| Could not synchronize with {remoteName}.""".format(remoteHost = parsedArgs.remoteHost
+	    , remoteRepo = parsedArgs.remoteRepo
+	    , remoteName = parsedArgs.remoteName)
 	logging.debug('Executing: ' + synchronizationScript)
 	returnCode = subprocess.call(synchronizationScript, shell='True')
 	if returnCode != 0:
