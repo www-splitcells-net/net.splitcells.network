@@ -41,15 +41,16 @@ chmod 700 ~/.ssh-website-upload/id_rsa # Otherwise, scp may not work.
 mkdir -p target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate # Using subdirectories, ensures, that scp does not get a problem with missing directories.
 cp -r target/site/jacoco-aggregate/* target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate
 mkdir -p target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate/jacoco.exec/
-find . -type f -name "*.jacoco.exec" -exec cp {} target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate/jacoco.exec/ \;
+find . -type f -name '*.jacoco.exec' -exec cp {} target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate/jacoco.exec/ \;
 realpath target/website-upload/public_html/net/splitcells/martins/avots/website/jacoco-aggregate
 # The targeted scp upload folder is dependent on the relative source path. Therefore, cd and the current folder are used, in order to avoid this strange mapping.
 cd target/website-upload/
 scp -v -i ~/.ssh-website-upload/id_rsa -o PubkeyAuthentication=yes -o StrictHostKeyChecking=no -r ./ splitcm@www322.your-server.de:
 rm ~/.ssh-website-upload/id_rsa
 # Upload JaCoCos code coverage to network.log repo.
-cd $networkRepo
+cd $networkRepo/projects
 mkdir -p $networkLogRepo/src/main/resources/net/splitcells/network/worker/daily-ci/jacoco.exec
-find . -type f -name "*.jacoco.exec" -print -exec cp -f {} $networkLogRepo/src/main/resources/net/splitcells/network/worker/daily-ci/jacoco.exec/ \;
+find . -type f -name '*.jacoco.exec' -print -exec cp {} $networkLogRepo/src/main/resources/net/splitcells/network/worker/daily-ci/jacoco.exec/ \;
+ls -al $networkLogRepo/src/main/resources/net/splitcells/network/worker/daily-ci/
 cd $networkLogRepo
 git diff --exit-code || git commit -sam "Update code coverage report of daily CI #32"
