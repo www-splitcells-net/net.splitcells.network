@@ -7,11 +7,17 @@
 
 set -e
 
+# Skills are invoked via the `Skill` tool, whose input contains the name of the used skill.
 jqQuery='
   select(.type == "assistant") |
   .message.content[]? |
-  select(.type == "text") |
-  .text
+  if .type == "text" then
+    .text
+  elif .type == "tool_use" and .name == "Skill" then
+    "[SKILL] " + (.input.skill // "unknown") + (if .input.args then " " + (.input.args | tostring) else "" end)
+  else
+    empty
+  end
   '
 
 if [ "debug" = "$log_level" ]
@@ -21,8 +27,13 @@ then
       .event.delta.text
     elif .type == "assistant" then
       .message.content[]? |
-      select(.type == "tool_use" and .name == "Bash") |
-      " \n[EXEC] " + .input.command
+      if .type == "tool_use" and .name == "Bash" then
+        " \n[EXEC] " + .input.command
+      elif .type == "tool_use" and .name == "Skill" then
+        " \n[SKILL] " + (.input.skill // "unknown") + (if .input.args then " " + (.input.args | tostring) else "" end)
+      else
+        empty
+      end
     elif .type == "user" then
       .message.content[]? |
       select(.type == "tool_result") |
