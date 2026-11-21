@@ -35,6 +35,35 @@ public class FileSystemTest extends TestSuiteI {
         require(testSubject.reader.subFileSystemView("test").exists());
     }
 
+    /**
+     * Paths, that point outside the root of a {@link FileSystemView} via {@code ..} or absolute paths,
+     * have to be refused, in order to contain the file access.
+     */
+    public void testContainment(Supplier<FileSystemAccess> factory) {
+        val testSubject = factory.get();
+        testSubject.writer.createDirectoryPath("inner");
+        testSubject.writer.writeToFile("secret", "secret".getBytes());
+        testSubject.writer.writeToFile("inner/inside", "inside".getBytes());
+        val innerWriter = testSubject.writer.subFileSystem("inner");
+        val innerReader = testSubject.reader.subFileSystemView("inner");
+        requireEquals(innerReader.readString("./inside"), "inside");
+        requireThrow(() -> innerReader.isFile("../secret"));
+        requireThrow(() -> innerReader.isDirectory(".."));
+        requireThrow(() -> testSubject.reader.isFile("/secret"));
+        requireThrow(() -> innerReader.readString("../secret"));
+        requireThrow(() -> innerReader.readFileAsBytes("a/../../secret"));
+        requireThrow(() -> innerReader.inputStream("../secret"));
+        requireThrow(() -> innerReader.walkRecursively(".."));
+        requireThrow(() -> innerReader.subFileSystemView(".."));
+        requireThrow(() -> testSubject.reader.readString("/secret"));
+        requireThrow(() -> innerWriter.writeToFile("../written", "x".getBytes()));
+        requireThrow(() -> innerWriter.appendToFile(Path.of("../secret"), "x".getBytes()));
+        requireThrow(() -> innerWriter.createDirectoryPath("../created"));
+        requireThrow(() -> innerWriter.delete("../secret"));
+        requireThrow(() -> innerWriter.subFileSystem(".."));
+        requireEquals(testSubject.reader.readString("secret"), "secret");
+    }
+
     public void testIsFile(Supplier<FileSystemAccess> factory) {
         val testSubject = factory.get();
         testSubject.writer.writeToFile("test", "content".getBytes());
@@ -187,6 +216,7 @@ public class FileSystemTest extends TestSuiteI {
                 , dynamicTests(this::testExistsForSubFileSystem, factory)
                 , dynamicTests(this::testCreateDirectoryPath, factory)
                 , dynamicTests(this::testIsFile, factory)
+                , dynamicTests(this::testContainment, factory)
                 , dynamicTests(this::testReadFileAsBytes, factory)
                 , dynamicTests(this::testWriteToFile, factory)
                 , dynamicTests(this::testReadString, factory)
