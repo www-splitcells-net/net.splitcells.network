@@ -10,3 +10,4 @@ AI agents should update this file automatically.
 # Developer Guide
 Do not commit any changes, if it was not explicitly asked for.
 Write changes to the appropriate changelog files.
+Create an issue in net.splitcells.network.community for the task at hand.
