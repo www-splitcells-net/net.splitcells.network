@@ -25,7 +25,7 @@ if __name__ == '__main__':
 	script = """
 	    set -e
 	    set -x
-	    repos.process --command="repo.remote.set2 --remote-repo='{remoteRepo}' --remote-name='{remoteName}'"
+	    repos.process --command='repo.remote.set2 --remote-repo="{remoteRepo}" --remote-name="{remoteName}"'
 	""".format(remoteRepo = parsedArgs.remoteRepo, remoteName = parsedArgs.remoteName)
 	logging.debug("Executing: " + script)
 	returnCode = subprocess.call(script, shell='True')
