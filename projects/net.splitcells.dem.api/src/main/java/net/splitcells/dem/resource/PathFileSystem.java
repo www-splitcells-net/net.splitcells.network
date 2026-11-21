@@ -188,10 +188,6 @@ public class PathFileSystem implements FileSystem {
         return resolve(Path.of(path));
     }
 
-    private boolean isContained(Path path) {
-        return rootPath.resolve(path).normalize().startsWith(rootPath);
-    }
-
     private static Path requireContained(Path root, Path resolved, String requestedPath) {
         if (!resolved.startsWith(root)) {
             throw execException(tree("The given path is not allowed to leave the root of the file system.")
@@ -273,12 +269,12 @@ public class PathFileSystem implements FileSystem {
 
     @Override
     public boolean isFile(Path path) {
-        return isContained(path) && java.nio.file.Files.isRegularFile(resolve(path));
+        return java.nio.file.Files.isRegularFile(resolve(path));
     }
 
     @Override
     public boolean isDirectory(Path path) {
-        return isContained(path) && java.nio.file.Files.isDirectory(resolve(path));
+        return java.nio.file.Files.isDirectory(resolve(path));
     }
 
     @Override

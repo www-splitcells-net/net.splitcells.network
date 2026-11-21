@@ -52,8 +52,8 @@ public class PathFileSystemTest {
             val testSubject = pathFileSystem(parent.resolve("root"));
             testSubject.writeToFile(Path.of("inside.txt"), "inside");
             requireEquals(testSubject.readString(Path.of("a/../inside.txt")), "inside");
-            requireEquals(testSubject.isFile(Path.of("../secret.txt")), false);
-            requireEquals(testSubject.isDirectory(Path.of("..")), false);
+            requireThrow(() -> testSubject.isDirectory(Path.of("..")));
+            requireThrow(() -> testSubject.isFile(Path.of("../secret.txt")));
             requireThrow(() -> testSubject.readString(Path.of("../secret.txt")));
             requireThrow(() -> testSubject.readFileAsBytes(Path.of("a/../../secret.txt")));
             requireThrow(() -> testSubject.inputStream(Path.of("../secret.txt")));
