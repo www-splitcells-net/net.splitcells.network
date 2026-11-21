@@ -291,7 +291,7 @@ public class ProjectRendererI implements ProjectRenderer {
             } else if (path.endsWith(".csv")) {
                 final var file = resolveSourceFolder(path, "csv");
                 if (projectSrcFolder.isFile(file)) {
-                    return Optional.of(binaryMessage(Files.readFileAsBytes(file), "text/csv"));
+                    return Optional.of(binaryMessage(projectSrcFolder.readFileAsBytes(file), "text/csv"));
                 } else {
                     return Optional.empty();
                 }
