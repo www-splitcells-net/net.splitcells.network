@@ -45,16 +45,16 @@ public class EditorProcessorTest {
         }
     };
     
-    @DisabledTest @IntegrationTest public void testOptimization() {
+    @IntegrationTest public void testOptimization() {
         process(EditorProcessorTest.TEST_OPTIMIZATION_GUI, GelUiCell.class).requireErrorFree();
     }
 
 
-    @DisabledTest @IntegrationTest public void testChangingImport() {
     /**
      * Tests whether the form submission works, when the problem is checked during first async check,
      * becaue the problem is so small.
      */
+    @IntegrationTest public void testFirstAsyncCheck() {
         process(() -> {
             try (final var browser = htmlClient()) {
                 try (final var tab = browser.openTab("/net/splitcells/gel/ui/editor/geal/index.html")) {
