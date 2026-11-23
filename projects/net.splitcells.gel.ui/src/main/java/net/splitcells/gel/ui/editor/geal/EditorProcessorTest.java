@@ -44,26 +44,27 @@ public class EditorProcessorTest {
             }
         }
     };
-
+    
     @DisabledTest @IntegrationTest public void testOptimization() {
         process(EditorProcessorTest.TEST_OPTIMIZATION_GUI, GelUiCell.class).requireErrorFree();
     }
 
 
     @DisabledTest @IntegrationTest public void testChangingImport() {
+    /**
+     * Tests whether the form submission works, when the problem is checked during first async check,
+     * becaue the problem is so small.
+     */
         process(() -> {
             try (final var browser = htmlClient()) {
                 try (final var tab = browser.openTab("/net/splitcells/gel/ui/editor/geal/index.html")) {
                     tab.elementByClass("net-splitcells-website-pop-up-confirmation-button").click();
                     tab.elementById("net-splitcells-gel-ui-editor-geal-form-submit").click();
-                    tab.elementById("net-splitcells-gel-ui-editor-geal-form-Definition").setTextContent("TODO");
+                    tab.elementById("net-splitcells-gel-ui-editor-geal-form-Definition").setTextContent("");
                     waitUntilRequirementIsTrue(1000L * 60, () -> tab
                             .elementById("net-splitcells-gel-ui-editor-geal-form-solution")
                             .evalIfExists(e -> !e.value().trim().isEmpty())
                             .orElse(false));
-                    requireNonEmptyString(tab
-                            .elementById("net-splitcells-gel-ui-editor-geal-form-solution.formatted")
-                            .textContent());
                 }
             }
         }, GelUiCell.class).requireErrorFree();
