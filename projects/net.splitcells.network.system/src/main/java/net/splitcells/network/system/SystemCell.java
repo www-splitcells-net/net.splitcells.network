@@ -121,7 +121,6 @@ public class SystemCell implements Cell {
                         , "/net/splitcells/website/news")
                         .withLogoPath(Optional.of("net/splitcells/website/images/average.source.code.image.generator.filling.via.horizontal.100.percent.jpg"))
                         .withDescription(Optional.of("All User and Developer Relevant News in One Place at Your Finger Tips")))
-                .withAdditionalProcessor(EditorProcessor.PATH, editorProcessor())
                 .withAdditionalProjectsRendererExtension(performanceReport())
                 .withAdditionalProjectsRendererExtension(functionCallDoc())
                 .withLicensePage(trailLink("Licensing Info of The Core Project net.splitcells.network", "/net/splitcells/network/LICENSE.html"))

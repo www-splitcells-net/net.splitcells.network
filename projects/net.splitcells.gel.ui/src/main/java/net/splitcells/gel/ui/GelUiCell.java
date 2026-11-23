@@ -33,7 +33,9 @@ public class GelUiCell implements Cell {
                         , configValue(GelUiFileSystem.class)))
                 .withAdditionalProjectsRendererExtension(colloquiumExample())
                 .withAdditionalProjectsRendererExtension(sportCourseExample())
-                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/codemirror-editor-bundle.js");
+                .withAdditionalJsBackgroundFiles("net/splitcells/website/js/codemirror-editor-bundle.js")
+                .withAdditionalProcessor(EditorProcessor.PATH, editorProcessor())
+        ;
         
         env.withCell(WebsiteServerCell.class);
     }
