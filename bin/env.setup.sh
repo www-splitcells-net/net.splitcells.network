@@ -19,4 +19,5 @@ cd ../net.splitcells.network
   # Print crash logs, in order to debug CI workflow crashes.
   export MAVEN_OPTS="-XX:ErrorFile=$HOME/hs_err_pid%p.log"
   trap "cat $HOME/hs_err_pid*.log || echo No JVM crash reports are present." EXIT
+mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps" # Setup Playwright for full stack tests.
 . ./projects/net.splitcells.shell/src/main/bash/command/managed/command.managed.export.bin.sh
