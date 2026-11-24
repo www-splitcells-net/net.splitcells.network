@@ -39,6 +39,10 @@ public class EditorProcessorTest {
                 tab.waitUntilRequirementIsTrue(t -> t
                         .elementById("net-splitcells-gel-ui-editor-geal-form-solution.formatted")
                         .textContent().isEmpty());
+                // The session id needs to be discarded, as it is valid after the calculations are done.
+                tab.waitUntilRequirementIsTrue(t -> t
+                        .elementById("net-splitcells-gel-ui-editor-geal-form-async-user-session-life-cycle-id")
+                        .textContent().isEmpty());
             }
         }
     };
