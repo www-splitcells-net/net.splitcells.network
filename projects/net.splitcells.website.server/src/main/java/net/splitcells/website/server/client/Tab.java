@@ -13,7 +13,7 @@ public interface Tab extends Closeable {
      * <p>Reasonable maximum amount of time for a user to wait to get a result.</p>
      * <p>TODO Maybe this number could be decreased.</p>
      */
-    final long MILLISECOND_MAX_WAIT_TIME = 60_000L;
+    long MILLISECOND_MAX_WAIT_TIME = 60_000L;
     Element elementByClass(String cssClass);
 
     Element elementById(String id);
