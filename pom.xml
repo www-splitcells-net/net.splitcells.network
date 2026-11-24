@@ -18,6 +18,7 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
     <modules>
+        <module>projects/net.splitcells.worker.container.pom</module>
         <module>projects/net.splitcells.pom.java.minimal</module>
         <module>projects/net.splitcells.maven.plugin.resource.list</module>
         <module>projects/net.splitcells.pom.java.defaults</module>
