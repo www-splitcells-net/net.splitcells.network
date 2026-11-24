@@ -32,7 +32,7 @@ public class EditorProcessorTest {
             try (final var tab = browser.openTab("/net/splitcells/gel/ui/editor/geal/index.html")) {
                 tab.elementByClass("net-splitcells-website-pop-up-confirmation-button").click();
                 tab.elementById("net-splitcells-gel-ui-editor-geal-form-submit").click();
-                waitUntilRequirementIsTrue(1000L * 60, () -> tab
+                tab.waitUntilRequirementIsTrue(t -> t
                         .elementById("net-splitcells-gel-ui-editor-geal-form-solution")
                         .evalIfExists(e -> !e.value().trim().isEmpty())
                         .orElse(false));
