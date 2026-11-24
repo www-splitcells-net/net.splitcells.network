@@ -36,9 +36,9 @@ public class EditorProcessorTest {
                         .elementById("net-splitcells-gel-ui-editor-geal-form-solution")
                         .evalIfExists(e -> !e.value().trim().isEmpty())
                         .orElse(false));
-                requireNonEmptyString(tab
+                tab.waitUntilRequirementIsTrue(t -> t
                         .elementById("net-splitcells-gel-ui-editor-geal-form-solution.formatted")
-                        .textContent());
+                        .textContent().isEmpty());
             }
         }
     };
@@ -63,7 +63,7 @@ public class EditorProcessorTest {
                     tab.elementByClass("net-splitcells-website-pop-up-confirmation-button").click();
                     tab.elementById("net-splitcells-gel-ui-editor-geal-form-submit").click();
                     tab.elementById("net-splitcells-gel-ui-editor-geal-form-Definition").setTextContent("");
-                    waitUntilRequirementIsTrue(1000L * 60, () -> tab
+                    tab.waitUntilRequirementIsTrue(t -> t
                             .elementById("net-splitcells-gel-ui-editor-geal-form-solution")
                             .evalIfExists(e -> !e.value().trim().isEmpty())
                             .orElse(false));
