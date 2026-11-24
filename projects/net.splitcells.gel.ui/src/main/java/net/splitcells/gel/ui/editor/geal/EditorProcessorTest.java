@@ -5,10 +5,8 @@ package net.splitcells.gel.ui.editor.geal;
 
 import net.splitcells.dem.lang.tree.Tree;
 import net.splitcells.dem.testing.annotations.CapabilityTest;
-import net.splitcells.dem.testing.annotations.DisabledTest;
 import net.splitcells.dem.testing.annotations.IntegrationTest;
 import net.splitcells.dem.testing.annotations.UnitTest;
-import net.splitcells.dem.utils.StringUtils;
 import net.splitcells.gel.editor.GelEditorFileSystem;
 import net.splitcells.gel.ui.GelUiCell;
 import net.splitcells.gel.ui.editor.geal.example.ColloquiumExample;
@@ -44,7 +42,11 @@ public class EditorProcessorTest {
             }
         }
     };
-    
+
+    /**
+     * During this test, the GUI client does multiple async checks.
+     * So a counterpart to {@link #testStopOnFirstAsyncCheck()} has not to be done.
+     */
     @IntegrationTest public void testOptimization() {
         process(EditorProcessorTest.TEST_OPTIMIZATION_GUI, GelUiCell.class).requireErrorFree();
     }
@@ -54,7 +56,7 @@ public class EditorProcessorTest {
      * Tests whether the form submission works, when the problem is checked during first async check,
      * becaue the problem is so small.
      */
-    @IntegrationTest public void testFirstAsyncCheck() {
+    @IntegrationTest public void testStopOnFirstAsyncCheck() {
         process(() -> {
             try (final var browser = htmlClient()) {
                 try (final var tab = browser.openTab("/net/splitcells/gel/ui/editor/geal/index.html")) {
