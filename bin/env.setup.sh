@@ -22,5 +22,7 @@ cd $repo
   trap "cat $HOME/hs_err_pid*.log || echo No JVM crash reports are present." EXIT
 cd $repo/projects/net.splitcells.worker.container.pom
   mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps" # Setup Playwright for full stack tests.
+  # This is needed for container with ubuntu:latest. "install-deps" is not enough for the daily CI.
+  apt install -y libgtk-4-1 libgraphene-1.0-0 libavif16          
 cd $repo
   . ./projects/net.splitcells.shell/src/main/bash/command/managed/command.managed.export.bin.sh
