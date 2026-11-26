@@ -50,7 +50,7 @@ public class RepairOptimizationStep implements OptimizationStep {
     @Override public Optional<OptimizationStep> runAndProvideNextStep() {
         // Online initialization is always done, because repair only changes allocated demands and not free ones.
         onlineLinearInitialization().optimize(solution);
-        if (currentStep <= maxStep && !solution.isOptimal()) {
+        if (++currentStep < maxStep && !solution.isOptimal()) {
             deescalation.optimize(solution);
             return Optional.of(this);
         }
