@@ -48,8 +48,10 @@ then
     '
 fi
 
+# Provide access to all repos via `--add-dir ../`.
 claude-code --print "$1" \
     --permission-mode acceptEdits \
+    --add-dir ../ \
     --output-format stream-json \
     --verbose \
     --include-partial-messages \
